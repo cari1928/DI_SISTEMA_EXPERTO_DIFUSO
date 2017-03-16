@@ -1,6 +1,5 @@
 package SED;
 
-import Interfaces.ceros;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -31,7 +30,35 @@ public class MotorInferencia {
     }
 
     private void fuzzyfication() {
+        semiTriangular objSemTria;
+        semiTrapezoide objSemTrap;
+
         crearModelo();
+
+        if (listTriangular != null) {
+            for (Triangular objTria : listTriangular) {
+
+            }
+        }
+
+        if (listTrapezoide != null) {
+            listTrapezoide.forEach((objTrap) -> { //wow *-*, funcionará??
+
+                //checar que el punto ingresado por el usuario esté entre los puntos no críticos de la figura
+                if (objTrap.puntoIzq[0] < punto && punto < objTrap.puntoDer[0]) {
+                    resultado += calcY(objTrap) + " "; //fase de pruebas todavía
+                }
+
+            });
+        }
+
+        if (listSemiTriangular != null) {
+
+        }
+
+        if (listSemiTrapezoide != null) {
+
+        }
     }
 
     private void crearModelo() {
@@ -188,44 +215,43 @@ public class MotorInferencia {
             listSemiTrapezoide = null;
         }
     }
-    
-    void calcularY(semiTrapezoide objSTrap){
+
+    private double calcY(Trapezoide objT) {
+        return 0.0; //fase de pruebas 
+    }
+
+    private void calcularY(semiTrapezoide objSTrap) {
         char orientacion = objSTrap.orientacion;
-        if(orientacion == 'i'){
-            if(punto > objU.inicio && punto < objSTrap.punto2[0]){
+        if (orientacion == 'i') {
+            if (punto > objU.inicio && punto < objSTrap.punto2[0]) {
                 //Esta dentro izquierda
-                if(punto > objSTrap.puntoC[0] && punto < objSTrap.punto2[0]){
+                if (punto > objSTrap.puntoC[0] && punto < objSTrap.punto2[0]) {
                     //Esta en la pendiente
                     //Calcular pendiente
-                    double m = (objSTrap.punto2[1] - objSTrap.puntoC[1]) /(objSTrap.punto2[0] - objSTrap.puntoC[0]);
+                    double m = (objSTrap.punto2[1] - objSTrap.puntoC[1]) / (objSTrap.punto2[0] - objSTrap.puntoC[0]);
                     double y = (m + objSTrap.puntoC[0]) + objSTrap.puntoC[1];
-                    resultado += objSTrap.etiqueta+" Y = " + y + "\n";
-                }
-                else{
+                    resultado += objSTrap.etiqueta + " Y = " + y + "\n";
+                } else {
                     //Esta en la linea Recta de 1's
-                    resultado += objSTrap.etiqueta+" Y = 1" + "\n";
+                    resultado += objSTrap.etiqueta + " Y = 1" + "\n";
                 }
-            }
-            else{
+            } else {
                 //El punto no pertenece a la funcion
                 resultado += objSTrap.etiqueta + " Y = 0" + "\n";
             }
-        }
-        else{
-            if(punto < objU.fin && punto > objSTrap.punto2[0]){
+        } else {
+            if (punto < objU.fin && punto > objSTrap.punto2[0]) {
                 //Esta dentro derecha
-                if(punto < objSTrap.puntoC[0] && punto > objSTrap.punto2[0]){
+                if (punto < objSTrap.puntoC[0] && punto > objSTrap.punto2[0]) {
                     //Esta en la pendiente
-                    double m = (objSTrap.puntoC[1] - objSTrap.punto2[1]) /(objSTrap.puntoC[0] - objSTrap.punto2[0]);
+                    double m = (objSTrap.puntoC[1] - objSTrap.punto2[1]) / (objSTrap.puntoC[0] - objSTrap.punto2[0]);
                     double y = (m + objSTrap.punto2[0]) + objSTrap.punto2[1];
-                    resultado += objSTrap.etiqueta+" Y = " + y + "\n";
-                }
-                else{
+                    resultado += objSTrap.etiqueta + " Y = " + y + "\n";
+                } else {
                     //Esta en la linea recta de 1's
-                    resultado += objSTrap.etiqueta+" Y = 1" + "\n";
+                    resultado += objSTrap.etiqueta + " Y = 1" + "\n";
                 }
-            }
-            else{
+            } else {
                 //El punto no pertenece a la funcion
                 resultado += objSTrap.etiqueta + " Y = 0" + "\n";
             }
