@@ -25,7 +25,7 @@ public class trapezoide extends JFrame {
     String etiqueta;
     double origen, fin, puntoC1, puntoC2, aux;
     int noFuncion;
-    
+
     public trapezoide(int noFuncion, double origen, double fin) {
         super("Trapezoide");
         this.noFuncion = noFuncion;
@@ -74,11 +74,11 @@ public class trapezoide extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 //Aqui va lo que tiene que hacer al momento de pulsar aceptar.
                 //System.out.println("Falta programar");
-                if(capturaDatos() == true){
+                if (capturaDatos() == true) {
                     try {
                         GestionArchivos objG = new GestionArchivos();
-                        String Ftrapezoide = "Trapezoide "+ puntoC1 + " " + puntoC2 + " " + etiqueta;
-                        objG.escribir((noFuncion+1), Ftrapezoide, "final");
+                        String Ftrapezoide = "Trapezoide " + puntoC1 + " " + puntoC2 + " " + etiqueta + " " + origen;
+                        objG.escribir((noFuncion + 1), Ftrapezoide, "final");
                         ocultarventana();
                         tipoFunciones objFun = new tipoFunciones(noFuncion, calcularTraslape(), fin);
                     } catch (Exception ex) {
@@ -92,42 +92,41 @@ public class trapezoide extends JFrame {
     void ocultarventana() {
         this.setVisible(false);
     }
-    
-    boolean capturaDatos(){
+
+    boolean capturaDatos() {
         try {
             puntoC1 = Double.parseDouble(txtPuntoC1.getText().toString());
             puntoC2 = Double.parseDouble(txtPuntoC2.getText().toString());
             etiqueta = txtEtiqueta.getText().toString();
-            if(etiqueta.equals("")){
+            if (etiqueta.equals("")) {
                 JOptionPane.showMessageDialog(this, "Error, llene todos los campos.");
                 return false;
             }
-            if(puntoC1 < origen || puntoC1 > fin || puntoC2 < origen || puntoC1 > fin){
+            if (puntoC1 < origen || puntoC1 > fin || puntoC2 < origen || puntoC1 > fin) {
                 JOptionPane.showMessageDialog(this, "Error, los puntos criticos no estan dentro del discurso disponible");
                 return false;
             }
-            if((fin - origen) < ((puntoC1 - origen) + (puntoC2 - puntoC2) + (fin - puntoC2))){
+            if ((fin - origen) < ((puntoC1 - origen) + (puntoC2 - puntoC2) + (fin - puntoC2))) {
                 JOptionPane.showMessageDialog(this, "La funcion abarcara todo el discurso disponible");
-                aux=fin;
+                aux = fin;
                 //return false;
             }
-            if((puntoC1 - origen) < (fin - puntoC2)){
-                JOptionPane.showMessageDialog(this, "Error, la funcion no se puede colocar dentro del discurso disponible");
-                return false;
-            }
+//            if((puntoC1 - origen) < (fin - puntoC2)){
+//                JOptionPane.showMessageDialog(this, "Error, la funcion no se puede colocar dentro del discurso disponible");
+//                return false;
+//            }
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al capturar los datos");
             return false;
         }
     }
-    
-    double calcularTraslape(){
-        double nuevoOrigen=0;
-        if(aux==fin){
+
+    double calcularTraslape() {
+        double nuevoOrigen = 0;
+        if (aux == fin) {
             nuevoOrigen = (fin - puntoC2) * 0.6;
-        }
-        else{
+        } else {
             nuevoOrigen = (puntoC1 - origen) * 0.6;
         }
         nuevoOrigen = (puntoC2 + nuevoOrigen);

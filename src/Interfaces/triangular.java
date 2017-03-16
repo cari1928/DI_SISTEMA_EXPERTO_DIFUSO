@@ -27,7 +27,7 @@ public class triangular extends JFrame {
     double origen, fin, puntoC;
     int noFuncion;
     double aux;
-    
+
     triangular(int noFuncion, double origen, double fin) {
         super("Triangular");
         this.noFuncion = noFuncion;
@@ -71,11 +71,11 @@ public class triangular extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 //Aqui va lo que tiene que hacer al momento de pulsar aceptar.
                 //System.out.println("Falta programar");
-                if(capturaDatos() == true){
+                if (capturaDatos() == true) {
                     try {
                         GestionArchivos objG = new GestionArchivos();
-                        String Ftriangular = "triangular "+puntoC + " " + etiquete;
-                        objG.escribir((noFuncion+1), Ftriangular, "final");
+                        String Ftriangular = "Triangular " + puntoC + " " + etiquete + " " + origen;
+                        objG.escribir((noFuncion + 1), Ftriangular, "final");
                         ocultarventana();
                         tipoFunciones objFun = new tipoFunciones(noFuncion, calculaTraslape(), fin);
                     } catch (Exception ex) {
@@ -89,29 +89,24 @@ public class triangular extends JFrame {
     void ocultarventana() {
         this.setVisible(false);
     }
-    
-    boolean capturaDatos(){
+
+    boolean capturaDatos() {
         try {
             puntoC = Double.parseDouble(txtPuntoC.getText().toString());
             etiquete = txtEtiqueta.getText().toString();
-            if(etiquete.equals("")){
+            if (etiquete.equals("")) {
                 JOptionPane.showMessageDialog(this, "Error llene todos los campos");
                 return false;
             }
-            if(puntoC <= origen || puntoC >= fin){
+            if (puntoC <= origen || puntoC >= fin) {
                 JOptionPane.showMessageDialog(this, "El punto critico esta fuera del discurso disponible");
                 return false;
             }
             double rango = puntoC - origen;
-            if((fin - origen) < (rango + rango)){
+            if ((fin - origen) < (rango + rango)) {
                 JOptionPane.showMessageDialog(this, "La función abarcara todo el discurso disponible");
                 aux = fin;
             }
-            
-            /*if((fin - puntoC) < rango){
-                JOptionPane.showMessageDialog(this, "Ya se abarco todo el discurso.");
-                return false;
-            }*/
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,19 +114,18 @@ public class triangular extends JFrame {
             return false;
         }
     }
-    
-    double calculaTraslape(){
+
+    double calculaTraslape() {
         double rango = 0;
-        if(aux == fin){
+        if (aux == fin) {
             rango = fin - puntoC;
-        }
-        else{
+        } else {
             rango = puntoC - origen;
         }
-        
+
         double nuevoOrigen = rango * 0.6;
-        nuevoOrigen = nuevoOrigen +puntoC;
+        nuevoOrigen = nuevoOrigen + puntoC;
         return nuevoOrigen;
     }
-    
+
 }

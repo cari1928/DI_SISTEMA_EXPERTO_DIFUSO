@@ -13,7 +13,7 @@ public class Triangular {
     int turno;
 
     public Triangular() {
-        puntoC = new double[2];
+        puntoC = new double[2]; //posicion 0 = x, posicion 1 = y
         puntoIzq = new double[2];
         puntoDer = new double[2];
     }

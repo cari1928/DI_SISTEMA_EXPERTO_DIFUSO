@@ -26,7 +26,7 @@ public class ceros extends JFrame {
     double origen, finD;
     int noFuncion;
 
-    ceros(int noFuncion, double origen, double finD) {
+    public ceros(int noFuncion, double origen, double finD) {
         super("Ceros");
         this.finD = finD;
         this.origen = origen;
@@ -69,18 +69,18 @@ public class ceros extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 //Aqui va lo que tiene que hacer al momento de pulsar aceptar.
                 //System.out.println("Falta programar");
-                if(capturaDatos() == true){
+                if (capturaDatos() == true) {
                     try {
-                    GestionArchivos objG = new GestionArchivos();
-                    String Fceros = inicio + " " + fin;
-                    objG.escribir((noFuncion+1), Fceros, "final");
-                    ocultarventana();
-                    tipoFunciones objFun = new tipoFunciones(noFuncion, fin, finD);   
+                        GestionArchivos objG = new GestionArchivos();
+                        String Fceros = "Ceros" + " " + inicio + " " + fin;
+                        objG.escribir((noFuncion + 1), Fceros, "final");
+                        ocultarventana();
+                        tipoFunciones objFun = new tipoFunciones(noFuncion, fin, finD);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
                 }
-                
+
             }
         });
         pnlinf.add(aceptar);
@@ -90,25 +90,25 @@ public class ceros extends JFrame {
         this.setVisible(false);
     }
 
-    boolean capturaDatos(){
+    boolean capturaDatos() {
         try {
             inicio = Double.parseDouble(txtInicio.getText().toString());
             fin = Double.parseDouble(txtFinal.getText().toString());
-            if(inicio >= fin){
+            if (inicio >= fin) {
                 JOptionPane.showMessageDialog(this, "El punto inicial no puede ser mayor o igual al final");
                 return false;
             }
-            if(inicio < origen || inicio> finD){
+            if (inicio < origen || inicio > finD) {
                 JOptionPane.showMessageDialog(this, "El punto inicial no esta dentro del discurso disponible");
                 return false;
             }
-            if(fin < origen || fin > finD){
+            if (fin < origen || fin > finD) {
                 JOptionPane.showMessageDialog(this, "El punto final no esta dentro del discurso disponible");
                 return false;
             }
             double longitud = fin - inicio;
             double longitudD = finD - origen;
-            if(longitud >= longitudD){
+            if (longitud >= longitudD) {
                 JOptionPane.showMessageDialog(this, "La funcion no cabe en el discurso disponible");
                 return false;
             }

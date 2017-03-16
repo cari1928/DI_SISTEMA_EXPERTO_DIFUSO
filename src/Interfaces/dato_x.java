@@ -8,10 +8,10 @@ import javax.swing.JOptionPane;
  * @author Tenistas
  */
 public class dato_x extends javax.swing.JFrame {
-
+    
     public dato_x() {
         initComponents();
-
+        
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
@@ -91,6 +91,7 @@ public class dato_x extends javax.swing.JFrame {
             objM = new MotorInferencia(dato);
             setVisible(false);
             JOptionPane.showMessageDialog(this, objM.getResultado(), "Resultado", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ingresa un valor válido", "ERROR", JOptionPane.ERROR_MESSAGE);
         }

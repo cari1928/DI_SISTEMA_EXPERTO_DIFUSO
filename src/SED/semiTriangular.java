@@ -8,6 +8,7 @@ public class semiTriangular {
 
     double[] puntoC;
     double[] punto2;
+    double longitud;
     char orientacion;
     String etiqueta;
     int turno;

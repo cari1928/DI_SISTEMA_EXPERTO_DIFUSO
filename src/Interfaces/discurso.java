@@ -83,7 +83,7 @@ public class discurso extends JFrame {
                 if (capturaDatos()) {
                     try {
                         GestionArchivos objG = new GestionArchivos();
-                        String discurso = origen + " " + fin + " " + unidad + variable;
+                        String discurso = origen + " " + fin + " " + unidad + " " + variable;
                         objG.escribir(1, discurso, "nuevo");
                         ocultarventana();
                         tipoFunciones objFun = new tipoFunciones(0, origen, fin);
