@@ -23,9 +23,14 @@ public class semiTrapezoide extends JFrame {
     JTextField txtPuntoC, txtEtiqueta;
     JLabel lblPuntoC, lblEtiqueta, lblOrientacion;
     JButton aceptar;
+    double origen, fin;
+    int noFuncion;
 
-    public semiTrapezoide() {
+    public semiTrapezoide(int noFuncion, double origen, double fin) {
         super("Semi Trapezoide");
+        this.noFuncion = noFuncion;
+        this.origen = origen;
+        this.fin = fin;
         m_panelSup();
         m_panelInf();
         this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -66,7 +71,7 @@ public class semiTrapezoide extends JFrame {
                 //Aqui va lo que tiene que hacer al momento de pulsar aceptar.
                 System.out.println("Falta programar");
                 ocultarventana();
-                tipoFunciones objFun = new tipoFunciones();
+                tipoFunciones objFun = new tipoFunciones(noFuncion, origen, fin);
             }
         });
         pnlinf.add(aceptar);

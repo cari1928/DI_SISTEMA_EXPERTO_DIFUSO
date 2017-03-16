@@ -1,5 +1,6 @@
 package Interfaces;
 
+import SED.GestionArchivos;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -20,9 +22,15 @@ public class trapezoide extends JFrame {
     JLabel lblPuntoC1, lblPuntoC2, lblEtiqueta;
     JButton aceptar;
     JPanel pnlsup, pnlinf;
-
-    public trapezoide() {
+    String etiqueta;
+    double origen, fin, puntoC1, puntoC2, aux;
+    int noFuncion;
+    
+    public trapezoide(int noFuncion, double origen, double fin) {
         super("Trapezoide");
+        this.noFuncion = noFuncion;
+        this.origen = origen;
+        this.fin = fin;
         m_panelSup();
         m_panelInf();
         this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -65,9 +73,17 @@ public class trapezoide extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Aqui va lo que tiene que hacer al momento de pulsar aceptar.
-                System.out.println("Falta programar");
-                ocultarventana();
-                tipoFunciones objFun = new tipoFunciones();
+                //System.out.println("Falta programar");
+                if(capturaDatos() == true){
+                    try {
+                        GestionArchivos objG = new GestionArchivos();
+                        String Ftrapezoide = "Trapezoide "+ puntoC1 + " " + puntoC2 + " " + etiqueta;
+                        objG.escribir((noFuncion+1), Ftrapezoide, "final");
+                        ocultarventana();
+                        tipoFunciones objFun = new tipoFunciones(noFuncion, calcularTraslape(), fin);
+                    } catch (Exception ex) {
+                    }
+                }
             }
         });
         pnlinf.add(aceptar);
@@ -76,5 +92,45 @@ public class trapezoide extends JFrame {
     void ocultarventana() {
         this.setVisible(false);
     }
-
+    
+    boolean capturaDatos(){
+        try {
+            puntoC1 = Double.parseDouble(txtPuntoC1.getText().toString());
+            puntoC2 = Double.parseDouble(txtPuntoC2.getText().toString());
+            etiqueta = txtEtiqueta.getText().toString();
+            if(etiqueta.equals("")){
+                JOptionPane.showMessageDialog(this, "Error, llene todos los campos.");
+                return false;
+            }
+            if(puntoC1 < origen || puntoC1 > fin || puntoC2 < origen || puntoC1 > fin){
+                JOptionPane.showMessageDialog(this, "Error, los puntos criticos no estan dentro del discurso disponible");
+                return false;
+            }
+            if((fin - origen) < ((puntoC1 - origen) + (puntoC2 - puntoC2) + (fin - puntoC2))){
+                JOptionPane.showMessageDialog(this, "La funcion abarcara todo el discurso disponible");
+                aux=fin;
+                //return false;
+            }
+            if((puntoC1 - origen) < (fin - puntoC2)){
+                JOptionPane.showMessageDialog(this, "Error, la funcion no se puede colocar dentro del discurso disponible");
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al capturar los datos");
+            return false;
+        }
+    }
+    
+    double calcularTraslape(){
+        double nuevoOrigen=0;
+        if(aux==fin){
+            nuevoOrigen = (fin - puntoC2) * 0.6;
+        }
+        else{
+            nuevoOrigen = (puntoC1 - origen) * 0.6;
+        }
+        nuevoOrigen = (puntoC2 + nuevoOrigen);
+        return nuevoOrigen;
+    }
 }

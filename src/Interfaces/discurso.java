@@ -80,26 +80,24 @@ public class discurso extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Aqui va lo que tiene que hacer al momento de pulsar aceptar.
-                if(capturaDatos()){
+                if (capturaDatos()) {
                     try {
                         GestionArchivos objG = new GestionArchivos();
                         String discurso = origen + " " + fin + " " + unidad + variable;
                         objG.escribir(1, discurso, "nuevo");
                         ocultarventana();
-                        int noFuncion=0;
-                        tipoFunciones objFun = new tipoFunciones(noFunci on);                    
+                        tipoFunciones objFun = new tipoFunciones(0, origen, fin);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-                }
-                else{
+                } else {
                     origen = 0;
                     fin = 0;
                     variable = "";
                     unidad = "";
                 }
                 //System.out.println("Falta programar");
-                
+
             }
         });
         pnlinf.add(aceptar);
@@ -108,19 +106,19 @@ public class discurso extends JFrame {
     void ocultarventana() {
         this.setVisible(false);
     }
-    
-    boolean capturaDatos(){
+
+    boolean capturaDatos() {
         try {
             origen = Double.parseDouble(txtorigen.getText());
             fin = Double.parseDouble(txtFin.getText());
             variable = txtVariable.getText().toString();
             unidad = txtUnidad.getText().toString();
-            if(unidad.equals("") || variable.equals("")){
+            if (unidad.equals("") || variable.equals("")) {
                 JOptionPane.showMessageDialog(this, "Se deben dellanr todos los campos");
                 return false;
             }
-            
-            if(origen >= fin){
+
+            if (origen >= fin) {
                 JOptionPane.showMessageDialog(this, "El origen es igual o mayor que el final" + origen + " " + fin);
                 return false;
             }
@@ -131,7 +129,5 @@ public class discurso extends JFrame {
         }
         return true;
     }
-    
-    
-    
+
 }
