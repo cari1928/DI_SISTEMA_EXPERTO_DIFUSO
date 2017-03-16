@@ -2,7 +2,7 @@ package SED;
 
 /**
  *
- * @author radog
+ * @author Tenistas
  */
 public class MotorInferencia {
 

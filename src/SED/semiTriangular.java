@@ -4,15 +4,15 @@ package SED;
  *
  * @author Tenistas
  */
-public class semiTrapezoide {
+public class semiTriangular {
 
-    double puntoC[];
-    double punto2[];
+    double[] puntoC;
+    double[] punto2;
     char orientacion;
     String etiqueta;
-    int turno; //turno que tiene dentro de la gráfica
+    int turno;
 
-    public semiTrapezoide() {
+    public semiTriangular() {
         puntoC = new double[2];
         punto2 = new double[2];
     }

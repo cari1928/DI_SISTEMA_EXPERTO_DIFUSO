@@ -1,5 +1,6 @@
 package Interfaces;
 //calcular semitrapecion
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -14,7 +15,7 @@ import SED.*;
  */
 public class tipoFunciones extends JFrame {
 
-    String[] tipoFunciones = {"Ceros", "Triangular", "Trapezoide", "SemiTriangular", "SemiTrapezoide","Finalizar"};
+    String[] tipoFunciones = {"Ceros", "Triangular", "Trapezoide", "SemiTriangular", "SemiTrapezoide", "Finalizar"};
     JComboBox petList;
     JPanel panel;
     double origen, fin;
@@ -23,21 +24,20 @@ public class tipoFunciones extends JFrame {
     public tipoFunciones(int noFuncion, double origen, double fin) {
         super("Funciones de membrecia");
         noFuncion++;
-        if(noFuncion<10){
-        this.origen = origen;
-        this.fin = fin;
-        this.noFuncion = noFuncion;
-        m_panel();
-        this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        this.add(panel);
-        this.setVisible(true);
-        this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);//PARA CERRAR BIEN LA VENTANA
-        //this.setExtendedState(this.MAXIMIZED_BOTH);
-        this.setLocationRelativeTo(null);
-        this.setResizable(false);
-        this.setSize(200, 160);
-        }
-        else{
+        if (noFuncion < 10) {
+            this.origen = origen;
+            this.fin = fin;
+            this.noFuncion = noFuncion;
+            m_panel();
+            this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+            this.add(panel);
+            this.setVisible(true);
+            this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);//PARA CERRAR BIEN LA VENTANA
+            //this.setExtendedState(this.MAXIMIZED_BOTH);
+            this.setLocationRelativeTo(null);
+            this.setResizable(false);
+            this.setSize(200, 160);
+        } else {
             this.setVisible(false);
             MotorInferencia objM = new MotorInferencia();
         }
