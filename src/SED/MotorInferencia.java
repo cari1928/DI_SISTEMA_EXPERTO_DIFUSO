@@ -30,30 +30,33 @@ public class MotorInferencia {
     }
 
     private void fuzzyfication() {
-        semiTriangular objSemTria;
-        semiTrapezoide objSemTrap;
-
         crearModelo();
 
         if (listTriangular != null) {
-            for (Triangular objTria : listTriangular) {
-
-            }
         }
 
         if (listTrapezoide != null) {
-            listTrapezoide.forEach((objTrap) -> { //wow *-*, funcionará??
-
+            for (Trapezoide objTrap : listTrapezoide) {
                 //checar que el punto ingresado por el usuario esté entre los puntos no críticos de la figura
                 if (objTrap.puntoIzq[0] < punto && punto < objTrap.puntoDer[0]) {
-                    resultado += calcY(objTrap) + " "; //fase de pruebas todavía
+                    resultado += calcularY(objTrap) + " "; //fase de pruebas todavía
                 }
-
-            });
+            }
         }
 
         if (listSemiTriangular != null) {
-
+            for (semiTriangular objSemTria : listSemiTriangular) {
+                //checar orientacion
+                if (objSemTria.orientacion == 'd') {
+                    if (objSemTria.puntoC[0] < punto && punto < objSemTria.punto2[0]) {
+                        resultado += calcularY(objSemTria) + " ";
+                    }
+                } else {
+                    if (objSemTria.punto2[0] < punto && punto < objSemTria.puntoC[0]) {
+                        resultado += calcularY(objSemTria) + " ";
+                    }
+                }
+            }
         }
 
         if (listSemiTrapezoide != null) {
@@ -216,8 +219,39 @@ public class MotorInferencia {
         }
     }
 
-    private double calcY(Trapezoide objT) {
-        return 0.0; //fase de pruebas 
+    private double calcularY(Trapezoide objT) {
+        double x1, y1, x2, y2, y;
+        x1 = y1 = x2 = y2 = 0;
+
+        //verificar que el punto esté entre el puntoIzq y el puntoC1
+        if (objT.puntoIzq[0] < punto && punto < objT.puntoC1[0]) {
+            x1 = objT.puntoIzq[0];
+            y1 = objT.puntoIzq[1];
+            x2 = objT.puntoC1[0];
+            y2 = objT.puntoC1[1];
+
+        } else if (objT.puntoC2[0] < punto && punto < objT.puntoDer[0]) { //verificar que el punto esté entre el puntoDer y el puntoC2
+            x1 = objT.puntoDer[0];
+            y1 = objT.puntoDer[1];
+            x2 = objT.puntoC2[0];
+            y2 = objT.puntoC2[1];
+
+        } else if (objT.puntoC1[0] < punto && punto < objT.puntoC2[0]) { //verificar que el punto esté entre los dos puntos criticos
+            return 1;
+        }
+
+        return ((punto - x1) / (x2 - x1)) * (y2 - y1) + y1;
+    }
+
+    private double calcularY(semiTriangular objSemTria) {
+        double x1, y1, x2, y2, y;
+
+        x1 = objSemTria.punto2[0];
+        y1 = objSemTria.punto2[1];
+        x2 = objSemTria.puntoC[0];
+        y2 = objSemTria.puntoC[1];
+
+        return ((punto - x1) / (x2 - x1)) * (y2 - y1) + y1;
     }
 
     private void calcularY(semiTrapezoide objSTrap) {
