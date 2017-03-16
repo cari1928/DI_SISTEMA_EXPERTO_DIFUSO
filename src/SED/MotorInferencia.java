@@ -132,10 +132,6 @@ public class MotorInferencia {
                         objTra.puntoIzq[0] = objTra.puntoC1[0] - distancia;
                         objTra.puntoDer[0] = objTra.puntoC2[0] + distancia;
 
-                        //Y en 0's
-                        objTra.puntoC1[1] = 0;
-                        objTra.puntoC2[1] = 0;
-
                         objTra.etiqueta = parts[3];
                         objTra.turno = contFigura;
                         ++contFigura;
@@ -227,6 +223,25 @@ public class MotorInferencia {
         }
     }
 
+    private double calcularY(Triangular objTria) {
+        double x1, y1, x2, y2, x3, y3;
+
+        x1 = objTria.puntoIzq[0];
+        y1 = objTria.puntoIzq[1];
+        x2 = objTria.puntoC[0];
+        y2 = objTria.puntoC[1];
+        x3 = objTria.puntoDer[0];
+        y3 = objTria.puntoDer[1];
+
+        if (x1 < punto && punto < x2) {
+            return (((punto - x1) / (x2 - x1)) * (y2 - y1) + y1);
+        }
+        if (x2 < punto && punto < x3) {
+            return (((punto - x2) / (x3 - x2)) * (y3 - y2) + y2);
+        }
+        return -1;
+    }
+
     private double calcularY(Trapezoide objT) {
         double x1, y1, x2, y2, y;
         x1 = y1 = x2 = y2 = 0;
@@ -260,26 +275,6 @@ public class MotorInferencia {
         y2 = objSemTria.puntoC[1];
 
         return ((punto - x1) / (x2 - x1)) * (y2 - y1) + y1;
-    }
-    private double calcularY(Triangular objTria) {
-        double x1, y1, x2, y2, x3, y3;
-
-        x1 = objTria.puntoIzq[0];
-        y1 = objTria.puntoIzq[1];
-        x2 = objTria.puntoC[0];
-        y2 = objTria.puntoC[1];
-        x3 = objTria.puntoDer[0];
-        y3 = objTria.puntoDer[1];
-        
-        if(x1 <  punto && punto < x2)
-        {
-            return ((punto - x1) / (x2 - x1)) * (y2 - y1) + y1;
-        }
-        if(x2 < punto && punto < x3)
-        {
-            return ((punto - x2) / (x3 - x2)) * (y3 - y2) + y2;
-        }
-        return -1;
     }
 
     private void calcularY(semiTrapezoide objSTrap) {
@@ -322,7 +317,7 @@ public class MotorInferencia {
 
     //para pruebas
     public static void main(String[] args) {
-        MotorInferencia objM = new MotorInferencia(5.5);
+        MotorInferencia objM = new MotorInferencia(12);
     }
 
 }

@@ -111,8 +111,8 @@ public class discurso extends JFrame {
         try {
             origen = Double.parseDouble(txtorigen.getText());
             fin = Double.parseDouble(txtFin.getText());
-            variable = txtVariable.getText().toString();
-            unidad = txtUnidad.getText().toString();
+            variable = txtVariable.getText();
+            unidad = txtUnidad.getText();
             if (unidad.equals("") || variable.equals("")) {
                 JOptionPane.showMessageDialog(this, "Se deben dellanr todos los campos");
                 return false;
