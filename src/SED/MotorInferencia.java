@@ -36,7 +36,7 @@ public class MotorInferencia {
             for (Triangular objTria : listTriangular) {
                 //checar que el punto ingresado por el usuario esté entre los puntos no críticos de la figura
                 if (objTria.puntoIzq[0] < punto && punto < objTria.puntoDer[0]) {
-                    resultado += calcularY(objTria) + " "; //fase de pruebas todavía
+                    resultado += objTria.etiqueta + " " + calcularY(objTria) + " "; //fase de pruebas todavía
                 }
             }
         }
@@ -45,7 +45,7 @@ public class MotorInferencia {
             for (Trapezoide objTrap : listTrapezoide) {
                 //checar que el punto ingresado por el usuario esté entre los puntos no críticos de la figura
                 if (objTrap.puntoIzq[0] < punto && punto < objTrap.puntoDer[0]) {
-                    resultado += calcularY(objTrap) + " "; //fase de pruebas todavía
+                    resultado += objTrap.etiqueta + " " + calcularY(objTrap) + "\n"; //fase de pruebas todavía
                 }
             }
         }
@@ -55,11 +55,11 @@ public class MotorInferencia {
                 //checar orientacion
                 if (objSemTria.orientacion == 'd') {
                     if (objSemTria.puntoC[0] < punto && punto < objSemTria.punto2[0]) {
-                        resultado += calcularY(objSemTria) + " ";
+                        resultado += objSemTria.etiqueta + " " + calcularY(objSemTria) + "\n";
                     }
                 } else {
                     if (objSemTria.punto2[0] < punto && punto < objSemTria.puntoC[0]) {
-                        resultado += calcularY(objSemTria) + " ";
+                        resultado += objSemTria.etiqueta + " " + calcularY(objSemTria) + "\n";
                     }
                 }
             }
@@ -69,6 +69,10 @@ public class MotorInferencia {
             for (int i = 0; i < listSemiTrapezoide.size(); i++) {
                 calcularY(listSemiTrapezoide.get(i));
             }
+        }
+
+        if (resultado.equals("")) {
+            resultado = "0";
         }
     }
 
@@ -147,11 +151,13 @@ public class MotorInferencia {
 
                         objSemTri.longitud = Double.parseDouble(parts[2]);
                         objSemTri.orientacion = parts[3].charAt(0);
+                        objSemTri.etiqueta = parts[4];
 
                         //el otro punto
                         if (objSemTri.orientacion == 'i') { //izquierda
                             objSemTri.punto2[0] = objSemTri.puntoC[0] - objSemTri.longitud;
                         } else {
+                            //objSemTri.punto2[0] = objSemTri.puntoC[0] - objSemTri.longitud;
                             objSemTri.punto2[0] = objSemTri.puntoC[0] + objSemTri.longitud;
                         }
                         objSemTri.punto2[1] = 0;
@@ -170,12 +176,16 @@ public class MotorInferencia {
                         objSemTrap.orientacion = parts[2].charAt(0);
                         objSemTrap.etiqueta = parts[3];
 
-                        distancia = objSemTrap.puntoC[0] - objU.inicio;
-
                         //otro punto
                         if (objSemTrap.orientacion == 'i') {
+                            distancia = objSemTrap.puntoC[0] - objU.inicio;
                             objSemTrap.punto2[0] = objSemTrap.puntoC[0] + distancia;
                         } else {
+                            //mucho cuidado
+                            //distancia = objU.fin - objSemTrap.puntoC[0];
+                            //objSemTrap.punto2[0] = objSemTrap.puntoC[0] - distancia;
+
+                            distancia = objSemTrap.puntoC[0] - Double.parseDouble(parts[parts.length - 1]);
                             objSemTrap.punto2[0] = objSemTrap.puntoC[0] - distancia;
                         }
                         objSemTrap.punto2[1] = 0;

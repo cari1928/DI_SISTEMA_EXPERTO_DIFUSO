@@ -113,14 +113,8 @@ public class semiTriangular extends JFrame {
                 JOptionPane.showMessageDialog(this, "Error llene todos los campos");
                 return false;
             }
-            if (puntoC <= origen || puntoC >= fin) {
+            if (puntoC < origen || puntoC > fin) {
                 JOptionPane.showMessageDialog(this, "El punto critico esta fuera del discurso disponible");
-                return false;
-            }
-            if (v_orientacion == 'i' && puntoC == origen) {
-                return false;
-            }
-            if (v_orientacion == 'd' && puntoC == fin) {
                 return false;
             }
             double rango = puntoC - origen;
