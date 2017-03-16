@@ -60,7 +60,9 @@ public class MotorInferencia {
         }
 
         if (listSemiTrapezoide != null) {
-
+            for (int i = 0; i < listSemiTrapezoide.size(); i++) {
+                calcularY(listSemiTrapezoide.get(i));
+            }
         }
     }
 
