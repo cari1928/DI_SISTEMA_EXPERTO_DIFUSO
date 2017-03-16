@@ -156,6 +156,7 @@ public class MotorInferencia {
                         }
                         objSemTri.punto2[1] = 0;
                         objSemTri.turno = contFigura;
+                        listSemiTriangular.add(objSemTri);
                         ++contFigura;
                         break;
 
@@ -169,14 +170,17 @@ public class MotorInferencia {
                         objSemTrap.orientacion = parts[2].charAt(0);
                         objSemTrap.etiqueta = parts[3];
 
+                        distancia = objSemTrap.puntoC[0] - objU.inicio;
+
                         //otro punto
                         if (objSemTrap.orientacion == 'i') {
-                            objSemTrap.punto2[0] = objSemTrap.puntoC[0] - Double.parseDouble(parts[parts.length - 1]);
+                            objSemTrap.punto2[0] = objSemTrap.puntoC[0] + distancia;
                         } else {
-                            objSemTrap.punto2[0] = objSemTrap.puntoC[0] + Double.parseDouble(parts[parts.length - 1]);
+                            objSemTrap.punto2[0] = objSemTrap.puntoC[0] - distancia;
                         }
                         objSemTrap.punto2[1] = 0;
                         objSemTrap.turno = contFigura;
+                        listSemiTrapezoide.add(objSemTrap);
                         ++contFigura;
                         break;
 
@@ -279,14 +283,14 @@ public class MotorInferencia {
 
     private void calcularY(semiTrapezoide objSTrap) {
         char orientacion = objSTrap.orientacion;
+
         if (orientacion == 'i') {
-            if (punto > objU.inicio && punto < objSTrap.punto2[0]) {
+            if (objU.inicio < punto && punto < objSTrap.punto2[0]) {
                 //Esta dentro izquierda
-                if (punto > objSTrap.puntoC[0] && punto < objSTrap.punto2[0]) {
-                    //Esta en la pendiente
-                    //Calcular pendiente
-                    double m = (objSTrap.punto2[1] - objSTrap.puntoC[1]) / (objSTrap.punto2[0] - objSTrap.puntoC[0]);
-                    double y = (m + objSTrap.puntoC[0]) + objSTrap.puntoC[1];
+                if (objSTrap.puntoC[0] < punto && punto < objSTrap.punto2[0]) {
+                    double p1[] = {objSTrap.puntoC[0], objSTrap.puntoC[1]};
+                    double p2[] = {objSTrap.punto2[0], objSTrap.punto2[1]};
+                    double y = (punto - p1[0]) / (p2[0] - p1[0]) * (p2[1] - p1[1]) + (p1[1]);
                     resultado += objSTrap.etiqueta + " Y = " + y + "\n";
                 } else {
                     //Esta en la linea Recta de 1's
@@ -300,9 +304,9 @@ public class MotorInferencia {
             if (punto < objU.fin && punto > objSTrap.punto2[0]) {
                 //Esta dentro derecha
                 if (punto < objSTrap.puntoC[0] && punto > objSTrap.punto2[0]) {
-                    //Esta en la pendiente
-                    double m = (objSTrap.puntoC[1] - objSTrap.punto2[1]) / (objSTrap.puntoC[0] - objSTrap.punto2[0]);
-                    double y = (m + objSTrap.punto2[0]) + objSTrap.punto2[1];
+                    double p1[] = {objSTrap.puntoC[0], objSTrap.puntoC[1]};
+                    double p2[] = {objSTrap.punto2[0], objSTrap.punto2[1]};
+                    double y = (punto - p1[0]) / (p2[0] - p1[0]) * (p2[1] - p1[1]) + (p1[1]);
                     resultado += objSTrap.etiqueta + " Y = " + y + "\n";
                 } else {
                     //Esta en la linea recta de 1's

@@ -93,6 +93,7 @@ public class dato_x extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, objM.getResultado(), "Resultado", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Ingresa un valor válido", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
 

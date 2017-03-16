@@ -27,9 +27,9 @@ public class semiTriangular extends JFrame {
     JPanel pnlsup, pnlinf;
     String etiqueta;
     char v_orientacion;
-    double origen, fin,puntoC,longitud,aux;
+    double origen, fin, puntoC, longitud, aux;
     int noFuncion;
-    
+
     public semiTriangular(int noFuncion, double origen, double fin) {
         super("Semi Trapesoide");
         this.noFuncion = noFuncion;
@@ -86,16 +86,12 @@ public class semiTriangular extends JFrame {
                         String Fsemitriangular = "SemiTriangular " + puntoC + " " + longitud + " " + v_orientacion + " " + etiqueta + " " + origen;
                         objG.escribir((noFuncion + 1), Fsemitriangular, "final");
                         ocultarventana();
-                        if(v_orientacion == 'd')
-                        {
+                        if (v_orientacion == 'd') {
                             tipoFunciones objFun = new tipoFunciones(10, fin, fin);
-                        }else
-                        {
-                            if(noFuncion==1)
-                            {
+                        } else {
+                            if (noFuncion == 1) {
                                 tipoFunciones objFun = new tipoFunciones(noFuncion, calculaTraslape(), fin);
-                            }else
-                            {
+                            } else {
                                 System.out.println("No se puede insertar debido a que no es la primera función");
                             }
                         }
@@ -106,12 +102,13 @@ public class semiTriangular extends JFrame {
         });
         pnlinf.add(aceptar);
     }
+
     boolean capturaDatos() {
         try {
-            puntoC = Double.parseDouble(txtPuntoC.getText().toString());
-            etiqueta = txtEtiqueta.getText().toString();
-            v_orientacion=orientacion.getSelectedItem().toString().toLowerCase().charAt(0);
-            longitud=Double.parseDouble(lblLongitud.getText());
+            puntoC = Double.parseDouble(txtPuntoC.getText());
+            etiqueta = txtEtiqueta.getText();
+            v_orientacion = orientacion.getSelectedItem().toString().toLowerCase().charAt(0);
+            longitud = Double.parseDouble(txtLongitud.getText());
             if (etiqueta.equals("")) {
                 JOptionPane.showMessageDialog(this, "Error llene todos los campos");
                 return false;
@@ -120,12 +117,10 @@ public class semiTriangular extends JFrame {
                 JOptionPane.showMessageDialog(this, "El punto critico esta fuera del discurso disponible");
                 return false;
             }
-            if(v_orientacion == 'i' && puntoC==origen)
-            {
+            if (v_orientacion == 'i' && puntoC == origen) {
                 return false;
             }
-            if(v_orientacion == 'd' && puntoC==fin)
-            {
+            if (v_orientacion == 'd' && puntoC == fin) {
                 return false;
             }
             double rango = puntoC - origen;
@@ -133,7 +128,7 @@ public class semiTriangular extends JFrame {
                 JOptionPane.showMessageDialog(this, "La función abarcará todo el discurso disponible");
                 aux = fin;
             }
-            
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,6 +136,7 @@ public class semiTriangular extends JFrame {
             return false;
         }
     }
+
     double calculaTraslape() {
         double rango = 0;
         if (aux == fin) {

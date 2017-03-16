@@ -25,9 +25,9 @@ public class semiTrapezoide extends JFrame {
     JTextField txtPuntoC, txtEtiqueta;
     JLabel lblPuntoC, lblEtiqueta, lblOrientacion;
     JButton aceptar;
-    String etiqueta; 
+    String etiqueta;
     char v_orientacion;
-    double origen, fin,puntoC,aux;
+    double origen, fin, puntoC, aux;
     int noFuncion;
 
     public semiTrapezoide(int noFuncion, double origen, double fin) {
@@ -55,8 +55,8 @@ public class semiTrapezoide extends JFrame {
         txtPuntoC = new JTextField();
         txtEtiqueta = new JTextField();
         lblEtiqueta = new JLabel("Etiqueta: ");
-        lblPuntoC = new JLabel("Punto creitico: ");
-        lblOrientacion = new JLabel("Orientacion: ");
+        lblPuntoC = new JLabel("Punto crítico: ");
+        lblOrientacion = new JLabel("Orientación: ");
         pnlsup.add(lblOrientacion);
         pnlsup.add(orientacion);
         pnlsup.add(lblPuntoC);
@@ -79,16 +79,12 @@ public class semiTrapezoide extends JFrame {
                         String Fsemitrapezoide = "SemiTrapezoide " + puntoC + " " + v_orientacion + " " + etiqueta + " " + origen;
                         objG.escribir((noFuncion + 1), Fsemitrapezoide, "final");
                         ocultarventana();
-                        if(v_orientacion == 'd')
-                        {
+                        if (v_orientacion == 'd') {
                             tipoFunciones objFun = new tipoFunciones(10, fin, fin);
-                        }else
-                        {
-                            if(noFuncion==1)
-                            {
+                        } else {
+                            if (noFuncion == 1) {
                                 tipoFunciones objFun = new tipoFunciones(noFuncion, calculaTraslape(), fin);
-                            }else
-                            {
+                            } else {
                                 System.out.println("No se puede insertar debido a que no es la primera función");
                             }
                         }
@@ -99,26 +95,24 @@ public class semiTrapezoide extends JFrame {
         });
         pnlinf.add(aceptar);
     }
-    boolean capturaDatos()
-    {
+
+    boolean capturaDatos() {
         try {
             puntoC = Double.parseDouble(txtPuntoC.getText().toString());
             etiqueta = txtEtiqueta.getText().toString();
-            v_orientacion=orientacion.getSelectedItem().toString().toLowerCase().charAt(0);
-            if(etiqueta.equals("")){
+            v_orientacion = orientacion.getSelectedItem().toString().toLowerCase().charAt(0);
+            if (etiqueta.equals("")) {
                 JOptionPane.showMessageDialog(this, "Error, llene todos los campos.");
                 return false;
             }
-            if(puntoC < origen || puntoC > fin ){
+            if (puntoC < origen || puntoC > fin) {
                 JOptionPane.showMessageDialog(this, "Error, el punto crítico no está dentro del discurso disponible");
                 return false;
             }
-            if(v_orientacion == 'i' && puntoC==origen)
-            {
+            if (v_orientacion == 'i' && puntoC == origen) {
                 return false;
             }
-            if(v_orientacion == 'd' && puntoC==fin)
-            {
+            if (v_orientacion == 'd' && puntoC == fin) {
                 return false;
             }
             double rango = puntoC - origen;
@@ -126,15 +120,15 @@ public class semiTrapezoide extends JFrame {
                 JOptionPane.showMessageDialog(this, "La función abarcará todo el discurso disponible");
                 aux = fin;
             }
-            
+
             return true;
-            
-        } catch (Exception e) 
-        {
+
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al capturar los datos");
             return false;
         }
     }
+
     double calculaTraslape() {
         double rango = 0;
         if (aux == fin) {
