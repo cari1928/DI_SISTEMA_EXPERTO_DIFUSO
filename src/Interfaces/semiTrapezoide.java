@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -23,7 +24,9 @@ public class semiTrapezoide extends JFrame {
     JTextField txtPuntoC, txtEtiqueta;
     JLabel lblPuntoC, lblEtiqueta, lblOrientacion;
     JButton aceptar;
-    double origen, fin;
+    String etiqueta;
+    char v_orientacion;
+    double origen, fin, puntoC, aux;
     int noFuncion;
 
     public semiTrapezoide(int noFuncion, double origen, double fin) {
@@ -77,8 +80,43 @@ public class semiTrapezoide extends JFrame {
         pnlinf.add(aceptar);
     }
 
-    void ocultarventana() {
+    public void ocultarventana() {
         this.setVisible(false);
+    }
+
+    boolean capturaDatos() {
+        double rango;
+        try {
+            puntoC = Double.parseDouble(txtPuntoC.getText());
+            etiqueta = txtEtiqueta.getText();
+            v_orientacion = orientacion.getSelectedItem().toString().toLowerCase().charAt(0);
+
+            if (etiqueta.equals("")) {
+                JOptionPane.showMessageDialog(this, "Error, llene todos los campos.");
+                return false;
+            }
+            if (puntoC < origen || puntoC > fin) {
+                JOptionPane.showMessageDialog(this, "Error, el punto crítico no está dentro del discurso disponible");
+                return false;
+            }
+
+            rango = puntoC - origen;
+            if ((fin - origen) < (rango + rango)) {
+                JOptionPane.showMessageDialog(this, "La función abarcará todo el discurso disponible");
+                aux = fin;
+            }
+            if (v_orientacion == 'i') {
+                aux = fin;
+            }
+            if (v_orientacion == 'd') {
+                aux = fin;
+            }
+            return true;
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al capturar los datos");
+            return false;
+        }
     }
 
 }

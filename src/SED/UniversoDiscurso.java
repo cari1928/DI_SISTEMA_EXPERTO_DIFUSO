@@ -6,9 +6,9 @@ package SED;
  */
 public class UniversoDiscurso {
 
-    double inicio;
-    double fin;
-    String unidad;
-    String variable;
+    public double inicio;
+    public double fin;
+    public String unidad;
+    public String variable;
 
 }
