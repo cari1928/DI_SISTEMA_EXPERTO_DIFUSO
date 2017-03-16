@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,7 +18,9 @@ import javax.swing.JTextField;
 public class semiTriangular extends JFrame {
 
     JTextField txtEtiqueta, txtPuntoC, txtLongitud;
-    JLabel lblEtiqueta, lblPuntoC, lblLongitud;
+    String[] arrayO = {"Derecha", "Izquierda"};
+    JComboBox orientacion;
+    JLabel lblEtiqueta, lblPuntoC, lblLongitud, lblOrientacion;
     JButton aceptar;
     JPanel pnlsup, pnlinf;
     double origen, fin;
@@ -43,7 +46,9 @@ public class semiTriangular extends JFrame {
 
     void m_panelSup() {
         pnlsup = new JPanel();//Crea el espacio para el panel
-        pnlsup.setLayout(new GridLayout(3, 2));//Declara como irán los botones en el panel
+        pnlsup.setLayout(new GridLayout(4, 2));//Declara como irán los botones en el panel
+        orientacion = new JComboBox(arrayO);
+        lblOrientacion = new JLabel("Orientacion: ");
         txtPuntoC = new JTextField();
         txtPuntoC.setText("");
         lblPuntoC = new JLabel("Punto Critico: ");
@@ -53,6 +58,8 @@ public class semiTriangular extends JFrame {
         txtEtiqueta = new JTextField();
         txtEtiqueta.setText("");
         lblEtiqueta = new JLabel("Etiqueta: ");
+        pnlsup.add(lblOrientacion);
+        pnlsup.add(orientacion);
         pnlsup.add(lblPuntoC);
         pnlsup.add(txtPuntoC);
         pnlsup.add(lblLongitud);
