@@ -15,7 +15,7 @@ public class Principal {
         lookAndFeel("Windows");
         discurso objD = new discurso();
     }
-    
+
     private static void lookAndFeel(String type) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -28,5 +28,5 @@ public class Principal {
             ex.printStackTrace();
         }
     }
-    
+
 }

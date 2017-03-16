@@ -54,7 +54,7 @@ public class MotorInferencia {
             for (semiTriangular objSemTria : listSemiTriangular) {
                 //checar orientacion
                 if (objSemTria.orientacion == 'd') {
-                    if (objSemTria.puntoC[0] < punto && punto < objSemTria.punto2[0]) {
+                    if (objSemTria.punto2[0] < punto && punto < objSemTria.puntoC[0]) {
                         resultado += calcularY(objSemTria) + " ";
                     }
                 } else {
@@ -152,7 +152,7 @@ public class MotorInferencia {
                         if (objSemTri.orientacion == 'i') { //izquierda
                             objSemTri.punto2[0] = objSemTri.puntoC[0] - objSemTri.longitud;
                         } else {
-                            objSemTri.punto2[0] = objSemTri.puntoC[0] + objSemTri.longitud;
+                            objSemTri.punto2[0] = objSemTri.puntoC[0] - objSemTri.longitud;
                         }
                         objSemTri.punto2[1] = 0;
                         objSemTri.turno = contFigura;
