@@ -6,6 +6,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import SED.*;
 
 /**
  *
@@ -17,8 +18,9 @@ public class tipoFunciones extends JFrame {
     JComboBox petList;
     JPanel panel;
 
-    public tipoFunciones() {
+    public tipoFunciones(int noFuncion) {
         super("Funciones de membrecia");
+        if(noFuncion<10){
         m_panel();
         this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         this.add(panel);
@@ -28,6 +30,11 @@ public class tipoFunciones extends JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setSize(200, 160);
+        }
+        else{
+            this.setVisible(false);
+            MotorInferencia objM = new MotorInferencia();
+        }
     }
 
     void m_panel() {
