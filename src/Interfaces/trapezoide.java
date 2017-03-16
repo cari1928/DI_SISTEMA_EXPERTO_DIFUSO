@@ -102,7 +102,7 @@ public class trapezoide extends JFrame {
                 JOptionPane.showMessageDialog(this, "Error, llene todos los campos.");
                 return false;
             }
-            if (puntoC1 < origen || puntoC1 > fin || puntoC2 < origen || puntoC1 > fin) {
+            if (puntoC1 < origen || puntoC1 > fin || puntoC2 < origen || puntoC2 > fin) {
                 JOptionPane.showMessageDialog(this, "Error, los puntos criticos no estan dentro del discurso disponible");
                 return false;
             }

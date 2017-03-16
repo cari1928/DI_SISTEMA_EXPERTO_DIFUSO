@@ -188,6 +188,49 @@ public class MotorInferencia {
             listSemiTrapezoide = null;
         }
     }
+    
+    void calcularY(semiTrapezoide objSTrap){
+        char orientacion = objSTrap.orientacion;
+        if(orientacion == 'i'){
+            if(punto > objU.inicio && punto < objSTrap.punto2[0]){
+                //Esta dentro izquierda
+                if(punto > objSTrap.puntoC[0] && punto < objSTrap.punto2[0]){
+                    //Esta en la pendiente
+                    //Calcular pendiente
+                    double m = (objSTrap.punto2[1] - objSTrap.puntoC[1]) /(objSTrap.punto2[0] - objSTrap.puntoC[0]);
+                    double y = (m + objSTrap.puntoC[0]) + objSTrap.puntoC[1];
+                    resultado += objSTrap.etiqueta+" Y = " + y + "\n";
+                }
+                else{
+                    //Esta en la linea Recta de 1's
+                    resultado += objSTrap.etiqueta+" Y = 1" + "\n";
+                }
+            }
+            else{
+                //El punto no pertenece a la funcion
+                resultado += objSTrap.etiqueta + " Y = 0" + "\n";
+            }
+        }
+        else{
+            if(punto < objU.fin && punto > objSTrap.punto2[0]){
+                //Esta dentro derecha
+                if(punto < objSTrap.puntoC[0] && punto > objSTrap.punto2[0]){
+                    //Esta en la pendiente
+                    double m = (objSTrap.puntoC[1] - objSTrap.punto2[1]) /(objSTrap.puntoC[0] - objSTrap.punto2[0]);
+                    double y = (m + objSTrap.punto2[0]) + objSTrap.punto2[1];
+                    resultado += objSTrap.etiqueta+" Y = " + y + "\n";
+                }
+                else{
+                    //Esta en la linea recta de 1's
+                    resultado += objSTrap.etiqueta+" Y = 1" + "\n";
+                }
+            }
+            else{
+                //El punto no pertenece a la funcion
+                resultado += objSTrap.etiqueta + " Y = 0" + "\n";
+            }
+        }
+    }
 
     //para pruebas
     public static void main(String[] args) {
