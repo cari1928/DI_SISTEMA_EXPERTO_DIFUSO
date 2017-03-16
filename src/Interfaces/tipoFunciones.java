@@ -1,5 +1,5 @@
 package Interfaces;
-//calcular semitrapecion
+//calcular semitrapecio
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,7 +7,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import SED.*;
 
 /**
  *
@@ -15,19 +14,19 @@ import SED.*;
  */
 public class tipoFunciones extends JFrame {
 
-    String[] tipoFunciones = {"Ceros", "Triangular", "Trapezoide", "SemiTriangular", "SemiTrapezoide", "Finalizar"};
+    String[] tipoFunciones = {"Seleccione una Opción", "Ceros", "Triangular", "Trapezoide", "SemiTriangular", "SemiTrapezoide", "Finalizar"};
     JComboBox petList;
     JPanel panel;
     double origen, fin;
     int noFuncion;
 
-    public tipoFunciones(int noFuncion, double origen, double fin) {
-        super("Funciones de membrecia");
-        noFuncion++;
-        if (noFuncion < 10) {
+    public tipoFunciones(int numFuncion, double origen, double fin) {
+        super("Funciones de membrecía");
+        numFuncion++;
+        if (numFuncion < 10) {
             this.origen = origen;
             this.fin = fin;
-            this.noFuncion = noFuncion;
+            this.noFuncion = numFuncion;
             m_panel();
             this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
             this.add(panel);
@@ -38,8 +37,10 @@ public class tipoFunciones extends JFrame {
             this.setResizable(false);
             this.setSize(200, 160);
         } else {
-            this.setVisible(false);
-            MotorInferencia objM = new MotorInferencia();
+            //no creo que se llame aquí al motor de inferencias, éste se llama desde la interfaz dato_x
+            //MotorInferencia objM = new MotorInferencia(); 
+            ocultarventana();
+            dato_x guiD = new dato_x(); //podría ser más bien esto
         }
     }
 
@@ -72,10 +73,9 @@ public class tipoFunciones extends JFrame {
                         break;
                     case "Finalizar":
                         ocultarventana();
-                        MotorInferencia objM = new MotorInferencia();
+                        dato_x guiD = new dato_x();
                         break;
                 }
-                System.out.println("Falta programar");
             }
         });
         panel.add(petList);

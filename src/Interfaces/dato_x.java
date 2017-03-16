@@ -1,5 +1,6 @@
 package Interfaces;
 
+import SED.MotorInferencia;
 import javax.swing.JOptionPane;
 
 /**
@@ -8,14 +9,12 @@ import javax.swing.JOptionPane;
  */
 public class dato_x extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GUI_DATO
-     */
     public dato_x() {
         initComponents();
 
         setLocationRelativeTo(null);
         setResizable(false);
+        setVisible(true);
     }
 
     /**
@@ -85,47 +84,18 @@ public class dato_x extends javax.swing.JFrame {
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
         // TODO add your handling code here:
-        String dato = txtDato.getText();
-        if (dato.equals("")) {
+        double dato;
+        MotorInferencia objM;
+        try {
+            dato = Double.parseDouble(txtDato.getText());
+            objM = new MotorInferencia(dato);
+            setVisible(false);
+            JOptionPane.showMessageDialog(this, objM.getResultado(), "Resultado", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ingresa un valor válido", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnEnviarActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(dato_x.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(dato_x.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(dato_x.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(dato_x.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new dato_x().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEnviar;
