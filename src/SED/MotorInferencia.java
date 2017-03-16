@@ -33,6 +33,12 @@ public class MotorInferencia {
         crearModelo();
 
         if (listTriangular != null) {
+            for (Triangular objTria : listTriangular) {
+                //checar que el punto ingresado por el usuario esté entre los puntos no críticos de la figura
+                if (objTria.puntoIzq[0] < punto && punto < objTria.puntoDer[0]) {
+                    resultado += calcularY(objTria) + " "; //fase de pruebas todavía
+                }
+            }
         }
 
         if (listTrapezoide != null) {
@@ -246,7 +252,7 @@ public class MotorInferencia {
     }
 
     private double calcularY(semiTriangular objSemTria) {
-        double x1, y1, x2, y2, y;
+        double x1, y1, x2, y2;
 
         x1 = objSemTria.punto2[0];
         y1 = objSemTria.punto2[1];
@@ -254,6 +260,26 @@ public class MotorInferencia {
         y2 = objSemTria.puntoC[1];
 
         return ((punto - x1) / (x2 - x1)) * (y2 - y1) + y1;
+    }
+    private double calcularY(Triangular objTria) {
+        double x1, y1, x2, y2, x3, y3;
+
+        x1 = objTria.puntoIzq[0];
+        y1 = objTria.puntoIzq[1];
+        x2 = objTria.puntoC[0];
+        y2 = objTria.puntoC[1];
+        x3 = objTria.puntoDer[0];
+        y3 = objTria.puntoDer[1];
+        
+        if(x1 <  punto && punto < x2)
+        {
+            return ((punto - x1) / (x2 - x1)) * (y2 - y1) + y1;
+        }
+        if(x2 < punto && punto < x3)
+        {
+            return ((punto - x2) / (x3 - x2)) * (y3 - y2) + y2;
+        }
+        return -1;
     }
 
     private void calcularY(semiTrapezoide objSTrap) {
