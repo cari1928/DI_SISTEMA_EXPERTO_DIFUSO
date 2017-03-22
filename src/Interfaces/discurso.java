@@ -107,7 +107,7 @@ public class discurso extends JFrame {
         this.setVisible(false);
     }
 
-    boolean capturaDatos() {
+    public boolean capturaDatos() {
         try {
             origen = Double.parseDouble(txtorigen.getText());
             fin = Double.parseDouble(txtFin.getText());

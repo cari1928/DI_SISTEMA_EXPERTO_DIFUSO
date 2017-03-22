@@ -8,10 +8,10 @@ import javax.swing.JOptionPane;
  * @author Tenistas
  */
 public class dato_x extends javax.swing.JFrame {
-    
+
     public dato_x() {
         initComponents();
-        
+
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
@@ -99,6 +99,7 @@ public class dato_x extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnEnviarActionPerformed
 
+    //para pruebas
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -112,7 +113,7 @@ public class dato_x extends javax.swing.JFrame {
         }
         dato_x guiD = new dato_x();
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEnviar;
     private javax.swing.JPanel jPanel1;

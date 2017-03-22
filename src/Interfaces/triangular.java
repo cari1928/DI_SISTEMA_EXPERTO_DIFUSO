@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 public class triangular extends JFrame {
 
     double PC;
-    String etiquete;
+    String etiqueta;
     JLabel lblPuntoC, lblEtiqueta;
     JTextField txtPuntoC, txtEtiqueta;
     JPanel pnlinf, pnlsup;
@@ -74,7 +74,7 @@ public class triangular extends JFrame {
                 if (capturaDatos() == true) {
                     try {
                         GestionArchivos objG = new GestionArchivos();
-                        String Ftriangular = "Triangular " + puntoC + " " + etiquete + " " + origen;
+                        String Ftriangular = "Triangular " + puntoC + " " + etiqueta + " " + origen;
                         objG.escribir((noFuncion + 1), Ftriangular, "final");
                         ocultarventana();
                         tipoFunciones objFun = new tipoFunciones(noFuncion, calculaTraslape(), fin);
@@ -93,8 +93,8 @@ public class triangular extends JFrame {
     boolean capturaDatos() {
         try {
             puntoC = Double.parseDouble(txtPuntoC.getText().toString());
-            etiquete = txtEtiqueta.getText().toString();
-            if (etiquete.equals("")) {
+            etiqueta = txtEtiqueta.getText().toString();
+            if (etiqueta.equals("")) {
                 JOptionPane.showMessageDialog(this, "Error llene todos los campos");
                 return false;
             }

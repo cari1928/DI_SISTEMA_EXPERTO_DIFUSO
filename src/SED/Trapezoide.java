@@ -10,6 +10,7 @@ public class Trapezoide {
     double[] puntoC2;
     double[] puntoIzq;
     double[] puntoDer;
+    double membresiaY;
     String etiqueta;
     int turno;
 

@@ -9,6 +9,7 @@ public class Triangular {
     double[] puntoC;
     double[] puntoIzq;
     double[] puntoDer;
+    double membresiaY;
     String etiqueta;
     int turno;
 

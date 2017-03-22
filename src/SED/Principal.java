@@ -8,25 +8,13 @@ import Interfaces.discurso;
  */
 public class Principal {
 
+    //YA NO SE USA ESTA CLASE, DEJO EL CÓDIGO POR SI LE SIRVE DE REFERENCIA A ALGUIEN
+    //SE ELIMINARÁ EN VERSIONES POSTERIORES
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        lookAndFeel("Windows");
         discurso objD = new discurso();
     }
-    
-    private static void lookAndFeel(String type) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if (type.equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-    
+
 }
