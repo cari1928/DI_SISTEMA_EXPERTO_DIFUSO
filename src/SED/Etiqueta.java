@@ -6,6 +6,6 @@ package SED;
  */
 public class Etiqueta {
 
-    String etiqueta;
-    double membresia;
+    public String etiqueta;
+    public double membresia;
 }
