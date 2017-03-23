@@ -21,9 +21,9 @@ public class GestionArchivos {
     * nuevo = borrar contenido e insertar nuevo
     * final = agrega después del últmo registro
      */
-    public void escribir(int llave, String registro, String tipo) throws IOException {
+    public void escribir(String nomFile, int llave, String registro, String tipo) throws IOException {
         StringBuilder builder = null;
-        File archivo = new File("baseConocimientos");
+        File archivo = new File(nomFile);
 
         if (tipo.equals("nuevo")) {
             archivo.delete();
@@ -42,13 +42,13 @@ public class GestionArchivos {
         raf.close();
     }
 
-    public List leer() throws FileNotFoundException, IOException {
+    public List leer(String nomFile) throws FileNotFoundException, IOException {
         long ap_actual, ap_final;
         int tamaño = contarRengs(), llave; //cantidad de objetos
         List<String> list = new ArrayList<>();
         String convert;
 
-        raf = new RandomAccessFile("baseConocimientos", "r");
+        raf = new RandomAccessFile(nomFile, "r");
 
         while ((ap_actual = raf.getFilePointer()) != (ap_final = raf.length())) {
             llave = raf.readInt(); //lee la llave
@@ -100,11 +100,11 @@ public class GestionArchivos {
         GestionArchivos objG = new GestionArchivos();
         List<String> list = null;
         try {
-            objG.escribir(0, "-30 60 unidades variable", "nuevo");
+            objG.escribir("baseConocimientos", 0, "-30 60 unidades variable", "nuevo");
             //objG.escribir(0, "-30 30 unidades variable", "final");
             //objG.escribir(0, "-30 40 unidades variable", "final");
             //objG.escribir(0, "-30 50 unidades variable", "final");
-            list = objG.leer();
+            list = objG.leer("baseConocimientos");
             for (int i = 0; i < list.size(); i++) {
                 System.out.println(list.get(i));
             }

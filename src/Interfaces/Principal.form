@@ -33,7 +33,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Motor Inferencias"/>
+            <Property name="text" type="java.lang.String" value="Motor Inferencia"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
@@ -56,18 +56,21 @@
                     <Property name="text" type="java.lang.String" value="FAM"/>
                   </Properties>
                   <SubComponents>
-                    <MenuItem class="javax.swing.JMenuItem" name="jMenuItem8">
+                    <MenuItem class="javax.swing.JMenuItem" name="jmiFAMNuevo">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Nuevo"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem8ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiFAMNuevoActionPerformed"/>
                       </Events>
                     </MenuItem>
-                    <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
+                    <MenuItem class="javax.swing.JMenuItem" name="jmiFAMExistente">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Usar Existente"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiFAMExistenteActionPerformed"/>
+                      </Events>
                     </MenuItem>
                   </SubComponents>
                 </Menu>

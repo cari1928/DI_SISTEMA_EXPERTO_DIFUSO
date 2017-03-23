@@ -30,7 +30,7 @@ public class FAM {
         turno = 0;
     }
 
-    //solo genera las combinaciones, no calcula el peso de la regla ni las salidas difusas
+    //solo genera las combinaciones, no calcula las salidas difusas
     public void crear() throws IOException {
         String registro;
         Combinaciones objC;
@@ -51,9 +51,11 @@ public class FAM {
                     registro += "^";
                 }
             }
+            //agrega el peso de la regla
+            //registro = " " + listCombinaciones.get(0).pesoRegla + " ";
 
             registro += " 1"; //hasta aquí llega, en otro método se agregan también las etiquetas de salida
-            objG.escribir(i, registro, "final");
+            objG.escribir("FAM", i, registro, "final");
         }
 
     }
@@ -84,18 +86,97 @@ public class FAM {
                         creaCombinaciones(listSig, i, null);
                     case 3:
                         //ya recorrió todas las listas en la posicion i
-                        listCombinaciones.add(tmpC); //agrega la combinación generada
+                        tmpC.pesoRegla = calcPesoRegla(tmpC.listCombinaciones); //calcula el peso de la regla
+                        listCombinaciones.add(tmpC); //agrega la info de la combinación generada
                         tmpC = new Combinaciones(); //se limpia para la siguiente combinación
                         break;
                 }
                 ++turno;
             }
         }
-
     }
 
     public void actualizaFAM() {
+        GestionArchivos objG = new GestionArchivos();
+        List<String> listRegistros;
+        Combinaciones objC;
+        Etiqueta objE;
+        String[] parts, parts2;
+        double tmpMem;
+        listCombinaciones = new ArrayList<>();
 
+        try {
+            listRegistros = objG.leer("FAM");
+
+            for (String registro : listRegistros) {
+                parts = registro.split(" ");
+
+                //antecedentes 1|0 EtiquetaSalida
+                if (Integer.parseInt(parts[1]) == 1) { //regla seleccionada por el experto
+                    objC = new Combinaciones();
+
+                    if (parts.length == 3) { //guarda etiquetas de salida
+                        parts2 = parts[2].split("|");
+                        for (String etSalida : parts2) {
+                            objC.listSalidas.add(etSalida);
+                        }
+                    }
+
+                    parts = parts[0].split("^");
+
+                    for (String antecedente : parts) {
+                        tmpMem = buscaMembresia(antecedente);
+                        if (tmpMem != -1) {
+                            objE = new Etiqueta();
+                            objE.etiqueta = antecedente;
+                            objE.membresia = tmpMem;
+                            objC.listCombinaciones.add(objE);
+                        }
+                    }
+                    listCombinaciones.add(objC);
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private double buscaMembresia(String etiqueta) {
+        if (listTria != null) {
+            for (Triangular objT : listTria) {
+                if (objT.etiqueta.equals(etiqueta)) {
+                    return objT.membresiaY;
+                }
+            }
+        }
+
+        if (listTrap != null) {
+            for (Trapezoide objT : listTrap) {
+                if (objT.etiqueta.equals(etiqueta)) {
+                    return objT.membresiaY;
+                }
+            }
+        }
+
+        if (listSemTria != null) {
+            for (semiTriangular objST : listSemTria) {
+                if (objST.etiqueta.equals(etiqueta)) {
+                    return objST.membresiaY;
+                }
+            }
+        }
+
+        if (listSemTrap != null) {
+            for (semiTrapezoide objSTrap : listSemTrap) {
+                if (objSTrap.etiqueta.equals(etiqueta)) {
+                    return objSTrap.membresiaY;
+                }
+            }
+        }
+
+        return -1;
     }
 
     private Etiqueta obtenerEtiqueta(List lista, int i) {
@@ -129,6 +210,16 @@ public class FAM {
         }
 
         return objE;
+    }
+
+    private double calcPesoRegla(List<Etiqueta> listC) {
+        double minimo = listC.get(0).membresia; //toma la membresía del primer elemento
+        for (Etiqueta objE : listC) {
+            if (minimo > objE.membresia) { //compara con las demás membresías
+                minimo = objE.membresia; //guarda el más pequeño
+            }
+        }
+        return minimo; //regresa el más pequeño
     }
 
 }

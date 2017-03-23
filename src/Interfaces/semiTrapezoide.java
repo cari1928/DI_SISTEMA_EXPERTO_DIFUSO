@@ -77,7 +77,7 @@ public class semiTrapezoide extends JFrame {
                     try {
                         GestionArchivos objG = new GestionArchivos();
                         String Fsemitrapezoide = "SemiTrapezoide " + puntoC + " " + v_orientacion + " " + etiqueta + " " + origen;
-                        objG.escribir((noFuncion + 1), Fsemitrapezoide, "final");
+                        objG.escribir("baseConocimientos", (noFuncion + 1), Fsemitrapezoide, "final");
                         ocultarventana();
                         if (v_orientacion == 'd') {
                             tipoFunciones objFun = new tipoFunciones(10, fin, fin);

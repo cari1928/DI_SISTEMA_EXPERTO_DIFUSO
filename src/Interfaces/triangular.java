@@ -75,7 +75,7 @@ public class triangular extends JFrame {
                     try {
                         GestionArchivos objG = new GestionArchivos();
                         String Ftriangular = "Triangular " + puntoC + " " + etiqueta + " " + origen;
-                        objG.escribir((noFuncion + 1), Ftriangular, "final");
+                        objG.escribir("baseConocimientos", (noFuncion + 1), Ftriangular, "final");
                         ocultarventana();
                         tipoFunciones objFun = new tipoFunciones(noFuncion, calculaTraslape(), fin);
                     } catch (Exception ex) {

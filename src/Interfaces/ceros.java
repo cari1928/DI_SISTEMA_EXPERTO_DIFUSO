@@ -73,7 +73,7 @@ public class ceros extends JFrame {
                     try {
                         GestionArchivos objG = new GestionArchivos();
                         String Fceros = "Ceros" + " " + inicio + " " + fin;
-                        objG.escribir((noFuncion + 1), Fceros, "final");
+                        objG.escribir("baseConocimientos", (noFuncion + 1), Fceros, "final");
                         ocultarventana();
                         tipoFunciones objFun = new tipoFunciones(noFuncion, fin, finD);
                     } catch (Exception ex) {

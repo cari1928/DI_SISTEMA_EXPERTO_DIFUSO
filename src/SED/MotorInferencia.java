@@ -10,14 +10,19 @@ import javax.swing.JOptionPane;
  */
 public class MotorInferencia {
 
-    UniversoDiscurso objU;
-    List<Triangular> listTriangular;
-    List<Trapezoide> listTrapezoide;
-    List<semiTriangular> listSemiTriangular;
-    List<semiTrapezoide> listSemiTrapezoide;
-    double punto;
-    String resultado;
+    public UniversoDiscurso objU;
+    public List<Triangular> listTriangular;
+    public List<Trapezoide> listTrapezoide;
+    public List<semiTriangular> listSemiTriangular;
+    public List<semiTrapezoide> listSemiTrapezoide;
+    public double punto;
+    public String resultado;
 
+    public MotorInferencia() {
+
+    }
+
+    //usar este constructor cuando se vaya a ingresar algún punto
     public MotorInferencia(double punto) {
         this.punto = punto;
         resultado = "";
@@ -91,7 +96,7 @@ public class MotorInferencia {
         iniListas();
 
         try {
-            listRegistros = objG.leer();
+            listRegistros = objG.leer("baseConocimientos");
             for (int i = 0; i < listRegistros.size(); i++) {
                 registro = listRegistros.get(i);
                 parts = registro.split(" ");
