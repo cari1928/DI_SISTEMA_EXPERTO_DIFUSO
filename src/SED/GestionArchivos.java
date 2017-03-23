@@ -29,7 +29,7 @@ public class GestionArchivos {
             archivo.delete();
         }
 
-        raf = new RandomAccessFile("baseConocimientos", "rw");
+        raf = new RandomAccessFile(nomFile, "rw");
 
         if (tipo.equals("final")) {
             raf.seek(raf.length());
@@ -44,7 +44,7 @@ public class GestionArchivos {
 
     public List leer(String nomFile) throws FileNotFoundException, IOException {
         long ap_actual, ap_final;
-        int tamaño = contarRengs(), llave; //cantidad de objetos
+        int tamaño = contarRengs(nomFile), llave; //cantidad de objetos
         List<String> list = new ArrayList<>();
         String convert;
 
@@ -73,10 +73,10 @@ public class GestionArchivos {
         return list;
     }
 
-    public int contarRengs() throws FileNotFoundException, IOException {
+    public int contarRengs(String nomFile) throws FileNotFoundException, IOException {
         long ap_actual, ap_final;
         int cont = 0, llaves;
-        raf = new RandomAccessFile("baseConocimientos", "r");
+        raf = new RandomAccessFile(nomFile, "r");
 
         while ((ap_actual = raf.getFilePointer()) != (ap_final = raf.length())) {
             raf.readInt(); //lee la llave
