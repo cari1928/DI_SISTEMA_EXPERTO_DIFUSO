@@ -18,31 +18,32 @@ import javax.swing.JTextField;
  */
 public class ceros extends JFrame {
 
+    double inicio, fin, origen, finD;
+    int noFuncion;
+    String nomFile;
     JTextField txtInicio, txtFinal;
     JLabel lblInicio, lblFinal;
     JPanel pnlsup, pnlinf;
-    double inicio, fin;
     JButton aceptar;
-    double origen, finD;
-    int noFuncion;
 
-    public ceros(int noFuncion, double origen, double finD) {
+    public ceros(int noFuncion, double origen, double finD, String nomFile) {
         super("Ceros");
         this.finD = finD;
         this.origen = origen;
         this.noFuncion = noFuncion;
+        this.nomFile = nomFile; //ya viene con el nombre de la carpeta
+
         m_panelSup();
         m_panelInf();
+
         this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         this.add(pnlsup);
         this.add(pnlinf);
         this.setVisible(true);
-        this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);//PARA CERRAR BIEN LA VENTANA
-        //this.setExtendedState(this.MAXIMIZED_BOTH);
+        this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setSize(200, 160);
-        //this.pack();
     }
 
     void m_panelSup() {
@@ -67,15 +68,18 @@ public class ceros extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                String fCeros;
+                GestionArchivos objG;
+                tipoFunciones objFun;
+
                 //Aqui va lo que tiene que hacer al momento de pulsar aceptar.
-                //System.out.println("Falta programar");
                 if (capturaDatos() == true) {
                     try {
-                        GestionArchivos objG = new GestionArchivos();
-                        String Fceros = "Ceros" + " " + inicio + " " + fin;
-                        objG.escribir("baseConocimientos", (noFuncion + 1), Fceros, "final");
+                        objG = new GestionArchivos();
+                        fCeros = "Ceros" + " " + inicio + " " + fin;
+                        objG.escribir(nomFile, (noFuncion + 1), fCeros, "final");
                         ocultarventana();
-                        tipoFunciones objFun = new tipoFunciones(noFuncion, fin, finD);
+                        objFun = new tipoFunciones(noFuncion, fin, finD, nomFile);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

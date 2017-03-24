@@ -19,9 +19,10 @@ import SED.GestionArchivos;
  */
 public class discurso extends JFrame {
 
-    JDesktopPane escritorio;
+    private final String ruta = "SED/";
     double origen, fin;
     String variable, unidad;
+    JDesktopPane escritorio;
     JPanel pnlsup, pnlinf;
     JTextField txtorigen, txtFin, txtVariable, txtUnidad;
     JLabel lblOrigen, a, lblVariable, lblUnidad;
@@ -29,18 +30,18 @@ public class discurso extends JFrame {
 
     public discurso() {
         super("Discurso");
+
         m_panelSup();
         m_panelInf();
+
         this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         this.add(pnlsup);
         this.add(pnlinf);
         this.setVisible(true);
-        this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);//PARA CERRAR BIEN LA VENTANA
-        //this.setExtendedState(this.MAXIMIZED_BOTH);
+        this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setSize(200, 160);
-        //this.pack();
     }
 
     void m_panelSup() {
@@ -79,25 +80,26 @@ public class discurso extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                String discurso;
+                GestionArchivos objG;
+
                 //Aqui va lo que tiene que hacer al momento de pulsar aceptar.
                 if (capturaDatos()) {
                     try {
-                        GestionArchivos objG = new GestionArchivos();
-                        String discurso = origen + " " + fin + " " + unidad + " " + variable;
-                        objG.escribir("baseConocimientos", 1, discurso, "nuevo");
+                        objG = new GestionArchivos();
+                        discurso = origen + " " + fin + " " + unidad + " " + variable;
+                        objG.escribir(ruta + variable, 1, discurso, "nuevo"); //crea el archivo con el nombre de la variable
+                        objG.escribir(ruta + "Datos", 1, variable, "final"); //guarda el nombre de la variable en el archivo Datos
+
                         ocultarventana();
-                        tipoFunciones objFun = new tipoFunciones(0, origen, fin);
+                        new tipoFunciones(0, origen, fin, ruta + variable);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
                 } else {
-                    origen = 0;
-                    fin = 0;
-                    variable = "";
-                    unidad = "";
+                    origen = fin = 0;
+                    variable = unidad = "";
                 }
-                //System.out.println("Falta programar");
-
             }
         });
         pnlinf.add(aceptar);

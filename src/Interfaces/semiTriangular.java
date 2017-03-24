@@ -19,30 +19,33 @@ import javax.swing.JTextField;
  */
 public class semiTriangular extends JFrame {
 
-    JTextField txtEtiqueta, txtPuntoC, txtLongitud;
+    char v_orientacion;
+    double origen, fin, puntoC, longitud, aux;
+    int noFuncion;
+    String nomFile;
     String[] arrayO = {"Derecha", "Izquierda"};
+    JTextField txtEtiqueta, txtPuntoC, txtLongitud;
     JComboBox orientacion;
     JLabel lblEtiqueta, lblPuntoC, lblLongitud, lblOrientacion;
     JButton aceptar;
     JPanel pnlsup, pnlinf;
     String etiqueta;
-    char v_orientacion;
-    double origen, fin, puntoC, longitud, aux;
-    int noFuncion;
 
-    public semiTriangular(int noFuncion, double origen, double fin) {
+    public semiTriangular(int noFuncion, double origen, double fin, String nomFile) {
         super("Semi Trapesoide");
         this.noFuncion = noFuncion;
         this.origen = origen;
         this.fin = fin;
+        this.nomFile = nomFile;
+
         m_panelSup();
         m_panelInf();
+
         this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         this.add(pnlsup);
         this.add(pnlinf);
         this.setVisible(true);
-        this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);//PARA CERRAR BIEN LA VENTANA
-        //this.setExtendedState(this.MAXIMIZED_BOTH);
+        this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setSize(200, 160);
@@ -84,18 +87,22 @@ public class semiTriangular extends JFrame {
                     try {
                         GestionArchivos objG = new GestionArchivos();
                         String Fsemitriangular = "SemiTriangular " + puntoC + " " + longitud + " " + v_orientacion + " " + etiqueta + " " + origen;
-                        objG.escribir("baseConocimientos", (noFuncion + 1), Fsemitriangular, "final");
+                        objG.escribir(nomFile, (noFuncion + 1), Fsemitriangular, "final");
+
                         ocultarventana();
                         if (v_orientacion == 'd') {
-                            tipoFunciones objFun = new tipoFunciones(10, fin, fin);
+                            new tipoFunciones(10, fin, fin, nomFile);
+
                         } else {
+
                             if (noFuncion == 1) {
-                                tipoFunciones objFun = new tipoFunciones(noFuncion, calculaTraslape(), fin);
+                                new tipoFunciones(noFuncion, calculaTraslape(), fin, nomFile);
                             } else {
                                 System.out.println("No se puede insertar debido a que no es la primera función");
                             }
                         }
                     } catch (Exception ex) {
+                        ex.printStackTrace();
                     }
                 }
             }

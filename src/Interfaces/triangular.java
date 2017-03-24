@@ -18,33 +18,32 @@ import javax.swing.JTextField;
  */
 public class triangular extends JFrame {
 
-    double PC;
-    String etiqueta;
+    double PC, origen, fin, puntoC, aux;
+    int noFuncion;
+    String etiqueta, nomFile;
     JLabel lblPuntoC, lblEtiqueta;
     JTextField txtPuntoC, txtEtiqueta;
     JPanel pnlinf, pnlsup;
     JButton aceptar;
-    double origen, fin, puntoC;
-    int noFuncion;
-    double aux;
 
-    triangular(int noFuncion, double origen, double fin) {
+    triangular(int noFuncion, double origen, double fin, String nomFile) {
         super("Triangular");
         this.noFuncion = noFuncion;
         this.origen = origen;
         this.fin = fin;
+        this.nomFile = nomFile;
+
         m_panelSup();
         m_panelInf();
+
         this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         this.add(pnlsup);
         this.add(pnlinf);
         this.setVisible(true);
-        this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);//PARA CERRAR BIEN LA VENTANA
-        //this.setExtendedState(this.MAXIMIZED_BOTH);
+        this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setSize(200, 160);
-        //this.pack();
     }
 
     void m_panelSup() {
@@ -69,15 +68,15 @@ public class triangular extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                
                 //Aqui va lo que tiene que hacer al momento de pulsar aceptar.
-                //System.out.println("Falta programar");
                 if (capturaDatos() == true) {
                     try {
                         GestionArchivos objG = new GestionArchivos();
                         String Ftriangular = "Triangular " + puntoC + " " + etiqueta + " " + origen;
-                        objG.escribir("baseConocimientos", (noFuncion + 1), Ftriangular, "final");
+                        objG.escribir(nomFile, (noFuncion + 1), Ftriangular, "final");
                         ocultarventana();
-                        tipoFunciones objFun = new tipoFunciones(noFuncion, calculaTraslape(), fin);
+                        tipoFunciones objFun = new tipoFunciones(noFuncion, calculaTraslape(), fin, nomFile);
                     } catch (Exception ex) {
                     }
                 }

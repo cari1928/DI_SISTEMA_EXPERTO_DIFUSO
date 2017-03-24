@@ -18,31 +18,32 @@ import javax.swing.JTextField;
  */
 public class trapezoide extends JFrame {
 
+    double origen, fin, puntoC1, puntoC2, aux;
+    int noFuncion;
+    String etiqueta, nomFile;
     JTextField txtPuntoC1, txtPuntoC2, txtEtiqueta;
     JLabel lblPuntoC1, lblPuntoC2, lblEtiqueta;
     JButton aceptar;
     JPanel pnlsup, pnlinf;
-    String etiqueta;
-    double origen, fin, puntoC1, puntoC2, aux;
-    int noFuncion;
 
-    public trapezoide(int noFuncion, double origen, double fin) {
+    public trapezoide(int noFuncion, double origen, double fin, String nomFile) {
         super("Trapezoide");
         this.noFuncion = noFuncion;
         this.origen = origen;
         this.fin = fin;
+        this.nomFile = nomFile;
+
         m_panelSup();
         m_panelInf();
+
         this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         this.add(pnlsup);
         this.add(pnlinf);
         this.setVisible(true);
-        this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);//PARA CERRAR BIEN LA VENTANA
-        //this.setExtendedState(this.MAXIMIZED_BOTH);
+        this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setSize(200, 160);
-        //this.pack();
     }
 
     void m_panelSup() {
@@ -80,7 +81,7 @@ public class trapezoide extends JFrame {
                         String Ftrapezoide = "Trapezoide " + puntoC1 + " " + puntoC2 + " " + etiqueta + " " + origen;
                         objG.escribir("baseConocimientos", (noFuncion + 1), Ftrapezoide, "final");
                         ocultarventana();
-                        tipoFunciones objFun = new tipoFunciones(noFuncion, calcularTraslape(), fin);
+                        tipoFunciones objFun = new tipoFunciones(noFuncion, calcularTraslape(), fin, nomFile);
                     } catch (Exception ex) {
                     }
                 }

@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 public class Principal extends javax.swing.JFrame {
 
     private MotorInferencia objMI;
+    private FAM objFAM;
 
     public Principal() {
         initComponents();
@@ -78,6 +79,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu2.setText("Motor Inferencia");
 
         jMenuItem2.setText("Fuzzyfication");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenu4.setText("Inferencia");
@@ -155,20 +161,18 @@ public class Principal extends javax.swing.JFrame {
 
     private void jmiFAMNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFAMNuevoActionPerformed
         try {
-            FAM objFAM = new FAM(objMI.listTriangular, objMI.listTrapezoide, objMI.listSemiTriangular, objMI.listSemiTrapezoide);
+            objFAM = new FAM(objMI.listTriangular, objMI.listTrapezoide, objMI.listSemiTriangular, objMI.listSemiTrapezoide);
             objFAM.crear();
             JOptionPane.showMessageDialog(this, "FAM creada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 
             new GUI_Combinaciones(objFAM.listCombinaciones);
-            System.out.println("LLAMAR GUI COMBINACIONES");
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jmiFAMNuevoActionPerformed
 
     private void jmiFAMExistenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFAMExistenteActionPerformed
-        FAM objFAM = new FAM(objMI.listTriangular, objMI.listTrapezoide, objMI.listSemiTriangular, objMI.listSemiTrapezoide);
+        objFAM = new FAM(objMI.listTriangular, objMI.listTrapezoide, objMI.listSemiTriangular, objMI.listSemiTrapezoide);
         objFAM.actualizaFAM();
 
         //FALTA
@@ -178,8 +182,12 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        new dato_x();
+        new discurso();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments

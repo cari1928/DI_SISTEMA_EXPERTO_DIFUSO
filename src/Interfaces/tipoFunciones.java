@@ -1,11 +1,11 @@
 package Interfaces;
-//calcular semitrapecio
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -13,43 +13,44 @@ import javax.swing.JPanel;
  * @author Tenistas
  */
 public class tipoFunciones extends JFrame {
-
+    
+    double origen, fin;
+    int noFuncion;
+    String nomFile;
     String[] tipoFunciones = {"Seleccione una Opción", "Ceros", "Triangular", "Trapezoide", "SemiTriangular", "SemiTrapezoide", "Finalizar"};
     JComboBox petList;
     JPanel panel;
-    double origen, fin;
-    int noFuncion;
-
-    public tipoFunciones(int numFuncion, double origen, double fin) {
+    
+    public tipoFunciones(int numFuncion, double origen, double fin, String nomFile) {
         super("Funciones de membrecía");
+        this.nomFile = nomFile;
+        
         numFuncion++;
         if (numFuncion < 10) {
             this.origen = origen;
             this.fin = fin;
             this.noFuncion = numFuncion;
+            
             m_panel();
+            
             this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
             this.add(panel);
             this.setVisible(true);
-            this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);//PARA CERRAR BIEN LA VENTANA
-            //this.setExtendedState(this.MAXIMIZED_BOTH);
+            this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
             this.setLocationRelativeTo(null);
             this.setResizable(false);
             this.setSize(200, 160);
+            
         } else {
-            //no creo que se llame aquí al motor de inferencias, éste se llama desde la interfaz dato_x
-            //MotorInferencia objM = new MotorInferencia(); 
-            ocultarventana();
-            dato_x guiD = new dato_x(); //podría ser más bien esto
+            JOptionPane.showMessageDialog(null, "Variable agregada");
         }
     }
-
+    
     void m_panel() {
         panel = new JPanel();
         petList = new JComboBox(tipoFunciones);
-        //petList.setSelectedIndex(4);
         petList.addActionListener(new ActionListener() {
-
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Aqui va lo que tiene que hacer al momento de pulsar aceptar.
@@ -57,30 +58,28 @@ public class tipoFunciones extends JFrame {
                 ocultarventana();
                 switch (petName) {
                     case "Ceros":
-                        ceros objCe = new ceros(noFuncion, origen, fin);
+                        new ceros(noFuncion, origen, fin, nomFile);
                         break;
                     case "Triangular":
-                        triangular objT = new triangular(noFuncion, origen, fin);
+                        new triangular(noFuncion, origen, fin, nomFile);
                         break;
                     case "Trapezoide":
-                        trapezoide objTrap = new trapezoide(noFuncion, origen, fin);
+                        new trapezoide(noFuncion, origen, fin, nomFile);
                         break;
                     case "SemiTriangular":
-                        semiTriangular objSTri = new semiTriangular(noFuncion, origen, fin);
+                        new semiTriangular(noFuncion, origen, fin, nomFile);
                         break;
                     case "SemiTrapezoide":
-                        semiTrapezoide objSTrap = new semiTrapezoide(noFuncion, origen, fin);
+                        new semiTrapezoide(noFuncion, origen, fin, nomFile);
                         break;
                     case "Finalizar":
-                        ocultarventana();
-                        dato_x guiD = new dato_x();
-                        break;
+                        JOptionPane.showMessageDialog(null, "Funciones de membresía ingresadas");
                 }
             }
         });
         panel.add(petList);
     }
-
+    
     void ocultarventana() {
         this.setVisible(false);
     }
