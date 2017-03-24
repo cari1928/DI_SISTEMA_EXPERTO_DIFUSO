@@ -63,11 +63,6 @@ public class Principal extends javax.swing.JFrame {
         jMenu3.setText("Actualizar");
 
         jMenuItem3.setText("Nueva Variable");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
         jMenu3.add(jMenuItem3);
 
         jMenu1.add(jMenu3);
@@ -144,7 +139,7 @@ public class Principal extends javax.swing.JFrame {
             objFAM.crear();
             JOptionPane.showMessageDialog(this, "FAM creada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 
-            new GUI_Combinaciones(objFAM.listCombinaciones);
+            //LLAMAR GUI_COMBINACIONES AQUI
             System.out.println("LLAMAR GUI COMBINACIONES");
 
         } catch (Exception e) {
@@ -160,11 +155,6 @@ public class Principal extends javax.swing.JFrame {
         System.out.println("FALTA");
 
     }//GEN-LAST:event_jmiFAMExistenteActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-        new dato_x();
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments

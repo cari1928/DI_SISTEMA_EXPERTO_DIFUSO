@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class FAM {
 
-    public List<Combinaciones> listCombinaciones;
+    List<Combinaciones> listCombinaciones;
 
     private final List<Triangular> listTria;
     private final List<Trapezoide> listTrap;
