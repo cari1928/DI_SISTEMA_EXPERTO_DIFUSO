@@ -139,17 +139,14 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         String directorio = "SED";
         File index = new File(directorio);
-        String[]entries = index.list();
-        
-        if (!index.exists()) 
-        {
+        String[] entries = index.list();
+
+        if (!index.exists()) {
             index.mkdir();
             JOptionPane.showMessageDialog(null, "Los archivos se han limpiado exitosamente");
-        } else 
-        {
-            for(String s: entries)
-            {
-                File currentFile = new File(index.getPath(),s);
+        } else {
+            for (String s : entries) {
+                File currentFile = new File(index.getPath(), s);
                 currentFile.delete();
             }
             JOptionPane.showMessageDialog(null, "Los archivos se han limpiado exitosamente");
