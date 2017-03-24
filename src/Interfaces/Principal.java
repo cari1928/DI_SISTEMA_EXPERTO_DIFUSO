@@ -2,6 +2,7 @@ package Interfaces;
 
 import SED.FAM;
 import SED.MotorInferencia;
+import java.io.File;
 import javax.swing.JOptionPane;
 
 /**
@@ -136,6 +137,23 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        String directorio = "SED";
+        File index = new File(directorio);
+        String[]entries = index.list();
+        
+        if (!index.exists()) 
+        {
+            index.mkdir();
+            JOptionPane.showMessageDialog(null, "Los archivos se han limpiado exitosamente");
+        } else 
+        {
+            for(String s: entries)
+            {
+                File currentFile = new File(index.getPath(),s);
+                currentFile.delete();
+            }
+            JOptionPane.showMessageDialog(null, "Los archivos se han limpiado exitosamente");
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jmiFAMNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFAMNuevoActionPerformed

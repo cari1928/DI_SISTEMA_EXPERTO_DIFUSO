@@ -78,12 +78,15 @@ public class GestionArchivos {
         StringBuilder builder = null;
         File archivo = new File(nomFile);
         raf = new RandomAccessFile(nomFile, "rw");
-        if(llave>1)
-        raf.seek((llave * 300) + (2 + (llave - 1) * 4));
-        if(llave==1)
+        if (llave > 1) {
+            raf.seek((llave * 300) + (2 + (llave - 1) * 4));
+        }
+        if (llave == 1) {
             raf.seek(302);
-        if(llave!=0)
+        }
+        if (llave != 0) {
             llave = raf.readInt(); //lee la llave
+        }
         char[] registro = new char[TAMAÑO];
         char tmp;
         for (int i = 0; i < registro.length; i++) {
@@ -107,10 +110,11 @@ public class GestionArchivos {
         StringBuilder builder = null;
         File archivo = new File(nomFile);
         raf = new RandomAccessFile(nomFile, "rw");
-        if(llave>0)
-            raf.seek((llave*300)+(llave*4));
+        if (llave > 0) {
+            raf.seek((llave * 300) + (llave * 4));
+        }
         //if(llave>0)
-            raf.writeInt(llave);
+        raf.writeInt(llave);
         builder = new StringBuilder(registro);
         builder.setLength(TAMAÑO);
         raf.writeChars(builder.toString());
@@ -167,7 +171,6 @@ public class GestionArchivos {
             for (int i = 0; i < list.size(); i++) {
                 System.out.println(list.get(i));
             }
-            
 
         } catch (Exception ex) {
             ex.printStackTrace();
