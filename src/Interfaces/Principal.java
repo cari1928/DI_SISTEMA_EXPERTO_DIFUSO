@@ -1,8 +1,10 @@
 package Interfaces;
 
 import SED.FAM;
+import SED.GestionArchivos;
 import SED.MotorInferencia;
 import java.io.File;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -186,7 +188,18 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
+        GestionArchivos objG = new GestionArchivos();
+        List<String> listVars;
+        dato_x guiD;
+        try {
+            listVars = objG.leer("SED/Datos");
+
+            for (String variable : listVars) {
+                guiD = new dato_x(variable.trim());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**

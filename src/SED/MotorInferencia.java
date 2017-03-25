@@ -16,25 +16,19 @@ public class MotorInferencia {
     public List<semiTriangular> listSemiTriangular;
     public List<semiTrapezoide> listSemiTrapezoide;
     public double punto;
-    public String resultado;
+    public String resultado, rutaArchivo;
 
     public MotorInferencia() {
-
-    }
-
-    //usar este constructor cuando se vaya a ingresar algún punto
-    public MotorInferencia(double punto) {
-        this.punto = punto;
         resultado = "";
-
-        fuzzyfication();
     }
 
     public String getResultado() {
         return resultado;
     }
 
-    private void fuzzyfication() {
+    public void fuzzyfication(double punto, String variable) {
+        this.punto = punto;
+        this.rutaArchivo = variable;
         crearModelo();
 
         if (listTriangular != null) {
@@ -96,7 +90,7 @@ public class MotorInferencia {
         iniListas();
 
         try {
-            listRegistros = objG.leer("baseConocimientos");
+            listRegistros = objG.leer(rutaArchivo);
             for (int i = 0; i < listRegistros.size(); i++) {
                 registro = listRegistros.get(i);
                 parts = registro.split(" ");
@@ -336,7 +330,7 @@ public class MotorInferencia {
 
     //para pruebas
     public static void main(String[] args) {
-        MotorInferencia objM = new MotorInferencia(12);
+        MotorInferencia objM = new MotorInferencia();
     }
 
 }

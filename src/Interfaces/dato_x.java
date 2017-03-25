@@ -9,8 +9,11 @@ import javax.swing.JOptionPane;
  */
 public class dato_x extends javax.swing.JFrame {
 
-    public dato_x() {
+    String variable;
+
+    public dato_x(String variable) {
         initComponents();
+        this.variable = variable;
 
         setLocationRelativeTo(null);
         setResizable(false);
@@ -88,10 +91,13 @@ public class dato_x extends javax.swing.JFrame {
         MotorInferencia objM;
         try {
             dato = Double.parseDouble(txtDato.getText());
-            objM = new MotorInferencia(dato);
+
+            objM = new MotorInferencia();
+            objM.fuzzyfication(dato, "SED/" + variable);
+
             setVisible(false);
             JOptionPane.showMessageDialog(this, objM.getResultado(), "Resultado", JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
+            
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Ingresa un valor válido", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -111,7 +117,7 @@ public class dato_x extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        dato_x guiD = new dato_x();
+        dato_x guiD = new dato_x("PRUEBA");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
