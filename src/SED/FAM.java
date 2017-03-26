@@ -358,4 +358,40 @@ public class FAM {
 
     }
 
+    public void actualizaArchivo() throws IOException {
+        GestionArchivos objG = new GestionArchivos();
+        List<String> listFAM = objG.leer("SED/FAM");
+        Combinaciones objC;
+        Etiqueta objE;
+        String[] parts, minip;
+
+        listCombinaciones = new ArrayList<>();
+        for (String listF : listFAM) {
+            objC = new Combinaciones();
+
+            parts = listF.split(" ");
+
+            //checa el último elemento		
+            if (Double.parseDouble(parts[parts.length - 1]) == 1) { //verifica que sea un 1		
+                for (String part : parts) {
+
+                    if (part.contains(",")) {
+                        objE = new Etiqueta();
+                        minip = part.split(",");
+                        objE.etiqueta = minip[0];
+                        objE.membresia = Double.parseDouble(minip[1]);
+                        objC.listCombinaciones.add(objE); //agrega etiquetas		
+
+                    } else if (part.contains("|")) {
+                        minip = part.split("|");
+                        for (String m : minip) {
+                            objC.listSalidas.add(m); //agrega etiquetas de salida		
+                        }
+                    }
+                }
+                listCombinaciones.add(objC);
+            }
+        }
+    }
+
 }
