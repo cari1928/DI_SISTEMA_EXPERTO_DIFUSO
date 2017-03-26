@@ -78,7 +78,7 @@ public class trapezoide extends JFrame {
                 if (capturaDatos() == true) {
                     try {
                         GestionArchivos objG = new GestionArchivos();
-                        String Ftrapezoide = "Trapezoide " + puntoC1 + " " + puntoC2 + " " + etiqueta + " " + origen;
+                        String Ftrapezoide = "Trapezoide " + puntoC1 + " " + puntoC2 + " " + etiqueta + " " + origen + " 0";
                         objG.escribir(nomFile, (noFuncion + 1), Ftrapezoide, "final");
                         ocultarventana();
                         tipoFunciones objFun = new tipoFunciones(noFuncion, calcularTraslape(), fin, nomFile);

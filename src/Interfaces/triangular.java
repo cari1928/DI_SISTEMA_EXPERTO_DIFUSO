@@ -73,7 +73,7 @@ public class triangular extends JFrame {
                 if (capturaDatos() == true) {
                     try {
                         GestionArchivos objG = new GestionArchivos();
-                        String Ftriangular = "Triangular " + puntoC + " " + etiqueta + " " + origen;
+                        String Ftriangular = "Triangular " + puntoC + " " + etiqueta + " " + origen + " 0";
                         objG.escribir(nomFile, (noFuncion + 1), Ftriangular, "final");
                         ocultarventana();
                         tipoFunciones objFun = new tipoFunciones(noFuncion, calculaTraslape(), fin, nomFile);

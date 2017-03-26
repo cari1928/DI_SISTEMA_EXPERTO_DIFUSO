@@ -18,7 +18,6 @@ public class MotorInferencia {
     public List<semiTrapezoide> listSemiTrapezoide;
     public double punto;
     public String resultado, rutaArchivo;
-    String variable;
 
     public MotorInferencia() {
         resultado = "";
@@ -42,7 +41,7 @@ public class MotorInferencia {
                     try {
                         objTria.membresiaY = calcularY(objTria);
                         resultado += objTria.etiqueta + " " + objTria.membresiaY + " "; //fase de pruebas todavía
-                        String registro = objG.obtenerRegistroByID(this.variable, objTria.turno), nuevoRegistro = "";
+                        String registro = objG.obtenerRegistroByID(this.rutaArchivo, objTria.turno), nuevoRegistro = "";
                         String parts[] = registro.split(" ");
 
                         for (int i = 0; i < parts.length; i++) {
@@ -54,7 +53,7 @@ public class MotorInferencia {
                                 nuevoRegistro += parts[i] + " ";
                             }
                         }
-                        objG.actualizar(this.variable, objTria.turno, nuevoRegistro);
+                        objG.actualizar(this.rutaArchivo, objTria.turno, nuevoRegistro);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -70,7 +69,7 @@ public class MotorInferencia {
                     try {
                         objTrap.membresiaY = calcularY(objTrap);
                         resultado += objTrap.etiqueta + " " + objTrap.membresiaY + "\n"; //fase de pruebas todavía
-                        String registro = objG.obtenerRegistroByID(this.variable, objTrap.turno), nuevoRegistro = "";
+                        String registro = objG.obtenerRegistroByID(this.rutaArchivo, objTrap.turno), nuevoRegistro = "";
                         String parts[] = registro.split(" ");
                         for (int i = 0; i < parts.length; i++) {
                             if (i == 4 && parts.length == 5) {
@@ -81,7 +80,7 @@ public class MotorInferencia {
                                 nuevoRegistro += parts[i] + " ";
                             }
                         }
-                        objG.actualizar(this.variable, objTrap.turno, nuevoRegistro);
+                        objG.actualizar(this.rutaArchivo, objTrap.turno, nuevoRegistro);
                     } catch (Exception e) {
                     }
                 }
@@ -103,7 +102,7 @@ public class MotorInferencia {
                     }
                 }
                 try {
-                    String registro = objG.obtenerRegistroByID(this.variable, objSemTria.turno), nuevoRegistro = "";
+                    String registro = objG.obtenerRegistroByID(this.rutaArchivo, objSemTria.turno), nuevoRegistro = "";
                     String parts[] = registro.split(" ");
                     for (int i = 0; i < parts.length; i++) {
                         if (i == 5 && parts.length == 6) {
@@ -114,7 +113,7 @@ public class MotorInferencia {
                             nuevoRegistro += parts[i] + " ";
                         }
                     }
-                    objG.actualizar(this.variable, objSemTria.turno, nuevoRegistro);
+                    objG.actualizar(this.rutaArchivo, objSemTria.turno, nuevoRegistro);
                 } catch (Exception e) {
                 }
             }
@@ -125,18 +124,18 @@ public class MotorInferencia {
                 semiTrapezoide objSemTrap = listSemiTrapezoide.get(i);
                 objSemTrap.membresiaY = calcularY(objSemTrap);
                 try {
-                    String registro = objG.obtenerRegistroByID(this.variable, objSemTrap.turno), nuevoRegistro = "";
+                    String registro = objG.obtenerRegistroByID(this.rutaArchivo, objSemTrap.turno), nuevoRegistro = "";
                     String parts[] = registro.split(" ");
                     for (int j = 0; j < parts.length; j++) {
                         if (j == 4 && parts.length == 5) {
-                            nuevoRegistro += parts[i] + " " + objSemTrap.membresiaY;
+                            nuevoRegistro += parts[j] + " " + objSemTrap.membresiaY;
                         } else if (j == 5 && parts.length == 6) {
                             nuevoRegistro += objSemTrap.membresiaY;
                         } else {
-                            nuevoRegistro += parts[i] + " ";
+                            nuevoRegistro += parts[j] + " ";
                         }
                     }
-                    objG.actualizar(this.variable, objSemTrap.turno, nuevoRegistro);
+                    objG.actualizar(this.rutaArchivo, objSemTrap.turno, nuevoRegistro);
                 } catch (Exception e) {
                 }
             }

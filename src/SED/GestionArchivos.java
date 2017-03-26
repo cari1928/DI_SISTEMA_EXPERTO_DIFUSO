@@ -152,26 +152,31 @@ public class GestionArchivos {
         GestionArchivos objG = new GestionArchivos();
         List<String> list = null;
         try {
-            objG.escribir("pruebas", 0, "00 00 unidades variable jdsdfferrtgrt gtttgrtgewrfe weferferferferfef wfwefwefwefwe", "nuevo");
+            /*objG.escribir("pruebas", 0, "00 00 unidades variable jdsdfferrtgrt gtttgrtgewrfe weferferferferfef wfwefwefwefwe", "nuevo");
             objG.escribir("pruebas", 1, "10 01 unidades variable jdsdfferrtgrt gtttgrtgewrfe weferferferferfef wfwefwefwefwe", "final");
             objG.escribir("pruebas", 2, "20 02 unidades variable jdsdfferrtgrt gtttgrtgewrfe ", "final");
             objG.escribir("pruebas", 3, "30 03 unidades variable jdsdfferrtgrt gtttgrtgewrfe weferferferferfef wfwefwefwefwe", "final");
             objG.escribir("pruebas", 4, "40 04 unidades variable jdsdfferrtgrt gtttgrtgewrfe weferferferferfef wfwefwefwefwe", "final");
             objG.escribir("pruebas", 5, "50 05 unidades variable jdsdfferrtgrt gtttgrtgewrfe weferferferferfef wfwefwefwefwe", "final");
             objG.escribir("pruebas", 6, "60 06 unidades variable jdsdfferrtgrt gtttgrtgewrfe weferferferferfef wfwefwefwefwe", "final");
-            objG.escribir("pruebas", 7, "70 07 unidades variable jdsdfferrtgrt gtttgrtgewrfe weferferferferfef wfwefwefwefwe", "final");
-            list = objG.leer("pruebas");
+            objG.escribir("pruebas", 7, "70 07 unidades variable jdsdfferrtgrt gtttgrtgewrfe weferferferferfef wfwefwefwefwe", "final");*/
+            list = objG.leer("SED/v1");
             for (int i = 0; i < list.size(); i++) {
                 System.out.println(list.get(i));
             }
             System.out.println("------------------------------------------------------------------");
-            String registro = objG.obtenerRegistroByID("pruebas", 7);
+            /*String registro = objG.obtenerRegistroByID("pruebas", 7);
             System.out.println(registro);
             //registro += "9999";
-            System.out.println(registro);
+            System.out.println(registro);*/
+            
+            //objG.actualizar("pruebas", 2, registro);
+            list = objG.leer("SED/v2");
+            for (int i = 0; i < list.size(); i++) {
+                System.out.println(list.get(i));
+            }
             System.out.println("-------------------------------------------------------------------");
-            objG.actualizar("pruebas", 2, registro);
-            list = objG.leer("pruebas");
+            list = objG.leer("SED/v3");
             for (int i = 0; i < list.size(); i++) {
                 System.out.println(list.get(i));
             }

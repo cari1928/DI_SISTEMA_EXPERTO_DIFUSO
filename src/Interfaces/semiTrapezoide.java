@@ -82,7 +82,7 @@ public class semiTrapezoide extends JFrame {
                 if (capturaDatos() == true) {
                     try {
                         objG = new GestionArchivos();
-                        fSemiTrapezoide = "SemiTrapezoide " + puntoC + " " + v_orientacion + " " + etiqueta + " " + origen;
+                        fSemiTrapezoide = "SemiTrapezoide " + puntoC + " " + v_orientacion + " " + etiqueta + " " + origen + " 0";
                         objG.escribir(nomFile, (noFuncion + 1), fSemiTrapezoide, "final");
 
                         ocultarventana();
