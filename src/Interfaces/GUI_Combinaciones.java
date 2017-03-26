@@ -34,7 +34,7 @@ public class GUI_Combinaciones extends JFrame {
         m_panel();
         this.add(panel);
         this.setVisible(true);
-        this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);//PARA CERRAR BIEN LA VENTANA
+        //    this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);//PARA CERRAR BIEN LA VENTANA
         //this.setExtendedState(this.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -124,6 +124,7 @@ public class GUI_Combinaciones extends JFrame {
     private String[] GeneraArray() {
         Combinaciones combinacion;
         String[] combinaciones = new String[Combinaciones.size()];
+        System.out.println(Combinaciones.size());
         for (int i = 0; i < 10; i++) {
             combinacion = Combinaciones.get(i);
             combinaciones[i] = "";

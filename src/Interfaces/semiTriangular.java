@@ -110,20 +110,21 @@ public class semiTriangular extends JFrame {
             etiqueta = txtEtiqueta.getText();
             v_orientacion = orientacion.getSelectedItem().toString().toLowerCase().charAt(0);
             longitud = Double.parseDouble(txtLongitud.getText());
-
+            
             if (etiqueta.equals("")) {
                 JOptionPane.showMessageDialog(this, "Error llene todos los campos");
                 return false;
             }
-            if (orientacion.getSelectedItem().toString().equalsIgnoreCase("Derecha")) {
+            if(orientacion.getSelectedItem().toString().equalsIgnoreCase("Derecha")){
                 puntoC = fin;
-            } else {
+            }
+            else{
                 puntoC = origen;
             }
-            if ((fin - origen) < longitud) {
-                JOptionPane.showMessageDialog(this, "La función abarcará todo el discurso disponible");
-                longitud = fin - origen;
-            }
+            if((fin - origen) < longitud){
+                    JOptionPane.showMessageDialog(this, "La función abarcará todo el discurso disponible");
+                    longitud = fin - origen;
+                }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -134,15 +135,17 @@ public class semiTriangular extends JFrame {
 
     double calculaTraslape() {
         double rango = 0;
-        if (aux == fin) {
-            rango = fin - puntoC;
-        } else {
-            rango = puntoC - origen;
-        }
-
-        double nuevoOrigen = rango * 0.6;
-        nuevoOrigen = nuevoOrigen + puntoC;
-        return nuevoOrigen;
+         if(orientacion.getSelectedObjects().toString().equals("Derecha")){
+             return fin;
+         }
+         else
+         {
+             double nuevoOrigen = ( ( origen + longitud) - origen) * 0.6;
+                    nuevoOrigen = origen + nuevoOrigen;
+                    return nuevoOrigen;
+         }
+        
+        
     }
 
     void ocultarventana() {
