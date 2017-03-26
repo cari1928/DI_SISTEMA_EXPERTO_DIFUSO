@@ -17,6 +17,7 @@ public class Variable {
     public String nombre;
 
     public Variable(UniversoDiscurso objU, List<Triangular> listTriangular, List<Trapezoide> listTrapezoide, List<semiTriangular> listSemiTriangular, List<semiTrapezoide> listSemiTrapezoide, double punto, String nombre) {
+
         this.objU = objU;
         this.listTriangular = listTriangular;
         this.listTrapezoide = listTrapezoide;
@@ -24,6 +25,7 @@ public class Variable {
         this.listSemiTrapezoide = listSemiTrapezoide;
         this.punto = punto;
         this.nombre = nombre;
+
     }
 
 }

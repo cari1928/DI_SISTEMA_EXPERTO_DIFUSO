@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -190,6 +192,7 @@ public class Principal extends javax.swing.JFrame {
             }
             objC = new Combinaciones();
             objFAM.crear(objFAM.listVariables.get(0), 1, objC, new Combinaciones());
+            System.out.println("");
         } catch (IOException ex) {
             ex.printStackTrace();
         }

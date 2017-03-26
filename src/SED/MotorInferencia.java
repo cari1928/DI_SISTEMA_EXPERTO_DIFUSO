@@ -1,5 +1,6 @@
 package SED;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -27,7 +28,7 @@ public class MotorInferencia {
         return resultado;
     }
 
-    public void fuzzyfication(double punto, String variable) {
+    public void fuzzyfication(double punto, String variable) throws IOException {
         this.punto = punto;
         this.rutaArchivo = variable;
         GestionArchivos objG = new GestionArchivos();

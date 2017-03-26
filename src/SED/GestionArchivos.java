@@ -44,7 +44,7 @@ public class GestionArchivos {
 
     public List leer(String nomFile) throws FileNotFoundException, IOException {
         long ap_actual, ap_final;
-        int tamaño = contarRengs(nomFile), llave; //cantidad de objetos
+        int tamaño = contarRengs(nomFile.trim()), llave; //cantidad de objetos
         List<String> list = new ArrayList<>();
         String convert;
 
