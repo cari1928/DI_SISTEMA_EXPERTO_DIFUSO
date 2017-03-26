@@ -5,9 +5,13 @@ import SED.Etiqueta;
 import SED.FAM;
 import SED.GestionArchivos;
 import SED.MotorInferencia;
+import SED.Variable;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,8 +22,8 @@ public class Principal extends javax.swing.JFrame {
 
     private MotorInferencia objMI;
     private FAM objFAM;
-    List<Etiqueta> listResultado=new ArrayList<>();
-    
+    List<Etiqueta> listResultado = new ArrayList<>();
+
     public Principal() {
         initComponents();
 
@@ -171,16 +175,25 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jmiFAMNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFAMNuevoActionPerformed
-        objMI.matrizFAM();
-//        try {
-//            objFAM = new FAM();
-//            objFAM.crear();
-//            JOptionPane.showMessageDialog(this, "FAM creada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-//
-//            new GUI_Combinaciones(objFAM.listCombinaciones);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        GestionArchivos objG = new GestionArchivos();
+        List<String> listRegistros;
+        FAM objFAM = new FAM();
+        Variable objV;
+        String rutaArchivo;
+        try {
+            listRegistros = objG.leer("SED/Datos");
+
+            //llena listVariables
+            for (String registro : listRegistros) {
+                rutaArchivo = "SED/" + registro.trim();
+                objMI.crearModelo(rutaArchivo.trim());
+                objV = new Variable(objMI.objU, objMI.listTriangular, objMI.listTrapezoide, objMI.listSemiTriangular, objMI.listSemiTrapezoide, objMI.punto);
+                objFAM.listVariables.add(objV);
+            }
+            objFAM.crear();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_jmiFAMNuevoActionPerformed
 
     private void jmiFAMExistenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFAMExistenteActionPerformed
@@ -214,29 +227,27 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         Combinaciones temp;
-        Etiqueta objR=new Etiqueta();
+        Etiqueta objR = new Etiqueta();
         boolean check;
-        for (int i = 0; i < objFAM.listCombinaciones.size(); i++) 
-        {
-            temp=objFAM.listCombinaciones.get(i);
-            objR.membresia=temp.pesoRegla;
+        for (int i = 0; i < objFAM.listCombinaciones.size(); i++) {
+            temp = objFAM.listCombinaciones.get(i);
+            objR.membresia = temp.pesoRegla;
 
-            for (int j = 0; j < temp.listSalidas.size(); j++) 
-            {
-                objR.etiqueta=temp.listSalidas.get(j);
-                check=false;
-                for (int m = 0; m < listResultado.size() && !check; m++) 
-                {
-                    if(objR.etiqueta.equalsIgnoreCase(listResultado.get(m).etiqueta))
-                        check=true;
+            for (int j = 0; j < temp.listSalidas.size(); j++) {
+                objR.etiqueta = temp.listSalidas.get(j);
+                check = false;
+                for (int m = 0; m < listResultado.size() && !check; m++) {
+                    if (objR.etiqueta.equalsIgnoreCase(listResultado.get(m).etiqueta)) {
+                        check = true;
+                    }
                 }
-                for (int k = i+1; k < temp.listCombinaciones.size() && !check; k++) 
-                {
-                    for (int l = 0; l < temp.listSalidas.size(); l++) 
-                    {
-                        if(objR.etiqueta.equalsIgnoreCase(objFAM.listCombinaciones.get(k).listSalidas.get(l)))
-                            if(objR.membresia < objFAM.listCombinaciones.get(k).pesoRegla)
+                for (int k = i + 1; k < temp.listCombinaciones.size() && !check; k++) {
+                    for (int l = 0; l < temp.listSalidas.size(); l++) {
+                        if (objR.etiqueta.equalsIgnoreCase(objFAM.listCombinaciones.get(k).listSalidas.get(l))) {
+                            if (objR.membresia < objFAM.listCombinaciones.get(k).pesoRegla) {
                                 objR.membresia = objFAM.listCombinaciones.get(k).pesoRegla;
+                            }
+                        }
                     }
                 }
                 listResultado.add(objR);

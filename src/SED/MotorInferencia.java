@@ -27,12 +27,12 @@ public class MotorInferencia {
         return resultado;
     }
 
-    public void fuzzyfication(double punto, String variable) {
+    public void fuzzyfication(double punto, String variable) throws IOException {
         this.punto = punto;
         this.rutaArchivo = variable;
         GestionArchivos objG;
         Etiqueta objE;
-        crearModelo();
+        crearModelo(null);
 
         if (listTriangular != null) {
             for (Triangular objTria : listTriangular) {
@@ -78,7 +78,7 @@ public class MotorInferencia {
         }
     }
 
-    private void crearModelo() {
+    public void crearModelo(String ruta) {
         GestionArchivos objG = new GestionArchivos();
         List<String> listRegistros;
         Triangular objTri;
@@ -93,7 +93,7 @@ public class MotorInferencia {
         iniListas();
 
         try {
-            listRegistros = objG.leer(rutaArchivo);
+            listRegistros = objG.leer(ruta);
             for (int i = 0; i < listRegistros.size(); i++) {
                 registro = listRegistros.get(i);
                 parts = registro.split(" ");
@@ -328,18 +328,6 @@ public class MotorInferencia {
                 //El punto no pertenece a la funcion
                 resultado += objSTrap.etiqueta + " Y = 0" + "\n";
             }
-        }
-    }
-
-    public void matrizFAM() throws IOException {
-        GestionArchivos objG = new GestionArchivos();
-        FAM objFAM = new FAM();
-        List<String> listRegistros = objG.leer("SED/Datos");
-
-        for (String registro : listRegistros) {
-            rutaArchivo = "SED/" + registro;
-            crearModelo();
-
         }
     }
 

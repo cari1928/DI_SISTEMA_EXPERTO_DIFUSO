@@ -25,17 +25,9 @@ public class FAM {
     public FAM() {
         //INICIALIZA ATRIBUTOS
         listCombinaciones = new ArrayList<>();
+        listVariables = new ArrayList<>();
         tmpC = new Combinaciones();
         turno = 0;
-    }
-
-    public void creaCombinaciones() throws IOException {
-        GestionArchivos objG = new GestionArchivos();
-        List<String> listRegistros = objG.leer("SED/Datos");
-
-        for (String registro : listRegistros) {
-            
-        }
     }
 
     //solo genera las combinaciones, no calcula las salidas difusas
@@ -44,9 +36,11 @@ public class FAM {
         Combinaciones objC;
         GestionArchivos objG = new GestionArchivos();
 
-        //genera las combinaciones
-        creaCombinaciones(listTria, 0, listTrap);
+        for (Variable var : listVariables) {
+            creaCombinaciones(var.listTriangular, 0, var.listTrapezoide, var);
+        }
 
+        //genera las combinaciones
         //escribe las combinaciones en el archivo FAM
         for (int i = 0; i < listCombinaciones.size(); i++) {
             registro = ""; //limpia el registro
@@ -70,7 +64,7 @@ public class FAM {
 
     //crea la pura combinación
     //no calcula el peso de la regla ni las salidas difusas
-    private void creaCombinaciones(List lista, int position, List listSig) {
+    private void creaCombinaciones(List lista, int position, List listSig, Variable var) {
         Etiqueta tmpEt;
 
         if (lista != null) {
@@ -78,20 +72,20 @@ public class FAM {
             for (int i = position; i < lista.size(); i++) {
 
                 tmpEt = obtenerEtiqueta(lista, i); //se genera la etiqueta de la figura
-                tmpC.listCombinaciones.add(tmpEt); //se guarda la etiqueta en una lista
-
+                tmpC.listCombinaciones.add(tmpEt); //se guarda la etiqueta en una list
+                
                 switch (turno) {
                     case 0:
                         //listSig = trapezoide
-                        creaCombinaciones(listSig, i, listSemTria);
+                        creaCombinaciones(listSig, i, var.listSemiTriangular, var);
                         break;
                     case 1:
                         //listSig = listSemTria
-                        creaCombinaciones(listSig, i, listSemTrap);
+                        creaCombinaciones(listSig, i, var.listSemiTrapezoide, var);
                         break;
                     case 2:
                         //listSig = listSemTrap
-                        creaCombinaciones(listSig, i, null);
+                        creaCombinaciones(listSig, i, null, var);
                     case 3:
                         //ya recorrió todas las listas en la posicion i
                         tmpC.pesoRegla = calcPesoRegla(tmpC.listCombinaciones); //calcula el peso de la regla
@@ -187,37 +181,85 @@ public class FAM {
         return -1;
     }
 
-    private Etiqueta obtenerEtiqueta(List lista, int i) {
+    private Etiqueta obtenerEtiqueta(List list, int i) {
+        Etiqueta tmp;
+        tmp = obtenerEtTriangular(list, i);
+        if (tmp != null) {
+            return tmp;
+        }
+
+        tmp = obtenerEtTrapezoide(list, i);
+        if (tmp != null) {
+            return tmp;
+        }
+
+        tmp = obtenerEtSemiTriangular(list, i);
+        if (tmp != null) {
+            return tmp;
+        }
+
+        tmp = obtenerEtSemiTrapezoide(list, i);
+        if (tmp != null) {
+            return tmp;
+        }
+
+        return null;
+    }
+
+    private Etiqueta obtenerEtTriangular(List<Triangular> listTria, int i) {
         Triangular tmpTria;
+        Etiqueta objE = new Etiqueta();
+
+        try {
+            tmpTria = listTria.get(i);
+            objE.etiqueta = tmpTria.etiqueta;
+            objE.membresia = tmpTria.membresiaY;
+            return objE;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private Etiqueta obtenerEtTrapezoide(List<Trapezoide> litTrap, int i) {
         Trapezoide tmpTrap;
+        Etiqueta objE = new Etiqueta();
+
+        try {
+            tmpTrap = listTrap.get(i);
+            objE.etiqueta = tmpTrap.etiqueta;
+            objE.membresia = tmpTrap.membresiaY;
+            return objE;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private Etiqueta obtenerEtSemiTriangular(List<semiTriangular> listSemiTria, int i) {
         semiTriangular tmpSemTria;
+        Etiqueta objE = new Etiqueta();
+
+        try {
+            tmpSemTria = listSemiTria.get(i);
+            objE.etiqueta = tmpSemTria.etiqueta;
+            objE.membresia = tmpSemTria.membresiaY;
+            return objE;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private Etiqueta obtenerEtSemiTrapezoide(List<semiTrapezoide> listSemiTrap, int i) {
         semiTrapezoide tmpSemTrap;
         Etiqueta objE = new Etiqueta();
 
-        //crea el objeto según su tipo de forma
-        switch (turno) {
-            case 0:
-                tmpTria = (Triangular) lista.get(i);
-                objE.etiqueta = tmpTria.etiqueta;
-                objE.membresia = tmpTria.membresiaY;
-                break;
-            case 1:
-                tmpTrap = (Trapezoide) lista.get(i);
-                objE.etiqueta = tmpTrap.etiqueta;
-                objE.membresia = tmpTrap.membresiaY;
-                break;
-            case 2:
-                tmpSemTria = (semiTriangular) lista.get(i);
-                objE.etiqueta = tmpSemTria.etiqueta;
-                objE.membresia = tmpSemTria.membresiaY;
-                break;
-            case 3:
-                tmpSemTrap = (semiTrapezoide) lista.get(i);
-                objE.etiqueta = tmpSemTrap.etiqueta;
-                objE.membresia = tmpSemTrap.membresiaY;
+        try {
+            tmpSemTrap = listSemiTrap.get(i);
+            objE.etiqueta = tmpSemTrap.etiqueta;
+            objE.membresia = tmpSemTrap.membresiaY;
+            return objE;
+        } catch (Exception e) {
+            return null;
         }
-
-        return objE;
     }
 
     private double calcPesoRegla(List<Etiqueta> listC) {
