@@ -113,7 +113,7 @@ public class semiTrapezoide extends JFrame {
                 JOptionPane.showMessageDialog(this, "Error, llene todos los campos.");
                 return false;
             }
-            if (puntoC < origen || puntoC > fin) {
+            if (origen > puntoC || puntoC > fin) {
                 JOptionPane.showMessageDialog(this, "Error, el punto crítico no está dentro del discurso disponible");
                 return false;
             }

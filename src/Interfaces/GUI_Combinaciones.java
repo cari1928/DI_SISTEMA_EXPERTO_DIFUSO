@@ -29,7 +29,9 @@ public class GUI_Combinaciones extends JFrame {
     GUI_Combinaciones(List<Combinaciones> Combinaciones) {
         super("GUI_Combinaciones");
         this.Combinaciones = Combinaciones;
+        
         m_panel();
+        
         this.add(panel);
         this.setVisible(true);
         this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);

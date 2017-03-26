@@ -335,4 +335,27 @@ public class FAM {
         return minimo; //regresa el más pequeño
     }
 
+    public void crearArchivo() throws IOException {
+        GestionArchivos objG = new GestionArchivos();
+        Combinaciones objC;
+        String registro = "", parte = "nuevo";
+
+        for (int i = 0; i < listCombinaciones.size(); i++) {
+            objC = listCombinaciones.get(i);
+
+            for (Etiqueta objE : objC.listCombinaciones) {
+                registro += objE.etiqueta + "," + objE.membresia + " ";
+            }
+            registro += " 1";
+
+            if (i > 0) {
+                parte = "final";
+            }
+
+            objG.escribir("SED/FAM", i, registro, parte);
+            registro = "";
+        }
+
+    }
+
 }

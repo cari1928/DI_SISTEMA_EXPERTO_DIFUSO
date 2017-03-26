@@ -10,8 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -54,7 +52,7 @@ public class Principal extends javax.swing.JFrame {
         jmiFAMNuevo = new javax.swing.JMenuItem();
         jmiFAMExistente = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        jmPesoRegla = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -131,13 +129,13 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu5.setText("Mostrar");
 
-        jMenuItem6.setText("Peso de la Regla");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        jmPesoRegla.setText("Peso de la Regla");
+        jmPesoRegla.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                jmPesoReglaActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem6);
+        jMenu5.add(jmPesoRegla);
 
         jMenuItem7.setText("Salida Difusa");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
@@ -185,6 +183,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jmiFAMNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFAMNuevoActionPerformed
         GestionArchivos objG = new GestionArchivos();
+        GUI_Combinaciones guiC;
         List<String> listRegistros;
         Combinaciones objC;
         objFAM = new FAM();
@@ -202,8 +201,8 @@ public class Principal extends javax.swing.JFrame {
             }
             objC = new Combinaciones();
             objFAM.crear(objFAM.listVariables.get(0), 1, objC, new Combinaciones());
-
-            JOptionPane.showMessageDialog(this, "FALTA LLAMAR A GUI COMBINACIONES");
+            objFAM.crearArchivo();
+            guiC = new GUI_Combinaciones(objFAM.listCombinaciones);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -270,12 +269,44 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    private void jmPesoReglaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmPesoReglaActionPerformed
+        GestionArchivos objG = new GestionArchivos();
+        List<String> listV, tmpR;
+        String ruta;
+        try {
+            listV = objG.leer("SED/Datos");
+
+            for (String rVar : listV) {
+                ruta = "SED/" + rVar;
+                tmpR = objG.leer(ruta.trim());
+
+                for (String registro : tmpR) {
+                    System.out.println(registro);
+                }
+                System.out.println("");
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Archivos no disponibles");
+        }
+    }//GEN-LAST:event_jmPesoReglaActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        // TODO add your handling code here:
+        GestionArchivos objG = new GestionArchivos();
+        List<String> listV, tmpR;
+        String ruta;
+        try {
+            listV = objG.leer("SED/FAM");
+
+            for (String registro : listV) {
+                System.out.println(registro);
+            }            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Archivos no disponibles");
+        }
+
+
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
@@ -314,8 +345,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jmPesoRegla;
     private javax.swing.JMenuItem jmiFAMExistente;
     private javax.swing.JMenuItem jmiFAMNuevo;
     // End of variables declaration//GEN-END:variables

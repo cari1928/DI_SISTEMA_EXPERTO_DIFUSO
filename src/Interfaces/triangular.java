@@ -68,7 +68,7 @@ public class triangular extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
                 //Aqui va lo que tiene que hacer al momento de pulsar aceptar.
                 if (capturaDatos() == true) {
                     try {

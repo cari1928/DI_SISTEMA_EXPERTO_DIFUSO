@@ -15,7 +15,7 @@ public class dato_x extends javax.swing.JFrame {
         this.variable = variable;
         initComponents();
 
-        this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);

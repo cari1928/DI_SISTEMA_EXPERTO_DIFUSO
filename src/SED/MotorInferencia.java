@@ -32,7 +32,6 @@ public class MotorInferencia {
         this.punto = punto;
         this.rutaArchivo = variable;
         GestionArchivos objG = new GestionArchivos();
-        Etiqueta objE;
         crearModelo(rutaArchivo);
 
         if (listTriangular != null) {
@@ -187,8 +186,12 @@ public class MotorInferencia {
                         objTri.puntoDer[1] = 0;
 
                         objTri.etiqueta = parts[2];
-                        objTri.membresiaY = Double.parseDouble(parts[3]);
                         objTri.turno = contFigura;
+
+                        if (parts.length == 5) {
+                            objTri.membresiaY = Double.parseDouble(parts[4]);
+                        }
+
                         listTriangular.add(objTri);
                         ++contFigura;
                         break;
@@ -210,8 +213,12 @@ public class MotorInferencia {
                         objTra.puntoDer[0] = objTra.puntoC2[0] + distancia;
 
                         objTra.etiqueta = parts[3];
-                        objTra.membresiaY = Double.parseDouble(parts[4]);
                         objTra.turno = contFigura;
+
+                        if (parts.length == 6) {
+                            objTra.membresiaY = Double.parseDouble(parts[5]);
+                        }
+
                         ++contFigura;
                         listTrapezoide.add(objTra);
                         break;
@@ -236,7 +243,11 @@ public class MotorInferencia {
                         }
                         objSemTri.punto2[1] = 0;
                         objSemTri.turno = contFigura;
-                        objSemTri.membresiaY = Double.parseDouble(parts[5]);
+
+                        if (parts.length == 7) {
+                            objSemTri.membresiaY = Double.parseDouble(parts[6]);
+                        }
+
                         listSemiTriangular.add(objSemTri);
                         ++contFigura;
                         break;
@@ -265,8 +276,12 @@ public class MotorInferencia {
                         }
                         objSemTrap.punto2[1] = 0;
                         objSemTrap.turno = contFigura;
-                        objSemTrap.membresiaY = Double.parseDouble(parts[4]);
                         listSemiTrapezoide.add(objSemTrap);
+
+                        if (parts.length == 6) {
+                            objSemTrap.membresiaY = Double.parseDouble(parts[5]);
+                        }
+
                         ++contFigura;
                         break;
 
