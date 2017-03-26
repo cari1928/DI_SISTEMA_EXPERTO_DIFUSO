@@ -29,12 +29,18 @@ public class MotorInferencia {
     public void fuzzyfication(double punto, String variable) {
         this.punto = punto;
         this.rutaArchivo = variable;
+        GestionArchivos objG;
+        Etiqueta objE;
         crearModelo();
 
         if (listTriangular != null) {
             for (Triangular objTria : listTriangular) {
                 //checar que el punto ingresado por el usuario esté entre los puntos no críticos de la figura
                 if (objTria.puntoIzq[0] < punto && punto < objTria.puntoDer[0]) {
+                    
+                    objG = new GestionArchivos();
+                    
+
                     resultado += objTria.etiqueta + " " + calcularY(objTria) + " "; //fase de pruebas todavía
                 }
             }
