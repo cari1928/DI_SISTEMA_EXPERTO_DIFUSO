@@ -3,15 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
+            <file>file:/C:/Users/radog/Documents/NetBeansProjects/DI_SED/src/Interfaces/semiTriangular.java</file>
             <file>file:/C:/Users/radog/Documents/NetBeansProjects/DI_SED/src/Interfaces/Principal.java</file>
+            <file>file:/C:/Users/radog/Documents/NetBeansProjects/DI_SED/src/SED/MotorInferencia.java</file>
             <file>file:/C:/Users/radog/Documents/NetBeansProjects/DI_SED/src/SED/FAM.java</file>
-=======
-            <file>file:/C:/Users/Macias/Documents/MACIAS%20FRANCO%20GUSTAVO/tecno%20xD/10mosemestre/desarrollos/desdifusificacion/DI_SED/src/SED/Combinaciones.java</file>
-            <file>file:/C:/Users/Macias/Documents/MACIAS%20FRANCO%20GUSTAVO/tecno%20xD/10mosemestre/desarrollos/desdifusificacion/DI_SED/src/Interfaces/Principal.java</file>
-            <file>file:/C:/Users/Macias/Documents/MACIAS%20FRANCO%20GUSTAVO/tecno%20xD/10mosemestre/desarrollos/desdifusificacion/DI_SED/src/SED/FAM.java</file>
-            <file>file:/C:/Users/Macias/Documents/MACIAS%20FRANCO%20GUSTAVO/tecno%20xD/10mosemestre/desarrollos/desdifusificacion/DI_SED/src/SED/Etiqueta.java</file>
->>>>>>> 7286e7473d45dc31e711425b23d995029f21caba
+            <file>file:/C:/Users/radog/Documents/NetBeansProjects/DI_SED/src/SED/Combinaciones.java</file>
         </group>
     </open-files>
 </project-private>

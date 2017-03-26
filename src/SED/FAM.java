@@ -20,7 +20,6 @@ public class FAM {
     private List<semiTrapezoide> listSemTrap;
 
     public FAM() {
-        //INICIALIZA ATRIBUTOS
         listCombinaciones = new ArrayList<>();
         listVariables = new ArrayList<>();
     }
@@ -326,7 +325,7 @@ public class FAM {
         }
     }
 
-    private double calcPesoRegla(List<Etiqueta> listC) {
+    public double calcPesoRegla(List<Etiqueta> listC) {
         double minimo = listC.get(0).membresia; //toma la membresía del primer elemento
         for (Etiqueta objE : listC) {
             if (minimo > objE.membresia) { //compara con las demás membresías

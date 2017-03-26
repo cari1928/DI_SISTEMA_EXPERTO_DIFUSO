@@ -132,9 +132,19 @@ public class Principal extends javax.swing.JFrame {
         jMenu5.setText("Mostrar");
 
         jMenuItem6.setText("Peso de la Regla");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem6);
 
         jMenuItem7.setText("Salida Difusa");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem7);
 
         jMenuBar1.add(jMenu5);
@@ -192,7 +202,8 @@ public class Principal extends javax.swing.JFrame {
             }
             objC = new Combinaciones();
             objFAM.crear(objFAM.listVariables.get(0), 1, objC, new Combinaciones());
-            System.out.println("");
+
+            JOptionPane.showMessageDialog(this, "FALTA LLAMAR A GUI COMBINACIONES");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -225,7 +236,14 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         Combinaciones temp;
         Etiqueta objR = new Etiqueta();
+        double minimo;
         boolean check;
+
+        for (Combinaciones listC : objFAM.listCombinaciones) {
+            minimo = objFAM.calcPesoRegla(listC.listCombinaciones);
+            listC.pesoRegla = minimo;
+        }
+
         for (int i = 0; i < objFAM.listCombinaciones.size(); i++) {
             temp = objFAM.listCombinaciones.get(i);
             objR.membresia = temp.pesoRegla;
@@ -251,6 +269,14 @@ public class Principal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
