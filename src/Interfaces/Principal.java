@@ -209,7 +209,13 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiFAMNuevoActionPerformed
 
     private void jmiFAMExistenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFAMExistenteActionPerformed
-
+        try {
+            objFAM = new FAM();
+            objFAM.actualizaArchivo();
+            System.out.println("");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_jmiFAMExistenteActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -300,7 +306,7 @@ public class Principal extends javax.swing.JFrame {
 
             for (String registro : listV) {
                 System.out.println(registro);
-            }            
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Archivos no disponibles");
