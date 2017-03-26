@@ -91,12 +91,12 @@ public class MotorInferencia {
             for (semiTriangular objSemTria : listSemiTriangular) {
                 //checar orientacion
                 if (objSemTria.orientacion == 'd') {
-                    if (objSemTria.puntoC[0] < punto && punto < objSemTria.punto2[0]) {
+                    if (objSemTria.puntoC[0] > punto && punto > objSemTria.punto2[0]) {
                         objSemTria.membresiaY = calcularY(objSemTria);
                         resultado += objSemTria.etiqueta + " " + objSemTria.membresiaY + "\n";
                     }
                 } else {
-                    if (objSemTria.punto2[0] < punto && punto < objSemTria.puntoC[0]) {
+                    if (objSemTria.punto2[0] > punto && punto > objSemTria.puntoC[0]) {
                         objSemTria.membresiaY = calcularY(objSemTria);
                         resultado += objSemTria.etiqueta + " " + objSemTria.membresiaY + "\n";
                     }
@@ -187,7 +187,6 @@ public class MotorInferencia {
                         objTri.etiqueta = parts[2];
                         objTri.turno = contFigura;
                         objTri.membresiaY = Double.parseDouble(parts[4]);
-                        
 
                         listTriangular.add(objTri);
                         ++contFigura;
@@ -212,7 +211,6 @@ public class MotorInferencia {
                         objTra.etiqueta = parts[3];
                         objTra.turno = contFigura;
                         objTra.membresiaY = Double.parseDouble(parts[5]);
-                        
 
                         ++contFigura;
                         listTrapezoide.add(objTra);
@@ -231,10 +229,11 @@ public class MotorInferencia {
 
                         //el otro punto
                         if (objSemTri.orientacion == 'i') { //izquierda
-                            objSemTri.punto2[0] = objSemTri.puntoC[0] - objSemTri.longitud;
-                        } else {
                             //objSemTri.punto2[0] = objSemTri.puntoC[0] - objSemTri.longitud;
                             objSemTri.punto2[0] = objSemTri.puntoC[0] + objSemTri.longitud;
+                        } else {
+                            objSemTri.punto2[0] = objSemTri.puntoC[0] - objSemTri.longitud;
+                            //objSemTri.punto2[0] = objSemTri.puntoC[0] + objSemTri.longitud;
                         }
                         objSemTri.punto2[1] = 0;
                         objSemTri.turno = contFigura;
@@ -269,7 +268,6 @@ public class MotorInferencia {
                         objSemTrap.turno = contFigura;
                         listSemiTrapezoide.add(objSemTrap);
                         objSemTrap.membresiaY = Double.parseDouble(parts[5]);
-
 
                         ++contFigura;
                         break;

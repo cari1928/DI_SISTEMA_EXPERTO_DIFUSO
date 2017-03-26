@@ -17,7 +17,7 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author Tenistas
  */
-public class GUI_Combinaciones extends JFrame {
+public final class GUI_Combinaciones extends JFrame {
 
     GestionArchivos objA = new GestionArchivos();
     int first = -1, last = -1;
@@ -29,9 +29,9 @@ public class GUI_Combinaciones extends JFrame {
     GUI_Combinaciones(List<Combinaciones> Combinaciones) {
         super("GUI_Combinaciones");
         this.Combinaciones = Combinaciones;
-        
+
         m_panel();
-        
+
         this.add(panel);
         this.setVisible(true);
         this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
@@ -124,7 +124,7 @@ public class GUI_Combinaciones extends JFrame {
         Combinaciones combinacion;
         String[] combinaciones = new String[Combinaciones.size()];
         System.out.println(Combinaciones.size());
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < Combinaciones.size(); i++) {
             combinacion = Combinaciones.get(i);
             combinaciones[i] = "";
             for (int j = 0; j < combinacion.listCombinaciones.size(); j++) {
