@@ -17,11 +17,11 @@ import javax.swing.JOptionPane;
  * @author Tenistas
  */
 public class Principal extends javax.swing.JFrame {
-    
+
     private MotorInferencia objMI;
     private FAM objFAM;
     List<Etiqueta> listResultado;
-    
+
     public Principal() {
         initComponents();
         listResultado = new ArrayList<>();
@@ -168,7 +168,7 @@ public class Principal extends javax.swing.JFrame {
         String directorio = "SED";
         File index = new File(directorio);
         String[] entries = index.list();
-        
+
         if (!index.exists()) {
             index.mkdir();
             JOptionPane.showMessageDialog(null, "Los archivos se han limpiado exitosamente");
@@ -209,14 +209,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiFAMNuevoActionPerformed
 
     private void jmiFAMExistenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFAMExistenteActionPerformed
-        try {
-            objFAM = new FAM();
-            objFAM.actualizaArchivo();
-            System.out.println("");
-            JOptionPane.showMessageDialog(this, "Combinaciones cargadas");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+
     }//GEN-LAST:event_jmiFAMExistenteActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -230,7 +223,7 @@ public class Principal extends javax.swing.JFrame {
         dato_x guiD;
         try {
             listVars = objG.leer("SED/Datos");
-            
+
             for (String variable : listVars) {
                 guiD = new dato_x(variable.trim());
             }
@@ -244,16 +237,16 @@ public class Principal extends javax.swing.JFrame {
         Etiqueta objR = new Etiqueta();
         double minimo;
         boolean check;
-        
+
         for (Combinaciones listC : objFAM.listCombinaciones) {
             minimo = objFAM.calcPesoRegla(listC.listCombinaciones);
             listC.pesoRegla = minimo;
         }
-        
+
         for (int i = 0; i < objFAM.listCombinaciones.size(); i++) {
             temp = objFAM.listCombinaciones.get(i);
             objR.membresia = temp.pesoRegla;
-            
+
             for (int j = 0; j < temp.listSalidas.size(); j++) {
                 objR.etiqueta = temp.listSalidas.get(j);
                 check = false;
@@ -274,7 +267,6 @@ public class Principal extends javax.swing.JFrame {
                 listResultado.add(objR);
             }
         }
-        System.out.println("");
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jmPesoReglaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmPesoReglaActionPerformed
@@ -283,11 +275,11 @@ public class Principal extends javax.swing.JFrame {
         String ruta;
         try {
             listV = objG.leer("SED/Datos");
-            
+
             for (String rVar : listV) {
                 ruta = "SED/" + rVar;
                 tmpR = objG.leer(ruta.trim());
-                
+
                 for (String registro : tmpR) {
                     System.out.println(registro);
                 }
@@ -305,15 +297,15 @@ public class Principal extends javax.swing.JFrame {
         String ruta;
         try {
             listV = objG.leer("SED/FAM");
-            
+
             for (String registro : listV) {
                 System.out.println(registro);
-            }
+            }            
         } catch (IOException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Archivos no disponibles");
         }
-        
+
 
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 

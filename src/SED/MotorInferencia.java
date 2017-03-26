@@ -176,7 +176,7 @@ public class MotorInferencia {
                         objTri.puntoC[1] = 1;
 
                         //cálculo de la X de los puntos izq y der
-                        distancia = Math.abs(objTri.puntoC[0] - Double.parseDouble(parts[parts.length - 1]));
+                        distancia = Math.abs(objTri.puntoC[0] - Double.parseDouble(parts[parts.length - 2]));
                         objTri.puntoIzq[0] = objTri.puntoC[0] - distancia;
                         objTri.puntoDer[0] = objTri.puntoC[0] + distancia;
 
@@ -186,10 +186,8 @@ public class MotorInferencia {
 
                         objTri.etiqueta = parts[2];
                         objTri.turno = contFigura;
-
-                        if (parts.length == 5) {
-                            objTri.membresiaY = Double.parseDouble(parts[4]);
-                        }
+                        objTri.membresiaY = Double.parseDouble(parts[4]);
+                        
 
                         listTriangular.add(objTri);
                         ++contFigura;
@@ -207,16 +205,14 @@ public class MotorInferencia {
                         objTra.puntoC2[1] = 1;
 
                         //cálculo de la X de los puntos izq y der
-                        distancia = Math.abs(objTra.puntoC1[0] - Double.parseDouble(parts[parts.length - 1]));
+                        distancia = Math.abs(objTra.puntoC1[0] - Double.parseDouble(parts[parts.length - 2]));
                         objTra.puntoIzq[0] = objTra.puntoC1[0] - distancia;
                         objTra.puntoDer[0] = objTra.puntoC2[0] + distancia;
 
                         objTra.etiqueta = parts[3];
                         objTra.turno = contFigura;
-
-                        if (parts.length == 6) {
-                            objTra.membresiaY = Double.parseDouble(parts[5]);
-                        }
+                        objTra.membresiaY = Double.parseDouble(parts[5]);
+                        
 
                         ++contFigura;
                         listTrapezoide.add(objTra);
@@ -242,11 +238,7 @@ public class MotorInferencia {
                         }
                         objSemTri.punto2[1] = 0;
                         objSemTri.turno = contFigura;
-
-                        if (parts.length == 7) {
-                            objSemTri.membresiaY = Double.parseDouble(parts[6]);
-                        }
-
+                        objSemTri.membresiaY = Double.parseDouble(parts[6]);
                         listSemiTriangular.add(objSemTri);
                         ++contFigura;
                         break;
@@ -270,16 +262,14 @@ public class MotorInferencia {
                             //distancia = objU.fin - objSemTrap.puntoC[0];
                             //objSemTrap.punto2[0] = objSemTrap.puntoC[0] - distancia;
 
-                            distancia = objSemTrap.puntoC[0] - Double.parseDouble(parts[parts.length - 1]);
+                            distancia = objSemTrap.puntoC[0] - Double.parseDouble(parts[parts.length - 2]);
                             objSemTrap.punto2[0] = objSemTrap.puntoC[0] - distancia;
                         }
                         objSemTrap.punto2[1] = 0;
                         objSemTrap.turno = contFigura;
                         listSemiTrapezoide.add(objSemTrap);
+                        objSemTrap.membresiaY = Double.parseDouble(parts[5]);
 
-                        if (parts.length == 6) {
-                            objSemTrap.membresiaY = Double.parseDouble(parts[5]);
-                        }
 
                         ++contFigura;
                         break;
