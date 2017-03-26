@@ -1,5 +1,6 @@
 package SED;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -29,12 +30,17 @@ public class MotorInferencia {
     public void fuzzyfication(double punto, String variable) {
         this.punto = punto;
         this.rutaArchivo = variable;
+        GestionArchivos objG;
+        Etiqueta objE;
         crearModelo();
 
         if (listTriangular != null) {
             for (Triangular objTria : listTriangular) {
                 //checar que el punto ingresado por el usuario esté entre los puntos no críticos de la figura
                 if (objTria.puntoIzq[0] < punto && punto < objTria.puntoDer[0]) {
+
+                    objG = new GestionArchivos();
+
                     resultado += objTria.etiqueta + " " + calcularY(objTria) + " "; //fase de pruebas todavía
                 }
             }
@@ -325,6 +331,18 @@ public class MotorInferencia {
                 //El punto no pertenece a la funcion
                 resultado += objSTrap.etiqueta + " Y = 0" + "\n";
             }
+        }
+    }
+
+    public void matrizFAM() throws IOException {
+        GestionArchivos objG = new GestionArchivos();
+        FAM objFAM = new FAM();
+        List<String> listRegistros = objG.leer("SED/Datos");
+
+        for (String registro : listRegistros) {
+            rutaArchivo = "SED/" + registro;
+            crearModelo();
+            
         }
     }
 

@@ -11,23 +11,31 @@ import java.util.List;
 public class FAM {
 
     public List<Combinaciones> listCombinaciones;
+    public List<Variable> listVariables;
 
-    private final List<Triangular> listTria;
-    private final List<Trapezoide> listTrap;
-    private final List<semiTriangular> listSemTria;
-    private final List<semiTrapezoide> listSemTrap;
+    //No se deben quitar las listas porque son usadas por el método crear modelo
+    private List<Triangular> listTria;
+    private List<Trapezoide> listTrap;
+    private List<semiTriangular> listSemTria;
+    private List<semiTrapezoide> listSemTrap;
     private Combinaciones tmpC;
     private int turno;
 
-    public FAM(List<Triangular> listTria, List<Trapezoide> lisTrap, List<semiTriangular> listSTria, List<semiTrapezoide> listTrap) {
-        this.listTria = listTria;
-        this.listTrap = lisTrap;
-        this.listSemTria = listSTria;
-        this.listSemTrap = listTrap;
-
+    //public FAM(List<Triangular> listTria, List<Trapezoide> lisTrap, List<semiTriangular> listSTria, List<semiTrapezoide> listTrap) {
+    public FAM() {
+        //INICIALIZA ATRIBUTOS
         listCombinaciones = new ArrayList<>();
         tmpC = new Combinaciones();
         turno = 0;
+    }
+
+    public void creaCombinaciones() throws IOException {
+        GestionArchivos objG = new GestionArchivos();
+        List<String> listRegistros = objG.leer("SED/Datos");
+
+        for (String registro : listRegistros) {
+            
+        }
     }
 
     //solo genera las combinaciones, no calcula las salidas difusas

@@ -162,23 +162,24 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jmiFAMNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFAMNuevoActionPerformed
-        try {
-            objFAM = new FAM(objMI.listTriangular, objMI.listTrapezoide, objMI.listSemiTriangular, objMI.listSemiTrapezoide);
-            objFAM.crear();
-            JOptionPane.showMessageDialog(this, "FAM creada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-
-            new GUI_Combinaciones(objFAM.listCombinaciones);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        objMI.matrizFAM();
+//        try {
+//            objFAM = new FAM();
+//            objFAM.crear();
+//            JOptionPane.showMessageDialog(this, "FAM creada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+//
+//            new GUI_Combinaciones(objFAM.listCombinaciones);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }//GEN-LAST:event_jmiFAMNuevoActionPerformed
 
     private void jmiFAMExistenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFAMExistenteActionPerformed
-        objFAM = new FAM(objMI.listTriangular, objMI.listTrapezoide, objMI.listSemiTriangular, objMI.listSemiTrapezoide);
-        objFAM.actualizaFAM();
-
-        //FALTA
-        System.out.println("FALTA");
+//        objFAM = new FAM(objMI.listTriangular, objMI.listTrapezoide, objMI.listSemiTriangular, objMI.listSemiTrapezoide);
+//        objFAM.actualizaFAM();
+//
+//        //FALTA
+//        System.out.println("FALTA");
 
     }//GEN-LAST:event_jmiFAMExistenteActionPerformed
 
