@@ -18,4 +18,7 @@ public class Combinaciones {
         listSalidas = new ArrayList<>();
     }
 
+    public Combinaciones(List<Etiqueta> listCombinaciones) {
+        this.listCombinaciones = listCombinaciones;
+    }
 }

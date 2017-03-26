@@ -24,9 +24,9 @@ public class semiTriangular extends JFrame {
     int noFuncion;
     String nomFile;
     String[] arrayO = {"Derecha", "Izquierda"};
-    JTextField txtEtiqueta, txtPuntoC, txtLongitud;
+    JTextField txtEtiqueta, txtLongitud;
     JComboBox orientacion;
-    JLabel lblEtiqueta, lblPuntoC, lblLongitud, lblOrientacion;
+    JLabel lblEtiqueta, lblLongitud, lblOrientacion;
     JButton aceptar;
     JPanel pnlsup, pnlinf;
     String etiqueta;
@@ -56,9 +56,6 @@ public class semiTriangular extends JFrame {
         pnlsup.setLayout(new GridLayout(4, 2));//Declara como irán los botones en el panel
         orientacion = new JComboBox(arrayO);
         lblOrientacion = new JLabel("Orientacion: ");
-        txtPuntoC = new JTextField();
-        txtPuntoC.setText("");
-        lblPuntoC = new JLabel("Punto Critico: ");
         txtLongitud = new JTextField();
         txtLongitud.setText("");
         lblLongitud = new JLabel("Longitud: ");
@@ -67,8 +64,6 @@ public class semiTriangular extends JFrame {
         lblEtiqueta = new JLabel("Etiqueta: ");
         pnlsup.add(lblOrientacion);
         pnlsup.add(orientacion);
-        pnlsup.add(lblPuntoC);
-        pnlsup.add(txtPuntoC);
         pnlsup.add(lblLongitud);
         pnlsup.add(txtLongitud);
         pnlsup.add(lblEtiqueta);
@@ -98,7 +93,7 @@ public class semiTriangular extends JFrame {
                             if (noFuncion == 1) {
                                 new tipoFunciones(noFuncion, calculaTraslape(), fin, nomFile);
                             } else {
-                                System.out.println("No se puede insertar debido a que no es la primera función");
+                                System.out.println("No se puede colocar la función debido a que no es la primera");
                             }
                         }
                     } catch (Exception ex) {
@@ -112,24 +107,23 @@ public class semiTriangular extends JFrame {
 
     boolean capturaDatos() {
         try {
-            puntoC = Double.parseDouble(txtPuntoC.getText());
             etiqueta = txtEtiqueta.getText();
             v_orientacion = orientacion.getSelectedItem().toString().toLowerCase().charAt(0);
             longitud = Double.parseDouble(txtLongitud.getText());
+
             if (etiqueta.equals("")) {
                 JOptionPane.showMessageDialog(this, "Error llene todos los campos");
                 return false;
             }
-            if (puntoC < origen || puntoC > fin) {
-                JOptionPane.showMessageDialog(this, "El punto critico esta fuera del discurso disponible");
-                return false;
+            if (orientacion.getSelectedItem().toString().equalsIgnoreCase("Derecha")) {
+                puntoC = fin;
+            } else {
+                puntoC = origen;
             }
-            double rango = puntoC - origen;
-            if ((fin - origen) < (rango + rango)) {
+            if ((fin - origen) < longitud) {
                 JOptionPane.showMessageDialog(this, "La función abarcará todo el discurso disponible");
-                aux = fin;
+                longitud = fin - origen;
             }
-
             return true;
         } catch (Exception e) {
             e.printStackTrace();

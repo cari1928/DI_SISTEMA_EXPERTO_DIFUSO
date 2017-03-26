@@ -12,8 +12,8 @@ public class dato_x extends javax.swing.JFrame {
     String variable;
 
     public dato_x(String variable) {
-        initComponents();
         this.variable = variable;
+        initComponents();
 
         setLocationRelativeTo(null);
         setResizable(false);
@@ -35,7 +35,7 @@ public class dato_x extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos: "+variable));
 
         btnEnviar.setText("Enviar");
         btnEnviar.addActionListener(new java.awt.event.ActionListener() {
@@ -97,7 +97,7 @@ public class dato_x extends javax.swing.JFrame {
 
             setVisible(false);
             JOptionPane.showMessageDialog(this, objM.getResultado(), "Resultado", JOptionPane.INFORMATION_MESSAGE);
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Ingresa un valor válido", "ERROR", JOptionPane.ERROR_MESSAGE);

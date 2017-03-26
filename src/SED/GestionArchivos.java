@@ -73,10 +73,14 @@ public class GestionArchivos {
         return list;
     }
 
-    public String obtenerRegistro(String nomFile, int llave) throws IOException {
+    public Etiqueta obtenerEtByRegistro() {
+        return null;
+    }
+
+    public String obtenerRegistroByID(String nomFile, int llave) throws IOException {
         String convert;
         StringBuilder builder = null;
-        File archivo = new File(nomFile);
+        //File archivo = new File(nomFile);
         raf = new RandomAccessFile(nomFile, "rw");
         if (llave > 1) {
             raf.seek((llave * 300) + (2 + (llave - 1) * 4));
@@ -161,7 +165,7 @@ public class GestionArchivos {
                 System.out.println(list.get(i));
             }
             System.out.println("------------------------------------------------------------------");
-            String registro = objG.obtenerRegistro("pruebas", 7);
+            String registro = objG.obtenerRegistroByID("pruebas", 7);
             System.out.println(registro);
             //registro += "9999";
             System.out.println(registro);

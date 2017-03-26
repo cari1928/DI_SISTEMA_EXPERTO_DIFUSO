@@ -116,7 +116,7 @@ public class discurso extends JFrame {
             variable = txtVariable.getText();
             unidad = txtUnidad.getText();
             if (unidad.equals("") || variable.equals("")) {
-                JOptionPane.showMessageDialog(this, "Se deben dellanr todos los campos");
+                JOptionPane.showMessageDialog(this, "Se deben llanar todos los campos");
                 return false;
             }
 

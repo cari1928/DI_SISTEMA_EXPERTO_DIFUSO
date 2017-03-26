@@ -17,6 +17,7 @@ public class MotorInferencia {
     public List<semiTrapezoide> listSemiTrapezoide;
     public double punto;
     public String resultado, rutaArchivo;
+    String variable;
 
     public MotorInferencia() {
         resultado = "";
@@ -29,22 +30,60 @@ public class MotorInferencia {
     public void fuzzyfication(double punto, String variable) {
         this.punto = punto;
         this.rutaArchivo = variable;
-        crearModelo();
+        GestionArchivos objG = new GestionArchivos();
+        Etiqueta objE;
+        crearModelo(rutaArchivo);
 
         if (listTriangular != null) {
             for (Triangular objTria : listTriangular) {
                 //checar que el punto ingresado por el usuario esté entre los puntos no críticos de la figura
                 if (objTria.puntoIzq[0] < punto && punto < objTria.puntoDer[0]) {
-                    resultado += objTria.etiqueta + " " + calcularY(objTria) + " "; //fase de pruebas todavía
+
+                    try {
+                        objTria.membresiaY = calcularY(objTria);
+                        resultado += objTria.etiqueta + " " + objTria.membresiaY + " "; //fase de pruebas todavía
+                        String registro = objG.obtenerRegistroByID(this.variable, objTria.turno), nuevoRegistro = "";
+                        String parts[] = registro.split(" ");
+
+                        for (int i = 0; i < parts.length; i++) {
+                            if (i == 3 && parts.length == 4) {
+                                nuevoRegistro += parts[i] + " " + objTria.membresiaY;
+                            } else if (i == 4 && parts.length == 5) {
+                                nuevoRegistro += objTria.membresiaY;
+                            } else {
+                                nuevoRegistro += parts[i] + " ";
+                            }
+                        }
+                        objG.actualizar(this.variable, objTria.turno, nuevoRegistro);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
         }
-
         if (listTrapezoide != null) {
             for (Trapezoide objTrap : listTrapezoide) {
                 //checar que el punto ingresado por el usuario esté entre los puntos no críticos de la figura
                 if (objTrap.puntoIzq[0] < punto && punto < objTrap.puntoDer[0]) {
-                    resultado += objTrap.etiqueta + " " + calcularY(objTrap) + "\n"; //fase de pruebas todavía
+                    try {
+                        objTrap.membresiaY = calcularY(objTrap);
+                        resultado += objTrap.etiqueta + " " + objTrap.membresiaY + "\n"; //fase de pruebas todavía
+                        String registro = objG.obtenerRegistroByID(this.variable, objTrap.turno), nuevoRegistro = "";
+                        String parts[] = registro.split(" ");
+                        for (int i = 0; i < parts.length; i++) {
+                            if (i == 4 && parts.length == 5) {
+                                nuevoRegistro += parts[i] + " " + objTrap.membresiaY;
+                            } else if (i == 5 && parts.length == 6) {
+                                nuevoRegistro += objTrap.membresiaY;
+                            } else {
+                                nuevoRegistro += parts[i] + " ";
+                            }
+                        }
+                        objG.actualizar(this.variable, objTrap.turno, nuevoRegistro);
+                    } catch (Exception e) {
+                    }
                 }
             }
         }
@@ -54,19 +93,52 @@ public class MotorInferencia {
                 //checar orientacion
                 if (objSemTria.orientacion == 'd') {
                     if (objSemTria.puntoC[0] < punto && punto < objSemTria.punto2[0]) {
-                        resultado += objSemTria.etiqueta + " " + calcularY(objSemTria) + "\n";
+                        objSemTria.membresiaY = calcularY(objSemTria);
+                        resultado += objSemTria.etiqueta + " " + objSemTria.membresiaY + "\n";
                     }
                 } else {
                     if (objSemTria.punto2[0] < punto && punto < objSemTria.puntoC[0]) {
-                        resultado += objSemTria.etiqueta + " " + calcularY(objSemTria) + "\n";
+                        objSemTria.membresiaY = calcularY(objSemTria);
+                        resultado += objSemTria.etiqueta + " " + objSemTria.membresiaY + "\n";
                     }
+                }
+                try {
+                    String registro = objG.obtenerRegistroByID(this.variable, objSemTria.turno), nuevoRegistro = "";
+                    String parts[] = registro.split(" ");
+                    for (int i = 0; i < parts.length; i++) {
+                        if (i == 5 && parts.length == 6) {
+                            nuevoRegistro += parts[i] + " " + objSemTria.membresiaY;
+                        } else if (i == 6 && parts.length == 7) {
+                            nuevoRegistro += objSemTria.membresiaY;
+                        } else {
+                            nuevoRegistro += parts[i] + " ";
+                        }
+                    }
+                    objG.actualizar(this.variable, objSemTria.turno, nuevoRegistro);
+                } catch (Exception e) {
                 }
             }
         }
 
         if (listSemiTrapezoide != null) {
             for (int i = 0; i < listSemiTrapezoide.size(); i++) {
-                calcularY(listSemiTrapezoide.get(i));
+                semiTrapezoide objSemTrap = listSemiTrapezoide.get(i);
+                objSemTrap.membresiaY = calcularY(objSemTrap);
+                try {
+                    String registro = objG.obtenerRegistroByID(this.variable, objSemTrap.turno), nuevoRegistro = "";
+                    String parts[] = registro.split(" ");
+                    for (int j = 0; j < parts.length; j++) {
+                        if (j == 4 && parts.length == 5) {
+                            nuevoRegistro += parts[i] + " " + objSemTrap.membresiaY;
+                        } else if (j == 5 && parts.length == 6) {
+                            nuevoRegistro += objSemTrap.membresiaY;
+                        } else {
+                            nuevoRegistro += parts[i] + " ";
+                        }
+                    }
+                    objG.actualizar(this.variable, objSemTrap.turno, nuevoRegistro);
+                } catch (Exception e) {
+                }
             }
         }
 
@@ -75,7 +147,7 @@ public class MotorInferencia {
         }
     }
 
-    private void crearModelo() {
+    public void crearModelo(String ruta) {
         GestionArchivos objG = new GestionArchivos();
         List<String> listRegistros;
         Triangular objTri;
@@ -90,7 +162,7 @@ public class MotorInferencia {
         iniListas();
 
         try {
-            listRegistros = objG.leer(rutaArchivo);
+            listRegistros = objG.leer(ruta);
             for (int i = 0; i < listRegistros.size(); i++) {
                 registro = listRegistros.get(i);
                 parts = registro.split(" ");
@@ -114,6 +186,7 @@ public class MotorInferencia {
                         objTri.puntoDer[1] = 0;
 
                         objTri.etiqueta = parts[2];
+                        objTri.membresiaY = Double.parseDouble(parts[3]);
                         objTri.turno = contFigura;
                         listTriangular.add(objTri);
                         ++contFigura;
@@ -136,6 +209,7 @@ public class MotorInferencia {
                         objTra.puntoDer[0] = objTra.puntoC2[0] + distancia;
 
                         objTra.etiqueta = parts[3];
+                        objTra.membresiaY = Double.parseDouble(parts[4]);
                         objTra.turno = contFigura;
                         ++contFigura;
                         listTrapezoide.add(objTra);
@@ -161,6 +235,7 @@ public class MotorInferencia {
                         }
                         objSemTri.punto2[1] = 0;
                         objSemTri.turno = contFigura;
+                        objSemTri.membresiaY = Double.parseDouble(parts[5]);
                         listSemiTriangular.add(objSemTri);
                         ++contFigura;
                         break;
@@ -189,6 +264,7 @@ public class MotorInferencia {
                         }
                         objSemTrap.punto2[1] = 0;
                         objSemTrap.turno = contFigura;
+                        objSemTrap.membresiaY = Double.parseDouble(parts[4]);
                         listSemiTrapezoide.add(objSemTrap);
                         ++contFigura;
                         break;
@@ -208,7 +284,6 @@ public class MotorInferencia {
             e.printStackTrace(); //para pruebas
             JOptionPane.showMessageDialog(null, "CREACIÓN DEL MODEO", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     private void iniListas() {
@@ -290,24 +365,26 @@ public class MotorInferencia {
         return ((punto - x1) / (x2 - x1)) * (y2 - y1) + y1;
     }
 
-    private void calcularY(semiTrapezoide objSTrap) {
+    private double calcularY(semiTrapezoide objSTrap) {
         char orientacion = objSTrap.orientacion;
-
+        double y = 0;
         if (orientacion == 'i') {
             if (objU.inicio < punto && punto < objSTrap.punto2[0]) {
                 //Esta dentro izquierda
                 if (objSTrap.puntoC[0] < punto && punto < objSTrap.punto2[0]) {
                     double p1[] = {objSTrap.puntoC[0], objSTrap.puntoC[1]};
                     double p2[] = {objSTrap.punto2[0], objSTrap.punto2[1]};
-                    double y = (punto - p1[0]) / (p2[0] - p1[0]) * (p2[1] - p1[1]) + (p1[1]);
+                    y = (punto - p1[0]) / (p2[0] - p1[0]) * (p2[1] - p1[1]) + (p1[1]);
                     resultado += objSTrap.etiqueta + " Y = " + y + "\n";
                 } else {
                     //Esta en la linea Recta de 1's
-                    resultado += objSTrap.etiqueta + " Y = 1" + "\n";
+                    y = 1;
+                    resultado += objSTrap.etiqueta + " Y = " + y + "\n";
                 }
             } else {
                 //El punto no pertenece a la funcion
-                resultado += objSTrap.etiqueta + " Y = 0" + "\n";
+                y = 0;
+                resultado += objSTrap.etiqueta + " Y = " + y + "\n";
             }
         } else {
             if (punto < objU.fin && punto > objSTrap.punto2[0]) {
@@ -315,22 +392,25 @@ public class MotorInferencia {
                 if (punto < objSTrap.puntoC[0] && punto > objSTrap.punto2[0]) {
                     double p1[] = {objSTrap.puntoC[0], objSTrap.puntoC[1]};
                     double p2[] = {objSTrap.punto2[0], objSTrap.punto2[1]};
-                    double y = (punto - p1[0]) / (p2[0] - p1[0]) * (p2[1] - p1[1]) + (p1[1]);
+                    y = (punto - p1[0]) / (p2[0] - p1[0]) * (p2[1] - p1[1]) + (p1[1]);
                     resultado += objSTrap.etiqueta + " Y = " + y + "\n";
                 } else {
                     //Esta en la linea recta de 1's
-                    resultado += objSTrap.etiqueta + " Y = 1" + "\n";
+                    y = 1;
+                    resultado += objSTrap.etiqueta + " Y = " + y + "\n";
                 }
             } else {
                 //El punto no pertenece a la funcion
-                resultado += objSTrap.etiqueta + " Y = 0" + "\n";
+                y = 0;
+                resultado += objSTrap.etiqueta + " Y = " + y + "\n";
             }
         }
+        return y;
     }
 
     //para pruebas
     public static void main(String[] args) {
-        MotorInferencia objM = new MotorInferencia();
+//        MotorInferencia objM = new MotorInferencia("PRUEBA");
     }
 
 }
