@@ -1,10 +1,17 @@
 package Interfaces;
 
 import SED.Combinaciones;
+import SED.FAM;
 import SED.GestionArchivos;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -17,27 +24,57 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author Tenistas
  */
-public final class GUI_Combinaciones extends JFrame {
+public class GUI_Combinaciones extends JFrame {
 
     GestionArchivos objA = new GestionArchivos();
     int first = -1, last = -1;
-    JPanel panel;
+    FAM objFAM;
+    JPanel panel, panelboton;
     JList listaCombinaciones;
     List<Combinaciones> Combinaciones;
     JLabel msj;
+    JButton aceptar;
 
-    GUI_Combinaciones(List<Combinaciones> Combinaciones) {
+    GUI_Combinaciones(FAM objFAM) {
         super("GUI_Combinaciones");
-        this.Combinaciones = Combinaciones;
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));//Crea el espacio para los paneles
+        this.Combinaciones = objFAM.listCombinaciones;
+        this.objFAM = objFAM;
 
         m_panel();
+        m_panelBoton();
 
         this.add(panel);
+        this.add(panelboton);
         this.setVisible(true);
         this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.pack();
+    }
+
+    void m_panelBoton() {
+        panelboton = new JPanel();
+        aceptar = new JButton("Aceptar");
+        aceptar.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                try {
+                    ocultarVentana();
+                    actualizaArchivoFam();
+                    objFAM.actualizaArchivo(); //Aqui es donde se llamara el metodo para crear la estructura con el FAM existente :3
+                    JOptionPane.showMessageDialog(null, "Combinaciones creadas y cargadas");
+                } catch (IOException ex) {
+                    Logger.getLogger(GUI_Combinaciones.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        panelboton.add(aceptar);
+    }
+
+    void ocultarVentana() {
+        this.setVisible(false);
     }
 
     void m_panel() {
@@ -79,39 +116,17 @@ public final class GUI_Combinaciones extends JFrame {
                     }
                     int selected = -1;
 
-                    if (first == -1 && last == -1) {
-                        System.out.println("El seleccionado es " + evt.getFirstIndex());
-                        selected = evt.getFirstIndex();
-                    } else if (first != evt.getFirstIndex()) {
-                        System.out.println("El seleccionado es " + evt.getFirstIndex());
-                        selected = evt.getFirstIndex();
-                    } else if (last != evt.getLastIndex()) {
-                        System.out.println("El seleccionado es " + evt.getLastIndex());
-                        selected = evt.getLastIndex();
-                    } else if (first != evt.getLastIndex()) {
-                        System.out.println("El seleccionado es " + evt.getLastIndex());
-                        selected = evt.getLastIndex();
-                    } else if (last != evt.getFirstIndex()) {
-                        System.out.println("El seleccionado es " + evt.getFirstIndex());
-                        selected = evt.getFirstIndex();
-                    }
-//                System.out.println(Combinaciones.get(11).Combinaciones.get(1).etiqueta);
+                    selected = evt.getLastIndex();
                     String etiquetasSalida;
-                    etiquetasSalida = JOptionPane.showInputDialog("Ingrese las etiquetas de salida separadas por un |", null);
-                    if (etiquetasSalida.indexOf("|") != -1) {
-                        String arraySalidas[] = etiquetasSalida.split("|");
+                    etiquetasSalida = JOptionPane.showInputDialog("Ingrese las etiquetas de salida separadas por un -", null);
+                    if (etiquetasSalida.indexOf("-") != -1) {
+                        String arraySalidas[] = etiquetasSalida.split("-");
                         for (int i = 0; i < arraySalidas.length; i++) {
-                            Combinaciones.get(selected + 1).listSalidas.add(arraySalidas[i]);
+                            Combinaciones.get(selected).listSalidas.add(arraySalidas[i]);
                         }
                     } else {
-                        Combinaciones.get(selected + 1).listSalidas.add(etiquetasSalida);
+                        Combinaciones.get(selected).listSalidas.add(etiquetasSalida);
                     }
-//                System.out.println("-----------------------------------------");
-//                System.out.println(last + "    " + first);
-//              first = evt.getFirstIndex();
-//              last =evt.getLastIndex();
-
-//              System.out.println("Selected from " + evt.getFirstIndex() + " to " + evt.getLastIndex());
                 }
             });
             panel.add(barra);
@@ -123,7 +138,6 @@ public final class GUI_Combinaciones extends JFrame {
     private String[] GeneraArray() {
         Combinaciones combinacion;
         String[] combinaciones = new String[Combinaciones.size()];
-        System.out.println(Combinaciones.size());
         for (int i = 0; i < Combinaciones.size(); i++) {
             combinacion = Combinaciones.get(i);
             combinaciones[i] = "";
@@ -143,9 +157,9 @@ public final class GUI_Combinaciones extends JFrame {
             List<String> listRegistrosFam;
             List<String> listRegistrosFamNueva = new ArrayList<>();
             List<String> salidasEtiquetas = new ArrayList<>();
-            listRegistrosFam = objA.leer("Fam");
+            listRegistrosFam = objA.leer("SED/FAM");
             String parts[];
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < Combinaciones.size(); i++) {
                 String aux = "";
                 if (Combinaciones.get(i).listSalidas.size() == 0) {
                     parts = listRegistrosFam.get(i).split(" ");
@@ -159,7 +173,7 @@ public final class GUI_Combinaciones extends JFrame {
                     salidasEtiquetas = Combinaciones.get(i).listSalidas;
                     for (int j = 0; j < salidasEtiquetas.size(); j++) {
                         if (j < (salidasEtiquetas.size() - 1)) {
-                            salidas += salidasEtiquetas.get(j) + "|";
+                            salidas += salidasEtiquetas.get(j) + "-";
                         } else {
                             salidas += salidasEtiquetas.get(j);
                         }
@@ -176,9 +190,9 @@ public final class GUI_Combinaciones extends JFrame {
                     listRegistrosFamNueva.add(aux);
                 }
             }
-            objA.escribir("FAM", 1, listRegistrosFamNueva.get(0), "nuevo"); //si empieza desde 1 la llave?
+            objA.escribir("SED/FAM", 1, listRegistrosFamNueva.get(0), "nuevo"); //si empieza desde 1 la llave?
             for (int i = 1; i < listRegistrosFamNueva.size(); i++) {
-                objA.escribir("FAM", (i + 1), listRegistrosFamNueva.get(i), "final");
+                objA.escribir("SED/FAM", (i + 1), listRegistrosFamNueva.get(i), "final");
             }
         } catch (IOException ex) {
             ex.printStackTrace();

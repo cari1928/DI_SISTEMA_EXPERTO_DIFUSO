@@ -364,6 +364,8 @@ public class FAM {
         Combinaciones objC;
         Etiqueta objE;
         String[] parts, minip;
+        String part;
+        double valor;
 
         listCombinaciones = new ArrayList<>();
         for (String listF : listFAM) {
@@ -371,9 +373,16 @@ public class FAM {
 
             parts = listF.split(" ");
 
+            if (parts[parts.length - 1].charAt(0) != '1') {
+                valor = Double.parseDouble(parts[parts.length - 2]);
+            } else {
+                valor = Double.parseDouble(parts[parts.length - 1]);
+            }
+
             //checa el último elemento				
-            if (Double.parseDouble(parts[parts.length - 1]) == 1) { //verifica que sea un 1				
-                for (String part : parts) {
+            if (valor == 1) { //verifica que sea un 1				
+                for (int i = 0; i < parts.length; i++) {
+                    part = parts[i];
 
                     if (part.contains(",")) {
                         objE = new Etiqueta();
@@ -382,15 +391,61 @@ public class FAM {
                         objE.membresia = Double.parseDouble(minip[1]);
                         objC.listCombinaciones.add(objE); //agrega etiquetas		      		
 
-                    } else if (part.contains("|")) {
-                        minip = part.split("|");
+                    } else if (part.contains("-")) {
+                        minip = part.split("-");
                         for (String m : minip) {
                             objC.listSalidas.add(m); //agrega etiquetas de salida				
                         }
+                    } else if (i != parts.length - 1) {
+                        objC.listSalidas.add(part);
                     }
                 }
                 listCombinaciones.add(objC);
             }
         }
     }
+    
+        public List<String> buscaSalidas(){
+        boolean bandera = true;
+        String etiquetaSalidaAux="";
+        List<String> salidas = new ArrayList<>();
+        for (int i = 0; i < listCombinaciones.size(); i++) {
+            for (int j = 0; j < listCombinaciones.get(i).listSalidas.size(); j++) {
+                etiquetaSalidaAux = listCombinaciones.get(i).listSalidas.get(j);
+                bandera = true;
+                for (int k = 0; k < salidas.size(); k++) {
+                    if(salidas.get(k).equals(etiquetaSalidaAux)){
+                        bandera = false; 
+                    }
+                }
+                if(bandera){
+                    salidas.add(etiquetaSalidaAux);
+                }
+            }
+        }
+        return salidas;
+    }
+    
+    public List<Etiqueta> obtenerReult(List<String> salidas){
+        List<Etiqueta> listEtqSalida = new ArrayList<>();
+        Etiqueta objE;
+        for (int i = 0; i < salidas.size(); i++) {  //Recorrer cada salida
+            objE = new Etiqueta();
+            objE.etiqueta = salidas.get(i); //Guardo la salida en un objeto Etiqueta
+            objE.membresia = -1000000000;
+            for (int j = 0; j < listCombinaciones.size(); j++) { //Recorrer cada combinacion
+                for (int k = 0; k < listCombinaciones.get(j).listSalidas.size(); k++) { //Recorrer cada etiqueta de salida para las combinaciones
+                    if(listCombinaciones.get(j).listSalidas.get(k).equals(objE.etiqueta)){ //Comparar etiqueta de la combinacion con etiqueta del parametro
+                        if(listCombinaciones.get(j).pesoRegla > objE.membresia){
+                            objE.membresia = listCombinaciones.get(j).pesoRegla;
+                            break;
+                        }
+                    }
+                }
+            }
+            listEtqSalida.add(objE);
+        }
+        return listEtqSalida;
+    }
+    
 }

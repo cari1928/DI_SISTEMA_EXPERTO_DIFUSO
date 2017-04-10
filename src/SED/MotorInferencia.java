@@ -82,6 +82,7 @@ public class MotorInferencia {
                         }
                         objG.actualizar(this.rutaArchivo, objTrap.turno, nuevoRegistro);
                     } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -168,6 +169,7 @@ public class MotorInferencia {
 
                 switch (parts[0]) {
                     case "Ceros":
+                        ++contFigura;
                         break;
 
                     case "Triangular": //0 = x, 1 = y
@@ -350,7 +352,7 @@ public class MotorInferencia {
             x2 = objT.puntoC2[0];
             y2 = objT.puntoC2[1];
 
-        } else if (objT.puntoC1[0] < punto && punto < objT.puntoC2[0]) { //verificar que el punto esté entre los dos puntos criticos
+        } else if (objT.puntoC1[0] <= punto && punto <= objT.puntoC2[0]) { //verificar que el punto esté entre los dos puntos criticos
             return 1;
         }
 

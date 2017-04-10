@@ -8,8 +8,11 @@ import SED.MotorInferencia;
 import SED.Variable;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,6 +47,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jmiArchivos = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -53,7 +57,7 @@ public class Principal extends javax.swing.JFrame {
         jmiFAMExistente = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jmPesoRegla = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        jmiSalidaDifusa = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,6 +84,15 @@ public class Principal extends javax.swing.JFrame {
         jMenu3.add(jMenuItem3);
 
         jMenu1.add(jMenu3);
+
+        jmiArchivos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        jmiArchivos.setText("Archivos");
+        jmiArchivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiArchivosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmiArchivos);
 
         jMenuBar1.add(jMenu1);
 
@@ -137,13 +150,13 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu5.add(jmPesoRegla);
 
-        jMenuItem7.setText("Salida Difusa");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        jmiSalidaDifusa.setText("Salida Difusa");
+        jmiSalidaDifusa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                jmiSalidaDifusaActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem7);
+        jMenu5.add(jmiSalidaDifusa);
 
         jMenuBar1.add(jMenu5);
 
@@ -202,7 +215,7 @@ public class Principal extends javax.swing.JFrame {
             objC = new Combinaciones();
             objFAM.crear(objFAM.listVariables.get(0), 1, objC, new Combinaciones());
             objFAM.crearArchivo();
-            guiC = new GUI_Combinaciones(objFAM.listCombinaciones);
+            guiC = new GUI_Combinaciones(objFAM);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -212,7 +225,6 @@ public class Principal extends javax.swing.JFrame {
         try {
             objFAM = new FAM();
             objFAM.actualizaArchivo();
-            System.out.println("");
             JOptionPane.showMessageDialog(this, "Combinaciones cargadas");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -250,71 +262,79 @@ public class Principal extends javax.swing.JFrame {
             listC.pesoRegla = minimo;
         }
 
-        for (int i = 0; i < objFAM.listCombinaciones.size(); i++) {
-            temp = objFAM.listCombinaciones.get(i);
-            objR.membresia = temp.pesoRegla;
-
-            for (int j = 0; j < temp.listSalidas.size(); j++) {
-                objR.etiqueta = temp.listSalidas.get(j);
-                check = false;
-                for (int m = 0; m < listResultado.size() && !check; m++) {
-                    if (objR.etiqueta.equalsIgnoreCase(listResultado.get(m).etiqueta)) {
-                        check = true;
-                    }
-                }
-                for (int k = i + 1; k < temp.listCombinaciones.size() && !check; k++) {
-                    for (int l = 0; l < temp.listSalidas.size(); l++) {
-                        if (objR.etiqueta.equalsIgnoreCase(objFAM.listCombinaciones.get(k).listSalidas.get(l))) {
-                            if (objR.membresia < objFAM.listCombinaciones.get(k).pesoRegla) {
-                                objR.membresia = objFAM.listCombinaciones.get(k).pesoRegla;
-                            }
-                        }
-                    }
-                }
-                listResultado.add(objR);
-            }
-        }
+        listResultado = objFAM.obtenerReult(objFAM.buscaSalidas());
+        JOptionPane.showMessageDialog(this, "Inferencia completada");
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jmPesoReglaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmPesoReglaActionPerformed
-        GestionArchivos objG = new GestionArchivos();
-        List<String> listV, tmpR;
-        String ruta;
-        try {
-            listV = objG.leer("SED/Datos");
+        String salida = "";
+        DecimalFormat decimales = new DecimalFormat("0.0000");
+        DecimalFormat cero = new DecimalFormat("0.0");
 
-            for (String rVar : listV) {
-                ruta = "SED/" + rVar;
-                tmpR = objG.leer(ruta.trim());
-
-                for (String registro : tmpR) {
-                    System.out.println(registro);
+        for (int i = 0; i < objFAM.listCombinaciones.size(); i++) {
+            for (int j = 0; j < objFAM.listCombinaciones.get(i).listSalidas.size(); j++) {
+                for (int k = 0; k < objFAM.listCombinaciones.get(i).listCombinaciones.size(); k++) {
+                    if (objFAM.listCombinaciones.get(i).listCombinaciones.get(k).membresia == 0.00000) {
+                        salida += objFAM.listCombinaciones.get(i).listCombinaciones.get(k).etiqueta + "(" + cero.format(objFAM.listCombinaciones.get(i).listCombinaciones.get(k).membresia) + ") ";
+                    } else {
+                        salida += objFAM.listCombinaciones.get(i).listCombinaciones.get(k).etiqueta + "(" + decimales.format(objFAM.listCombinaciones.get(i).listCombinaciones.get(k).membresia) + ") ";
+                    }
+                    if (k != objFAM.listCombinaciones.get(i).listCombinaciones.size() - 1) {
+                        salida += " ^ ";
+                    }
                 }
-                System.out.println("");
+                salida += "-> ";
+                if (objFAM.listCombinaciones.get(i).pesoRegla == 0.00000) {
+                    salida += objFAM.listCombinaciones.get(i).listSalidas.get(j) + "(" + cero.format(objFAM.listCombinaciones.get(i).pesoRegla) + ") \n";
+                } else {
+                    salida += objFAM.listCombinaciones.get(i).listSalidas.get(j) + "(" + decimales.format(objFAM.listCombinaciones.get(i).pesoRegla) + ") \n";
+                }
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Archivos no disponibles");
         }
+        JOptionPane.showMessageDialog(null, salida);
     }//GEN-LAST:event_jmPesoReglaActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        GestionArchivos objG = new GestionArchivos();
-        List<String> listV, tmpR;
-        String ruta;
+    private void jmiSalidaDifusaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSalidaDifusaActionPerformed
+        String resultado = "";
         try {
-            listV = objG.leer("SED/FAM");
-
-            for (String registro : listV) {
-                System.out.println(registro);
+            for (int i = 0; i < listResultado.size(); i++) {
+                resultado += listResultado.get(i).etiqueta + " : " + listResultado.get(i).membresia + "\n";
             }
-        } catch (IOException ex) {
+
+            JOptionPane.showMessageDialog(this, resultado, "Salidas Difusas", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Archivos no disponibles");
         }
+    }//GEN-LAST:event_jmiSalidaDifusaActionPerformed
 
+    private void jmiArchivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiArchivosActionPerformed
+        //PARA PRUEBAS!!!!!
+        GestionArchivos objG = new GestionArchivos();
+        List<String> listR, listV;
+        String archivo;
+        try {
+            listR = objG.leer("SED/Datos");
+            System.out.println("DATOS");
+            for (String rVar : listR) {
+                archivo = "SED/" + rVar;
+                listV = objG.leer(archivo.trim());
 
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+                for (String datos : listV) {
+                    System.out.println(datos);
+                }
+            }
+
+            listR = objG.leer("SED/FAM");
+            System.out.println("FAM");
+            for (String registros : listR) {
+                System.out.println(registros);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jmiArchivosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -352,9 +372,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jmPesoRegla;
+    private javax.swing.JMenuItem jmiArchivos;
     private javax.swing.JMenuItem jmiFAMExistente;
     private javax.swing.JMenuItem jmiFAMNuevo;
+    private javax.swing.JMenuItem jmiSalidaDifusa;
     // End of variables declaration//GEN-END:variables
 }
