@@ -24,6 +24,7 @@ public class Principal extends javax.swing.JFrame {
     private MotorInferencia objMI;
     private FAM objFAM;
     List<Etiqueta> listResultado;
+    boolean salida;
 
     public Principal() {
         initComponents();
@@ -55,6 +56,9 @@ public class Principal extends javax.swing.JFrame {
         jMenu6 = new javax.swing.JMenu();
         jmiFAMNuevo = new javax.swing.JMenuItem();
         jmiFAMExistente = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jmPesoRegla = new javax.swing.JMenuItem();
         jmiSalidaDifusa = new javax.swing.JMenuItem();
@@ -137,6 +141,26 @@ public class Principal extends javax.swing.JFrame {
         jMenu4.add(jMenu6);
 
         jMenu2.add(jMenu4);
+
+        jMenu7.setText("Defuzzyfication");
+
+        jMenuItem5.setText("Variable Salida");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem5);
+
+        jMenuItem6.setText("Centro de gravedad");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem6);
+
+        jMenu2.add(jMenu7);
 
         jMenuBar1.add(jMenu2);
 
@@ -233,7 +257,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        new discurso();
+        salida=false;
+        new discurso(salida);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -313,7 +338,8 @@ public class Principal extends javax.swing.JFrame {
         GestionArchivos objG = new GestionArchivos();
         List<String> listR, listV;
         String archivo;
-        try {
+        try 
+        {
             listR = objG.leer("SED/Datos");
             System.out.println("DATOS");
             for (String rVar : listR) {
@@ -335,6 +361,17 @@ public class Principal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jmiArchivosActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        salida=true;
+        new discurso(salida);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -367,11 +404,14 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jmPesoRegla;
     private javax.swing.JMenuItem jmiArchivos;
     private javax.swing.JMenuItem jmiFAMExistente;

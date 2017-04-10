@@ -27,13 +27,15 @@ public class discurso extends JFrame {
     JTextField txtorigen, txtFin, txtVariable, txtUnidad;
     JLabel lblOrigen, a, lblVariable, lblUnidad;
     JButton aceptar;
+    boolean salida;
 
-    public discurso() {
+    public discurso(boolean salida) {
         super("Discurso");
 
         m_panelSup();
         m_panelInf();
-
+        
+        this.salida=salida;
         this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         this.add(pnlsup);
         this.add(pnlinf);
@@ -88,11 +90,21 @@ public class discurso extends JFrame {
                     try {
                         objG = new GestionArchivos();
                         discurso = origen + " " + fin + " " + unidad + " " + variable;
-                        objG.escribir(ruta + variable, 1, discurso, "nuevo"); //crea el archivo con el nombre de la variable
-                        objG.escribir(ruta + "Datos", 1, variable, "final"); //guarda el nombre de la variable en el archivo Datos
+                        if(salida)
+                        {
+                            objG.escribir(ruta + variable+"-S", 1, discurso, "nuevo"); //crea el archivo con el nombre de la variable
+                            objG.escribir(ruta + "Datos", 1, variable+"-S", "final");
+                            ocultarventana();
+                            new tipoFunciones(0, origen, fin, ruta + variable+"-S");
+                        }else
+                        {
+                            objG.escribir(ruta + variable, 1, discurso, "nuevo"); //crea el archivo con el nombre de la variable
+                            objG.escribir(ruta + "Datos", 1, variable, "final"); //guarda el nombre de la variable en el archivo Datos
+                            ocultarventana();
+                            new tipoFunciones(0, origen, fin, ruta + variable);
+                        }
 
-                        ocultarventana();
-                        new tipoFunciones(0, origen, fin, ruta + variable);
+                        
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
