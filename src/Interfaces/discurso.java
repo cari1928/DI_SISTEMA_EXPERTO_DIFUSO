@@ -34,8 +34,8 @@ public class discurso extends JFrame {
 
         m_panelSup();
         m_panelInf();
-        
-        this.salida=salida;
+
+        this.salida = salida;
         this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         this.add(pnlsup);
         this.add(pnlinf);
@@ -90,21 +90,17 @@ public class discurso extends JFrame {
                     try {
                         objG = new GestionArchivos();
                         discurso = origen + " " + fin + " " + unidad + " " + variable;
-                        if(salida)
-                        {
-                            objG.escribir(ruta + variable+"-S", 1, discurso, "nuevo"); //crea el archivo con el nombre de la variable
-                            objG.escribir(ruta + "Datos", 1, variable+"-S", "final");
+                        if (salida) {
+                            objG.escribir(ruta + variable + "-S", 1, discurso, "nuevo"); //crea el archivo con el nombre de la variable
+                            objG.escribir(ruta + "Datos", 1, variable + "-S", "final");
                             ocultarventana();
-                            new tipoFunciones(0, origen, fin, ruta + variable+"-S");
-                        }else
-                        {
+                            new tipoFunciones(0, origen, fin, ruta + variable + "-S");
+                        } else {
                             objG.escribir(ruta + variable, 1, discurso, "nuevo"); //crea el archivo con el nombre de la variable
                             objG.escribir(ruta + "Datos", 1, variable, "final"); //guarda el nombre de la variable en el archivo Datos
                             ocultarventana();
                             new tipoFunciones(0, origen, fin, ruta + variable);
                         }
-
-                        
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

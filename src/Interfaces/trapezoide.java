@@ -124,7 +124,7 @@ public class trapezoide extends JFrame {
     }
 
     double calcularTraslape() {
-        double nuevoOrigen = 0;
+        double nuevoOrigen;
         if (aux == fin) {
             nuevoOrigen = (fin - puntoC2) * 0.6;
         } else {

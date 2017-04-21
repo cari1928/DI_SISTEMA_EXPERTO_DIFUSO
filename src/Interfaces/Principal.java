@@ -31,6 +31,7 @@ public class Principal extends javax.swing.JFrame {
         listResultado = new ArrayList<>();
         objMI = new MotorInferencia();
         setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**
@@ -201,7 +202,6 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
         String directorio = "SED";
         File index = new File(directorio);
         String[] entries = index.list();
@@ -256,8 +256,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiFAMExistenteActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-        salida=false;
+        salida = false;
         new discurso(salida);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -338,8 +337,7 @@ public class Principal extends javax.swing.JFrame {
         GestionArchivos objG = new GestionArchivos();
         List<String> listR, listV;
         String archivo;
-        try 
-        {
+        try {
             listR = objG.leer("SED/Datos");
             System.out.println("DATOS");
             for (String rVar : listR) {
@@ -364,13 +362,13 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-        salida=true;
+        salida = true;
         new discurso(salida);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
