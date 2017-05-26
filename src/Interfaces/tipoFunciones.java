@@ -78,7 +78,7 @@ public class tipoFunciones extends JFrame {
                             if (noFuncion == 1 || noFuncion == listaEtiquetasSalida.size()) {
                                 new semiTriangular(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
                             } else {
-                                JOptionPane.showMessageDialog(panel, "No es puede insertar está función");
+                                JOptionPane.showMessageDialog(panel, "No se puede insertar esta función");
                                 tipoFunciones objFun = new tipoFunciones(noFuncion - 1, origen, fin, nomFile);
                                 objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
                             }
@@ -91,7 +91,7 @@ public class tipoFunciones extends JFrame {
                             if (noFuncion == 1 || noFuncion == listaEtiquetasSalida.size()) {
                                 new semiTrapezoide(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
                             } else {
-                                JOptionPane.showMessageDialog(panel, "No es puede insertar está función");
+                                JOptionPane.showMessageDialog(panel, "No se puede insertar esta función");
                                 tipoFunciones objFun = new tipoFunciones(noFuncion - 1, origen, fin, nomFile);
                                 objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
                             }

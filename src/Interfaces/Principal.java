@@ -20,12 +20,12 @@ import javax.swing.JOptionPane;
  * @author Tenistas
  */
 public class Principal extends javax.swing.JFrame {
-
+    
     private MotorInferencia objMI;
     private FAM objFAM;
     List<Etiqueta> listResultado;
     boolean salida;
-
+    
     public Principal() {
         initComponents();
         listResultado = new ArrayList<>();
@@ -59,7 +59,7 @@ public class Principal extends javax.swing.JFrame {
         jmiFAMExistente = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        jmiCentroGravedad = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jmPesoRegla = new javax.swing.JMenuItem();
         jmiSalidaDifusa = new javax.swing.JMenuItem();
@@ -153,13 +153,13 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu7.add(jMenuItem5);
 
-        jMenuItem6.setText("Centro de gravedad");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        jmiCentroGravedad.setText("Centro de gravedad");
+        jmiCentroGravedad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                jmiCentroGravedadActionPerformed(evt);
             }
         });
-        jMenu7.add(jMenuItem6);
+        jMenu7.add(jmiCentroGravedad);
 
         jMenu2.add(jMenu7);
 
@@ -205,7 +205,7 @@ public class Principal extends javax.swing.JFrame {
         String directorio = "SED";
         File index = new File(directorio);
         String[] entries = index.list();
-
+        
         if (!index.exists()) {
             index.mkdir();
             JOptionPane.showMessageDialog(null, "Los archivos se han limpiado exitosamente");
@@ -266,7 +266,7 @@ public class Principal extends javax.swing.JFrame {
         dato_x guiD;
         try {
             listVars = objG.leer("SED/Datos");
-
+            
             for (String variable : listVars) {
                 guiD = new dato_x(variable.trim());
             }
@@ -280,13 +280,13 @@ public class Principal extends javax.swing.JFrame {
         Etiqueta objR = new Etiqueta();
         double minimo;
         boolean check;
-
+        
         for (Combinaciones listC : objFAM.listCombinaciones) {
             minimo = objFAM.calcPesoRegla(listC.listCombinaciones);
             listC.pesoRegla = minimo;
         }
-
-        listResultado = objFAM.obtenerReult(objFAM.buscaSalidas()); 
+        
+        listResultado = objFAM.obtenerReult(objFAM.buscaSalidas());
         JOptionPane.showMessageDialog(this, "Inferencia completada");
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -294,7 +294,7 @@ public class Principal extends javax.swing.JFrame {
         String salida = "";
         DecimalFormat decimales = new DecimalFormat("0.0000");
         DecimalFormat cero = new DecimalFormat("0.0");
-
+        
         for (int i = 0; i < objFAM.listCombinaciones.size(); i++) {
             for (int j = 0; j < objFAM.listCombinaciones.get(i).listSalidas.size(); j++) {
                 for (int k = 0; k < objFAM.listCombinaciones.get(i).listCombinaciones.size(); k++) {
@@ -324,7 +324,7 @@ public class Principal extends javax.swing.JFrame {
             for (int i = 0; i < listResultado.size(); i++) {
                 resultado += listResultado.get(i).etiqueta + " : " + listResultado.get(i).membresia + "\n";
             }
-
+            
             JOptionPane.showMessageDialog(this, resultado, "Salidas Difusas", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -344,12 +344,12 @@ public class Principal extends javax.swing.JFrame {
                 System.out.println(rVar);
                 archivo = "SED/" + rVar;
                 listV = objG.leer(archivo.trim());
-
+                
                 for (String datos : listV) {
                     System.out.println(datos);
                 }
             }
-
+            
             listR = objG.leer("SED/FAM");
             System.out.println("FAM");
             for (String registros : listR) {
@@ -363,35 +363,36 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-        if(!listResultado.isEmpty()){
+        if (!listResultado.isEmpty()) {
             salida = true;
             discurso objD = new discurso(salida, listResultado);
-        } else{
+        } else {
             JOptionPane.showMessageDialog(this, "Se requiere inferenciar primero");
         }
-        
+
         //objD.setListaEtiquetasSalida(listResultado);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void jmiCentroGravedadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCentroGravedadActionPerformed
+        double centroide;
         try {
-            // TODO add your handling code here:
             GestionArchivos objG = new GestionArchivos();
             String variable = "";
             List<String> registros;
             registros = objG.leer("SED/Datos");
             for (String reg : registros) {
-                if(reg.contains("-S")){
-                        variable = reg;
+                if (reg.contains("-S")) {
+                    variable = reg;
                 }
             }
-            MotorInferencia objMI = new MotorInferencia();
             List<String[]> listaPuntosX = objMI.obtenerXFormulaGuss("SED/" + variable.trim(), listResultado);
-            //ListaPuntosX es lo que ocupas tu cari!!!
+            centroide = objMI.centroide(listaPuntosX);
+            JOptionPane.showMessageDialog(this, "Centroide: " + centroide);
+            
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_jmiCentroGravedadActionPerformed
 
     /**
      * @param args the command line arguments
@@ -431,9 +432,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jmPesoRegla;
     private javax.swing.JMenuItem jmiArchivos;
+    private javax.swing.JMenuItem jmiCentroGravedad;
     private javax.swing.JMenuItem jmiFAMExistente;
     private javax.swing.JMenuItem jmiFAMNuevo;
     private javax.swing.JMenuItem jmiSalidaDifusa;

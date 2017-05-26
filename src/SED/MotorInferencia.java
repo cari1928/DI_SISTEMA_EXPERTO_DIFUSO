@@ -158,7 +158,7 @@ public class MotorInferencia {
         String[] parts;
         int contFigura = 1;
         double distancia;
-        
+
         iniListas();
 
         try {
@@ -446,7 +446,7 @@ public class MotorInferencia {
                             puntosX[1] = (((((listaEtiquetasSalida.get(pos).membresia - y1) / (y2 - y1)) * (x2 - x1)) + x1)) + "";
                             puntosX[2] = (((((listaEtiquetasSalida.get(pos).membresia - y2) / (y3 - y2)) * (x3 - x2)) + x2)) + "";
                             listaPuntosX.add(puntosX);
-                            pos++;
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -475,7 +475,7 @@ public class MotorInferencia {
                         y2 = objTrap.puntoC2[1];
                         puntosX[2] = ((((listaEtiquetasSalida.get(pos).membresia - y1) / (y2 - y1)) * (x2 - x1)) + x1) + "";
                         listaPuntosX.add(puntosX);
-                        pos++;
+
                     }
                 }
 
@@ -492,34 +492,77 @@ public class MotorInferencia {
 
                             puntosX[1] = ((((listaEtiquetasSalida.get(pos).membresia - y1) / (y2 - y1)) * (x2 - x1)) + x1) + "";
                             listaPuntosX.add(puntosX);
-                            pos++;
+
                         }
                     }
                 }
-
                 if (listSemiTrapezoide != null) {
                     for (semiTrapezoide objSemTrap : listSemiTrapezoide) {
-                        if(objSemTrap.etiqueta.equals(listaEtiquetasSalida.get(pos).etiqueta)){
+                        if (objSemTrap.etiqueta.equals(listaEtiquetasSalida.get(pos).etiqueta)) {
                             String[] puntosX = new String[3];
-                            puntosX[0]= listaEtiquetasSalida.get(pos).membresia + "";
-                            puntosX[2]= listaEtiquetasSalida.get(pos).etiqueta;
-                            
+                            puntosX[0] = listaEtiquetasSalida.get(pos).membresia + "";
+                            puntosX[2] = listaEtiquetasSalida.get(pos).etiqueta;
+
                             double p1[] = {objSemTrap.puntoC[0], objSemTrap.puntoC[1]};
                             double p2[] = {objSemTrap.punto2[0], objSemTrap.punto2[1]};
                             puntosX[1] = (((listaEtiquetasSalida.get(pos).membresia - p1[1]) / (p2[1] - p1[1]) * (p2[0] - p1[0])) + (p1[0])) + "";
                             listaPuntosX.add(puntosX);
-                            pos++;
+
                         }
                     }
                 }
             }
+            pos++;
         }
         return listaPuntosX;
     }
 
-    //para pruebas
-    public static void main(String[] args) {
-//        MotorInferencia objM = new MotorInferencia("PRUEBA");
+    public double centroide(List<String[]> lVars) {
+        List<Double> supElements = superior(lVars);
+        double sup = supElements.remove(supElements.size() - 1);
+        double inf = inferior(lVars, supElements);
+
+        return sup / inf;
+    }
+
+    private List<Double> superior(List<String[]> lVars) {
+        List<Double> lCounts = new ArrayList<>();
+        int count = 0;
+        double acum = 0, res = 0;
+        double y;
+        String label; //solo para indicar su existencia, viene incluido en la lVars
+
+        for (String[] var : lVars) {
+            y = Double.parseDouble(var[0]);
+            label = var[var.length - 1];
+
+            for (int i = 1; i < var.length - 1; i++) {
+                while (acum <= Double.parseDouble(var[i])) {
+                    acum += 0.1;
+                    ++count;
+                }
+                lCounts.add((double) count);
+                acum *= y;
+                res += acum;
+                acum = count = 0;
+            }
+        }
+
+        lCounts.add(res);
+        return lCounts;
+    }
+
+    private double inferior(List<String[]> lVars, List<Double> lCounts) {
+        double y, c;
+        double res = 0;
+
+        for (int i = 0; i < lVars.size(); i++) {
+            y = Double.parseDouble(lVars.get(i)[0]);
+            c = lCounts.get(i);
+            res += y * c;
+        }
+
+        return res;
     }
 
 }

@@ -106,20 +106,6 @@ public class dato_x extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnEnviarActionPerformed
 
-    //para pruebas
-    public static void main(String[] args) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        dato_x guiD = new dato_x("PRUEBA");
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEnviar;
