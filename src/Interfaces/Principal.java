@@ -341,6 +341,7 @@ public class Principal extends javax.swing.JFrame {
             listR = objG.leer("SED/Datos");
             System.out.println("DATOS");
             for (String rVar : listR) {
+                System.out.println(rVar);
                 archivo = "SED/" + rVar;
                 listV = objG.leer(archivo.trim());
 
