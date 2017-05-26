@@ -1,9 +1,11 @@
 package Interfaces;
 
+import SED.Etiqueta;
 import SED.GestionArchivos;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -29,13 +31,19 @@ public class semiTrapezoide extends JFrame {
     JTextField txtPuntoC, txtEtiqueta;
     JLabel lblPuntoC, lblEtiqueta, lblOrientacion;
     JButton aceptar;
+    private List<Etiqueta> listaEtiquetasSalida = null;
 
-    public semiTrapezoide(int noFuncion, double origen, double fin, String nomFile) {
+    public void setListaEtiquetasSalida(List<Etiqueta> listaEtiquetasSalida) {
+        this.listaEtiquetasSalida = listaEtiquetasSalida;
+    }
+
+    public semiTrapezoide(int noFuncion, double origen, double fin, String nomFile, List<Etiqueta> listaResuEtiquetas) {
         super("Semi Trapezoide");
         this.noFuncion = noFuncion;
         this.origen = origen;
         this.fin = fin;
         this.nomFile = nomFile;
+        this.listaEtiquetasSalida = listaResuEtiquetas;
 
         m_panelSup();
         m_panelInf();
@@ -55,22 +63,30 @@ public class semiTrapezoide extends JFrame {
         pnlsup.setLayout(new GridLayout(3, 2));//Declara como irán los botones en el panel
         orientacion = new JComboBox(arrayO);
         txtPuntoC = new JTextField();
-        txtEtiqueta = new JTextField();
-        lblEtiqueta = new JLabel("Etiqueta: ");
+
+        if (listaEtiquetasSalida == null) {
+            txtEtiqueta = new JTextField();
+            lblEtiqueta = new JLabel("Etiqueta: ");
+        }
+
         lblPuntoC = new JLabel("Punto crítico: ");
         lblOrientacion = new JLabel("Orientación: ");
         pnlsup.add(lblOrientacion);
         pnlsup.add(orientacion);
         pnlsup.add(lblPuntoC);
         pnlsup.add(txtPuntoC);
-        pnlsup.add(lblEtiqueta);
-        pnlsup.add(txtEtiqueta);
+        if (listaEtiquetasSalida == null) {
+            pnlsup.add(lblEtiqueta);
+            pnlsup.add(txtEtiqueta);
+        }
+
     }
 
     void m_panelInf() {
         pnlinf = new JPanel();//Crea el espacio para el panel
         aceptar = new JButton("Aceptar");
         aceptar.addActionListener(new ActionListener() {
+            boolean bandera = true;
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,22 +97,38 @@ public class semiTrapezoide extends JFrame {
                 //Aqui va lo que tiene que hacer al momento de pulsar aceptar.
                 if (capturaDatos() == true) {
                     try {
+                        bandera = true;
                         objG = new GestionArchivos();
                         fSemiTrapezoide = "SemiTrapezoide " + puntoC + " " + v_orientacion + " " + etiqueta + " " + origen + " 0";
                         objG.escribir(nomFile, (noFuncion + 1), fSemiTrapezoide, "final");
 
-                        ocultarventana();
                         if (v_orientacion == 'd') {
-                            objFun = new tipoFunciones(10, fin, fin, nomFile);
+                            if (listaEtiquetasSalida != null) {
+                                if (noFuncion != listaEtiquetasSalida.size()) {
+                                    JOptionPane.showMessageDialog(pnlinf, "Error Faltan etiquetas por insertar");
+                                    bandera = false;
+                                } else {
+                                    tipoFunciones objFun2 = new tipoFunciones(10, fin, fin, nomFile);
+                                    objFun2.setListaEtiquetasSalida(listaEtiquetasSalida);
+                                }
+                            } else {
+                                tipoFunciones objFun2 = new tipoFunciones(10, fin, fin, nomFile);
+                                objFun2.setListaEtiquetasSalida(listaEtiquetasSalida);
+                            }
                         } else {
                             if (noFuncion == 1) {
                                 objFun = new tipoFunciones(noFuncion, calculaTraslape(), fin, nomFile);
+                                objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
                             } else {
-                                System.out.println("No se puede insertar debido a que no es la primera función");
+                                JOptionPane.showMessageDialog(pnlinf, "Error, No se puede insertar la etiqueta devido a que no es la primera función");
+                                bandera = false;
                             }
                         }
                     } catch (Exception ex) {
                         ex.printStackTrace();
+                    }
+                    if (bandera) {
+                        ocultarventana();
                     }
                 }
             }
@@ -107,12 +139,17 @@ public class semiTrapezoide extends JFrame {
     boolean capturaDatos() {
         try {
             puntoC = Double.parseDouble(txtPuntoC.getText().toString());
-            etiqueta = txtEtiqueta.getText().toString();
             v_orientacion = orientacion.getSelectedItem().toString().toLowerCase().charAt(0);
-            if (etiqueta.equals("")) {
-                JOptionPane.showMessageDialog(this, "Error, llene todos los campos.");
-                return false;
+            if (listaEtiquetasSalida == null) {
+                etiqueta = txtEtiqueta.getText().toString();
+                if (etiqueta.equals("")) {
+                    JOptionPane.showMessageDialog(this, "Error, llene todos los campos.");
+                    return false;
+                }
+            } else {
+                etiqueta = listaEtiquetasSalida.get(noFuncion - 1).etiqueta;
             }
+
             if (origen > puntoC || puntoC > fin) {
                 JOptionPane.showMessageDialog(this, "Error, el punto crítico no está dentro del discurso disponible");
                 return false;

@@ -286,7 +286,7 @@ public class Principal extends javax.swing.JFrame {
             listC.pesoRegla = minimo;
         }
 
-        listResultado = objFAM.obtenerReult(objFAM.buscaSalidas());
+        listResultado = objFAM.obtenerReult(objFAM.buscaSalidas()); 
         JOptionPane.showMessageDialog(this, "Inferencia completada");
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -363,13 +363,34 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-        salida = true;
-        new discurso(salida);
+        if(!listResultado.isEmpty()){
+            salida = true;
+            discurso objD = new discurso(salida, listResultado);
+        } else{
+            JOptionPane.showMessageDialog(this, "Se requiere inferenciar primero");
+        }
+        
+        //objD.setListaEtiquetasSalida(listResultado);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
-
+        try {
+            // TODO add your handling code here:
+            GestionArchivos objG = new GestionArchivos();
+            String variable = "";
+            List<String> registros;
+            registros = objG.leer("SED/Datos");
+            for (String reg : registros) {
+                if(reg.contains("-S")){
+                        variable = reg;
+                }
+            }
+            MotorInferencia objMI = new MotorInferencia();
+            List<String[]> listaPuntosX = objMI.obtenerXFormulaGuss("SED/" + variable.trim(), listResultado);
+            //ListaPuntosX es lo que ocupas tu cari!!!
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**

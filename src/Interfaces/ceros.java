@@ -1,9 +1,11 @@
 package Interfaces;
 
+import SED.Etiqueta;
 import SED.GestionArchivos;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,14 +27,20 @@ public class ceros extends JFrame {
     JLabel lblInicio, lblFinal;
     JPanel pnlsup, pnlinf;
     JButton aceptar;
+    private List<Etiqueta> listaEtiquetasSalida = null;
 
-    public ceros(int noFuncion, double origen, double finD, String nomFile) {
+    public void setListaEtiquetasSalida(List<Etiqueta> listaEtiquetasSalida) {
+        this.listaEtiquetasSalida = listaEtiquetasSalida;
+    }
+
+    public ceros(int noFuncion, double origen, double finD, String nomFile, List<Etiqueta> listaResuEtiquetas) {
         super("Ceros");
         this.finD = finD;
         this.origen = origen;
         this.noFuncion = noFuncion;
         this.nomFile = nomFile; //ya viene con el nombre de la carpeta
-
+        this.listaEtiquetasSalida = listaResuEtiquetas;
+        
         m_panelSup();
         m_panelInf();
 

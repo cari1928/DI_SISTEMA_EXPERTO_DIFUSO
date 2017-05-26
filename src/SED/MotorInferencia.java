@@ -158,7 +158,7 @@ public class MotorInferencia {
         String[] parts;
         int contFigura = 1;
         double distancia;
-
+        
         iniListas();
 
         try {
@@ -411,6 +411,110 @@ public class MotorInferencia {
             }
         }
         return y;
+    }
+
+    //-------------------------------------------------------------------------------------------------
+    public List<String[]> obtenerXFormulaGuss(String Ruta, List<Etiqueta> listaEtiquetasSalida) {
+        List<String[]> puntosFunciones;
+        crearModelo(Ruta);
+        puntosFunciones = formulaGuss(listaEtiquetasSalida);
+        return puntosFunciones;
+    }
+
+    public List<String[]> formulaGuss(List<Etiqueta> listaEtiquetasSalida) {
+        List<String[]> listaPuntosX = new ArrayList<>();
+        double x1, y1, x2, y2, x3, y3;
+        int pos = 0;
+        GestionArchivos objG = new GestionArchivos();
+
+        while (pos < listaEtiquetasSalida.size()) {
+            if (listTriangular != null) {
+                for (Triangular objTria : listTriangular) {
+
+                    if (objTria.etiqueta.equals(listaEtiquetasSalida.get(pos).etiqueta)) {
+                        try {
+                            String[] puntosX = new String[4];
+                            puntosX[0] = listaEtiquetasSalida.get(pos).membresia + "";
+                            puntosX[3] = listaEtiquetasSalida.get(pos).etiqueta;
+                            x1 = objTria.puntoIzq[0];
+                            y1 = objTria.puntoIzq[1];
+                            x2 = objTria.puntoC[0];
+                            y2 = objTria.puntoC[1];
+                            x3 = objTria.puntoDer[0];
+                            y3 = objTria.puntoDer[1];
+
+                            puntosX[1] = (((((listaEtiquetasSalida.get(pos).membresia - y1) / (y2 - y1)) * (x2 - x1)) + x1)) + "";
+                            puntosX[2] = (((((listaEtiquetasSalida.get(pos).membresia - y2) / (y3 - y2)) * (x3 - x2)) + x2)) + "";
+                            listaPuntosX.add(puntosX);
+                            pos++;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+            if (listTrapezoide != null) {
+                for (Trapezoide objTrap : listTrapezoide) {
+                    //checar que el punto ingresado por el usuario esté entre los puntos no críticos de la figura
+
+                    if (objTrap.etiqueta.equals(listaEtiquetasSalida.get(pos).etiqueta)) {
+
+                        String[] puntosX = new String[4];
+                        puntosX[0] = listaEtiquetasSalida.get(pos).membresia + "";
+                        puntosX[3] = listaEtiquetasSalida.get(pos).etiqueta;
+                        x1 = y1 = x2 = y2 = 0;
+                        x1 = objTrap.puntoIzq[0];
+                        y1 = objTrap.puntoIzq[1];
+                        x2 = objTrap.puntoC1[0];
+                        y2 = objTrap.puntoC1[1];
+                        puntosX[1] = ((((listaEtiquetasSalida.get(pos).membresia - y1) / (y2 - y1)) * (x2 - x1)) + x1) + "";
+
+                        x1 = objTrap.puntoDer[0];
+                        y1 = objTrap.puntoDer[1];
+                        x2 = objTrap.puntoC2[0];
+                        y2 = objTrap.puntoC2[1];
+                        puntosX[2] = ((((listaEtiquetasSalida.get(pos).membresia - y1) / (y2 - y1)) * (x2 - x1)) + x1) + "";
+                        listaPuntosX.add(puntosX);
+                        pos++;
+                    }
+                }
+
+                if (listSemiTriangular != null) {
+                    for (semiTriangular objSemTria : listSemiTriangular) {
+                        if (objSemTria.etiqueta.equals(listaEtiquetasSalida.get(pos).etiqueta)) {
+                            String[] puntosX = new String[3];
+                            puntosX[0] = listaEtiquetasSalida.get(pos).membresia + "";
+                            puntosX[2] = listaEtiquetasSalida.get(pos).etiqueta;
+                            x1 = objSemTria.punto2[0];
+                            y1 = objSemTria.punto2[1];
+                            x2 = objSemTria.puntoC[0];
+                            y2 = objSemTria.puntoC[1];
+
+                            puntosX[1] = ((((listaEtiquetasSalida.get(pos).membresia - y1) / (y2 - y1)) * (x2 - x1)) + x1) + "";
+                            listaPuntosX.add(puntosX);
+                            pos++;
+                        }
+                    }
+                }
+
+                if (listSemiTrapezoide != null) {
+                    for (semiTrapezoide objSemTrap : listSemiTrapezoide) {
+                        if(objSemTrap.etiqueta.equals(listaEtiquetasSalida.get(pos).etiqueta)){
+                            String[] puntosX = new String[3];
+                            puntosX[0]= listaEtiquetasSalida.get(pos).membresia + "";
+                            puntosX[2]= listaEtiquetasSalida.get(pos).etiqueta;
+                            
+                            double p1[] = {objSemTrap.puntoC[0], objSemTrap.puntoC[1]};
+                            double p2[] = {objSemTrap.punto2[0], objSemTrap.punto2[1]};
+                            puntosX[1] = (((listaEtiquetasSalida.get(pos).membresia - p1[1]) / (p2[1] - p1[1]) * (p2[0] - p1[0])) + (p1[0])) + "";
+                            listaPuntosX.add(puntosX);
+                            pos++;
+                        }
+                    }
+                }
+            }
+        }
+        return listaPuntosX;
     }
 
     //para pruebas

@@ -1,5 +1,6 @@
 package Interfaces;
 
+import SED.Etiqueta;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import SED.GestionArchivos;
+import java.util.List;
 
 /**
  *
@@ -28,7 +30,14 @@ public class discurso extends JFrame {
     JLabel lblOrigen, a, lblVariable, lblUnidad;
     JButton aceptar;
     boolean salida;
+    private List<Etiqueta> listaEtiquetasSalida;
 
+    public void setListaEtiquetasSalida(List<Etiqueta> listaEtiquetasSalida) {
+        this.listaEtiquetasSalida = listaEtiquetasSalida;
+    }
+    
+    
+    
     public discurso(boolean salida) {
         super("Discurso");
 
@@ -36,6 +45,24 @@ public class discurso extends JFrame {
         m_panelInf();
 
         this.salida = salida;
+        this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        this.add(pnlsup);
+        this.add(pnlinf);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setSize(200, 160);
+    }
+    
+    public discurso(boolean salida, List<Etiqueta> listaEtiquetasSalida) {
+        super("Discurso");
+
+        m_panelSup();
+        m_panelInf();
+
+        this.salida = salida;
+        this.listaEtiquetasSalida = listaEtiquetasSalida;
         this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         this.add(pnlsup);
         this.add(pnlinf);
@@ -94,7 +121,8 @@ public class discurso extends JFrame {
                             objG.escribir(ruta + variable + "-S", 1, discurso, "nuevo"); //crea el archivo con el nombre de la variable
                             objG.escribir(ruta + "Datos", 1, variable + "-S", "final");
                             ocultarventana();
-                            new tipoFunciones(0, origen, fin, ruta + variable + "-S");
+                            tipoFunciones objTF = new tipoFunciones(0, origen, fin, ruta + variable + "-S");
+                            objTF.setListaEtiquetasSalida(listaEtiquetasSalida);
                         } else {
                             objG.escribir(ruta + variable, 1, discurso, "nuevo"); //crea el archivo con el nombre de la variable
                             objG.escribir(ruta + "Datos", 1, variable, "final"); //guarda el nombre de la variable en el archivo Datos

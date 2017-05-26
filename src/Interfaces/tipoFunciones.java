@@ -1,7 +1,9 @@
 package Interfaces;
 
+import SED.Etiqueta;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -20,6 +22,11 @@ public class tipoFunciones extends JFrame {
     String[] tipoFunciones = {"Ceros", "Triangular", "Trapezoide", "SemiTriangular", "SemiTrapezoide", "Finalizar"};
     JComboBox petList;
     JPanel panel;
+    private List<Etiqueta> listaEtiquetasSalida = null;
+
+    public void setListaEtiquetasSalida(List<Etiqueta> listaEtiquetasSalida) {
+        this.listaEtiquetasSalida = listaEtiquetasSalida;
+    }
 
     public tipoFunciones(int numFuncion, double origen, double fin, String nomFile) {
         super("Funciones de membrecía");
@@ -58,19 +65,39 @@ public class tipoFunciones extends JFrame {
                 ocultarventana();
                 switch (petName) {
                     case "Ceros":
-                        new ceros(noFuncion, origen, fin, nomFile);
+                        new ceros(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
                         break;
                     case "Triangular":
-                        new triangular(noFuncion, origen, fin, nomFile);
+                        new triangular(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
                         break;
                     case "Trapezoide":
-                        new trapezoide(noFuncion, origen, fin, nomFile);
+                        new trapezoide(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
                         break;
                     case "SemiTriangular":
-                        new semiTriangular(noFuncion, origen, fin, nomFile);
+                        if (listaEtiquetasSalida != null) {
+                            if (noFuncion == 1 || noFuncion == listaEtiquetasSalida.size()) {
+                                new semiTriangular(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
+                            } else {
+                                JOptionPane.showMessageDialog(panel, "No es puede insertar está función");
+                                tipoFunciones objFun = new tipoFunciones(noFuncion - 1, origen, fin, nomFile);
+                                objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
+                            }
+                        } else {
+                            new semiTriangular(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
+                        }
                         break;
                     case "SemiTrapezoide":
-                        new semiTrapezoide(noFuncion, origen, fin, nomFile);
+                        if (listaEtiquetasSalida != null) {
+                            if (noFuncion == 1 || noFuncion == listaEtiquetasSalida.size()) {
+                                new semiTrapezoide(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
+                            } else {
+                                JOptionPane.showMessageDialog(panel, "No es puede insertar está función");
+                                tipoFunciones objFun = new tipoFunciones(noFuncion - 1, origen, fin, nomFile);
+                                objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
+                            }
+                        }else{
+                            new semiTrapezoide(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
+                        }
                         break;
                     case "Finalizar":
                         JOptionPane.showMessageDialog(null, "Funciones de membresía ingresadas");

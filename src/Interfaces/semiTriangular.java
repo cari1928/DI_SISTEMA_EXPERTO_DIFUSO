@@ -1,9 +1,11 @@
 package Interfaces;
 
+import SED.Etiqueta;
 import SED.GestionArchivos;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,13 +32,19 @@ public class semiTriangular extends JFrame {
     JButton aceptar;
     JPanel pnlsup, pnlinf;
     String etiqueta;
+    private List<Etiqueta> listaEtiquetasSalida = null;
 
-    public semiTriangular(int noFuncion, double origen, double fin, String nomFile) {
+    public void setListaEtiquetasSalida(List<Etiqueta> listaEtiquetasSalida) {
+        this.listaEtiquetasSalida = listaEtiquetasSalida;
+    }
+
+    public semiTriangular(int noFuncion, double origen, double fin, String nomFile, List<Etiqueta> listaResuEtiquetas) {
         super("Semi Trapesoide");
         this.noFuncion = noFuncion;
         this.origen = origen;
         this.fin = fin;
         this.nomFile = nomFile;
+        this.listaEtiquetasSalida = listaResuEtiquetas;
 
         m_panelSup();
         m_panelInf();
@@ -59,45 +67,67 @@ public class semiTriangular extends JFrame {
         txtLongitud = new JTextField();
         txtLongitud.setText("");
         lblLongitud = new JLabel("Longitud: ");
-        txtEtiqueta = new JTextField();
-        txtEtiqueta.setText("");
-        lblEtiqueta = new JLabel("Etiqueta: ");
+        if (listaEtiquetasSalida == null) {
+            txtEtiqueta = new JTextField();
+            txtEtiqueta.setText("");
+            lblEtiqueta = new JLabel("Etiqueta: ");
+        }
+
         pnlsup.add(lblOrientacion);
         pnlsup.add(orientacion);
         pnlsup.add(lblLongitud);
         pnlsup.add(txtLongitud);
-        pnlsup.add(lblEtiqueta);
-        pnlsup.add(txtEtiqueta);
+        if (listaEtiquetasSalida == null) {
+            pnlsup.add(lblEtiqueta);
+            pnlsup.add(txtEtiqueta);
+        }
     }
 
     void m_panelInf() {
         pnlinf = new JPanel();//Crea el espacio para el panel
         aceptar = new JButton("Aceptar");
         aceptar.addActionListener(new ActionListener() {
+            boolean bandera = true;
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Aqui va lo que tiene que hacer al momento de pulsar aceptar.
                 if (capturaDatos() == true) {
                     try {
+                        bandera = true;
                         GestionArchivos objG = new GestionArchivos();
-                        String Fsemitriangular = "SemiTriangular " + puntoC + " " + longitud + " " + v_orientacion + " " + etiqueta + " " + origen  + " 0";
+                        String Fsemitriangular = "SemiTriangular " + puntoC + " " + longitud + " " + v_orientacion + " " + etiqueta + " " + origen + " 0";
                         objG.escribir(nomFile, (noFuncion + 1), Fsemitriangular, "final");
 
-                        ocultarventana();
                         if (v_orientacion == 'd') {
-                            new tipoFunciones(10, fin, fin, nomFile);
+                            if (listaEtiquetasSalida != null) {
+                                if (noFuncion != listaEtiquetasSalida.size()) {
+                                    JOptionPane.showMessageDialog(pnlinf, "Error Faltan etiquetas por insertar");
+                                    bandera = false;
+                                } else {
+                                    tipoFunciones objFun = new tipoFunciones(10, fin, fin, nomFile);
+                                    objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
+                                }
+                            } else {
+                                tipoFunciones objFun = new tipoFunciones(10, fin, fin, nomFile);
+                                objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
+                            }
 
                         } else {
 
                             if (noFuncion == 1) {
-                                new tipoFunciones(noFuncion, calculaTraslape(), fin, nomFile);
+                                tipoFunciones objFun = new tipoFunciones(noFuncion, calculaTraslape(), fin, nomFile);
+                                objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
                             } else {
-                                System.out.println("No se puede colocar la función debido a que no es la primera");
+                                JOptionPane.showMessageDialog(pnlinf, "Error, No se puede insertar la etiqueta devido a que no es la primera función");
+                                bandera = false;
                             }
                         }
                     } catch (Exception ex) {
                         ex.printStackTrace();
+                    }
+                    if (bandera) {
+                        ocultarventana();
                     }
                 }
             }
@@ -107,14 +137,18 @@ public class semiTriangular extends JFrame {
 
     boolean capturaDatos() {
         try {
-            etiqueta = txtEtiqueta.getText();
             v_orientacion = orientacion.getSelectedItem().toString().toLowerCase().charAt(0);
             longitud = Double.parseDouble(txtLongitud.getText());
-
-            if (etiqueta.equals("")) {
-                JOptionPane.showMessageDialog(this, "Error llene todos los campos");
-                return false;
+            if (listaEtiquetasSalida == null) {
+                etiqueta = txtEtiqueta.getText();
+                if (etiqueta.equals("")) {
+                    JOptionPane.showMessageDialog(this, "Error llene todos los campos");
+                    return false;
+                }
+            } else {
+                etiqueta = listaEtiquetasSalida.get(noFuncion - 1).etiqueta;
             }
+
             if (orientacion.getSelectedItem().toString().equalsIgnoreCase("Derecha")) {
                 puntoC = fin;
             } else {

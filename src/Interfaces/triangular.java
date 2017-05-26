@@ -1,9 +1,11 @@
 package Interfaces;
 
+import SED.Etiqueta;
 import SED.GestionArchivos;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,13 +27,19 @@ public class triangular extends JFrame {
     JTextField txtPuntoC, txtEtiqueta;
     JPanel pnlinf, pnlsup;
     JButton aceptar;
+    private List<Etiqueta> listaEtiquetasSalida = null;
 
-    triangular(int noFuncion, double origen, double fin, String nomFile) {
+    public void setListaEtiquetasSalida(List<Etiqueta> listaEtiquetasSalida) {
+        this.listaEtiquetasSalida = listaEtiquetasSalida;
+    }
+
+    triangular(int noFuncion, double origen, double fin, String nomFile, List<Etiqueta> listaResuEtiquetas) {
         super("Triangular");
         this.noFuncion = noFuncion;
         this.origen = origen;
         this.fin = fin;
         this.nomFile = nomFile;
+        this.listaEtiquetasSalida = listaResuEtiquetas;
 
         m_panelSup();
         m_panelInf();
@@ -52,13 +60,18 @@ public class triangular extends JFrame {
         txtPuntoC = new JTextField();
         txtPuntoC.setText("");
         lblPuntoC = new JLabel("Punto Critico: ");
-        txtEtiqueta = new JTextField();
-        txtEtiqueta.setText("");
-        lblEtiqueta = new JLabel("Etiqueta: ");
+        if (listaEtiquetasSalida == null) {
+            txtEtiqueta = new JTextField();
+            txtEtiqueta.setText("");
+            lblEtiqueta = new JLabel("Etiqueta: ");
+        }
         pnlsup.add(lblPuntoC);
         pnlsup.add(txtPuntoC);
-        pnlsup.add(lblEtiqueta);
-        pnlsup.add(txtEtiqueta);
+        if(listaEtiquetasSalida == null){
+            pnlsup.add(lblEtiqueta);
+            pnlsup.add(txtEtiqueta);
+        }
+        
     }
 
     void m_panelInf() {
@@ -77,6 +90,7 @@ public class triangular extends JFrame {
                         objG.escribir(nomFile, (noFuncion + 1), Ftriangular, "final");
                         ocultarventana();
                         tipoFunciones objFun = new tipoFunciones(noFuncion, calculaTraslape(), fin, nomFile);
+                        objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
                     } catch (Exception ex) {
                     }
                 }
@@ -92,11 +106,16 @@ public class triangular extends JFrame {
     boolean capturaDatos() {
         try {
             puntoC = Double.parseDouble(txtPuntoC.getText().toString());
-            etiqueta = txtEtiqueta.getText().toString();
-            if (etiqueta.equals("")) {
-                JOptionPane.showMessageDialog(this, "Error llene todos los campos");
-                return false;
+            if (listaEtiquetasSalida == null) {
+                etiqueta = txtEtiqueta.getText().toString();
+                if (etiqueta.equals("")) {
+                    JOptionPane.showMessageDialog(this, "Error llene todos los campos");
+                    return false;
+                }
+            }else{
+                etiqueta = listaEtiquetasSalida.get(noFuncion - 1).etiqueta;
             }
+
             if (puntoC <= origen || puntoC >= fin) {
                 JOptionPane.showMessageDialog(this, "El punto critico esta fuera del discurso disponible");
                 return false;
