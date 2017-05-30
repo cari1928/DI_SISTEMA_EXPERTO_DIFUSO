@@ -218,33 +218,6 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jmiFAMNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFAMNuevoActionPerformed
-        GestionArchivos objG = new GestionArchivos();
-        GUI_Combinaciones guiC;
-        List<String> listRegistros;
-        Combinaciones objC;
-        objFAM = new FAM();
-        Variable objV;
-        String rutaArchivo;
-        try {
-            listRegistros = objG.leer("SED/Datos");
-
-            //llena listVariables
-            for (String registro : listRegistros) {
-                rutaArchivo = "SED/" + registro.trim();
-                objMI.crearModelo(rutaArchivo.trim());
-                objV = new Variable(objMI.objU, objMI.listTriangular, objMI.listTrapezoide, objMI.listSemiTriangular, objMI.listSemiTrapezoide, objMI.punto, registro);
-                objFAM.listVariables.add(objV);
-            }
-            objC = new Combinaciones();
-            objFAM.crear(objFAM.listVariables.get(0), 1, objC, new Combinaciones());
-            objFAM.crearArchivo();
-            guiC = new GUI_Combinaciones(objFAM);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }//GEN-LAST:event_jmiFAMNuevoActionPerformed
-
     private void jmiFAMExistenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFAMExistenteActionPerformed
         try {
             objFAM = new FAM();
@@ -393,6 +366,33 @@ public class Principal extends javax.swing.JFrame {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jmiCentroGravedadActionPerformed
+
+    private void jmiFAMNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFAMNuevoActionPerformed
+        GestionArchivos objG = new GestionArchivos();
+        GUI_Combinaciones guiC;
+        List<String> listRegistros;
+        Combinaciones objC;
+        objFAM = new FAM();
+        Variable objV;
+        String rutaArchivo;
+        try {
+            listRegistros = objG.leer("SED/Datos");
+
+            //llena listVariables
+            for (String registro : listRegistros) {
+                rutaArchivo = "SED/" + registro.trim();
+                objMI.crearModelo(rutaArchivo.trim());
+                objV = new Variable(objMI.objU, objMI.listTriangular, objMI.listTrapezoide, objMI.listSemiTriangular, objMI.listSemiTrapezoide, objMI.punto, registro);
+                objFAM.listVariables.add(objV);
+            }
+            objC = new Combinaciones();
+            objFAM.crear(objFAM.listVariables.get(0), 1, objC, new Combinaciones());
+            objFAM.crearArchivo();
+            guiC = new GUI_Combinaciones(objFAM);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jmiFAMNuevoActionPerformed
 
     /**
      * @param args the command line arguments
