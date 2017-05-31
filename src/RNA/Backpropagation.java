@@ -20,9 +20,11 @@ public class Backpropagation {
     private List<Double[]> lFunEntrada;
     private List<Double[]> lFunActSalida;
     private List<Double[]> lError;
+    private List<Integer> lEpoch;
+    private List<Double> lCuadErrors;
     private List<Double[]> lS;
     private double alpha;
-    private int numNeuCapOculta, sizeCapa1, sizeCapa2, sizeCapa3, count;
+    private int numNeuCapOculta, sizeCapa1, sizeCapa2, sizeCapa3, count, epoch;
     private double terminoError;
 
     public Backpropagation(Patron[] lPatrones, double alpha, int numNeuCapOculta, double terminoError) {
@@ -31,6 +33,7 @@ public class Backpropagation {
         this.numNeuCapOculta = numNeuCapOculta;
         this.terminoError = terminoError;
         count = 0;
+        epoch = 1;
     }
 
     public void iniEntrenamiento() throws Exception {
@@ -38,6 +41,8 @@ public class Backpropagation {
         lS = new ArrayList<>();
         lTPesos = new ArrayList<>();
         lTUmbrales = new ArrayList<>();
+        lEpoch = new ArrayList<>();
+        lCuadErrors = new ArrayList<>();
         iniPesos();
         iniUmbrales();
         entrenamiento();
@@ -71,16 +76,102 @@ public class Backpropagation {
     }
 
     public void entrenamiento() {
+        iniListas();
         calcFunEntActSalida();
         calcError();
         calcS();
+        calcDeltaPesos();
+        calcDeltaUmbrales();
+        actualizarPesos();
+        actualizarUmbrales();
 
+        double res, sum = 0;
+        lEpoch.add(epoch);
+        if (count < lPatrones.length) {
+            for (int i = 0; i < lS.size(); i++) {
+                res = lS.get(i)[1];
+                sum += calcCuadrado(res);
+                lCuadErrors.add(sum);
+            }
+            count = 0;
+            ++epoch;
+            System.out.println("Suma Cuadrado Errores");
+            mostrarD(lCuadErrors);
+            System.out.println("Suma: " + sum);
+
+            if (sum > terminoError) {
+                entrenamiento();
+            }
+            //terminia, al llegar a este punto, las listas cuentan con los valores de la última ejecucion
+            //listas para la fase de ejecucion
+            System.out.println("");
+        } else {
+            ++count;
+            entrenamiento();
+        }
+
+        System.out.println("");
+        //termina
+    }
+
+    private void iniListas() {
+        lFunEntrada = new ArrayList<>();
+        lFunActSalida = new ArrayList<>();
+        lS = new ArrayList<>();
+        lTPesos = new ArrayList<>();
+        lTUmbrales = new ArrayList<>();
+    }
+
+    private void actualizarUmbrales() {
+        double suma;
+        for (int i = 0; i < lUmbrales.size(); i++) {
+            suma = lUmbrales.get(i)[1] + lTUmbrales.get(i)[1];
+            lUmbrales.get(i)[1] = suma;
+        }
+        System.out.println("ACTUALIZACION UMBRALES");
+        mostrar(lUmbrales);
+    }
+
+    private void actualizarPesos() {
+        double suma;
+        List<Double> tmpPeso;
+        for (int i = 0; i < lPesos.size(); i++) {
+            tmpPeso = getTPeso(lPesos.get(i)[0], lPesos.get(i)[1]);
+            suma = lPesos.get(i)[2] + tmpPeso.get(0);
+            lPesos.get(i)[2] = suma;
+        }
+        System.out.println("ACTUALIZACION DE PESOS");
+        mostrar(lPesos);
+    }
+
+    private double calcCuadrado(double value) {
+        return Math.pow(value, 2);
+    }
+
+    private void calcDeltaUmbrales() {
+        double fa;
+        for (int i = 0; i < lUmbrales.size(); i++) {
+            fa = getValue(lUmbrales.get(i)[0], lFunActSalida);
+            fa = deltaUmbral(fa, alpha);
+            lTUmbrales.add(new Double[]{lUmbrales.get(i)[0], fa});
+        }
+
+        System.out.println("Delta umbrales");
+        mostrar(lTUmbrales);
+    }
+
+    private double deltaUmbral(double TP, double ese_delta) {
+        double deltaUmbral = TP * (-1) * ese_delta;
+        return deltaUmbral;
+    }
+
+    private void calcDeltaPesos() {
         double s, fa;
         int value = sizeCapa2 * sizeCapa3;
-        for (int i = lPesos.size() - 1; i > 0; i++) {
+        for (int i = lPesos.size() - 1; i >= 0; i--) {
 
             if (i >= lPesos.size() - value) {
-                s = getValue(lPesos.get(i)[1], lS);
+                s = getValue(lPesos.get(i)[1], lS); //obtiene un peso buscando a 
             } else {
                 s = lPatrones[count].getGrados().get((int) (lPesos.get(i)[0] - 1));
             }
@@ -90,9 +181,12 @@ public class Backpropagation {
 
             lTPesos.add(new Double[]{lPesos.get(i)[0], lPesos.get(i)[1], s});
         }
+
+        System.out.println("Delta pesos");
+        mostrar(lTPesos);
     }
 
-    double deltapeso(double TP, double Yj, double ese_delta) {
+    private double deltapeso(double TP, double Yj, double ese_delta) {
         double deltapesos = TP * Yj * ese_delta;
         return deltapesos;
     }
@@ -154,6 +248,26 @@ public class Backpropagation {
         for (int i = 0; i < lPesos.size(); i++) {
             res = lPesos.get(i)[2];
             if (lPesos.get(i)[0] == value1 && lPesos.get(i)[1] == value2) {
+                tmp.add(res);
+                return tmp;
+            }
+        }
+        return tmp;
+    }
+
+    private List<Double> getTPeso(double value1, double value2) {
+        double res;
+        List<Double> tmp = new ArrayList<>();
+        for (int i = 0; i < lTPesos.size(); i++) {
+            res = lTPesos.get(i)[2];
+
+            System.out.println("V1: " + value1);
+            System.out.println("V1: " + value2);
+
+            System.out.println("lTpesos[0]: " + lTPesos.get(i)[0]);
+            System.out.println("lTpesos[1]: " + lTPesos.get(i)[1]);
+
+            if (lTPesos.get(i)[0] == value1 && lTPesos.get(i)[1] == value2) {
                 tmp.add(res);
                 return tmp;
             }
@@ -349,6 +463,12 @@ public class Backpropagation {
         }
     }
 
+    private void mostrarD(List<Double> list) {
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
+    }
+
     private List<Double[]> fillUmbrales(int c2, int c3) {
         List<Double[]> list = new ArrayList<>();
         Double[] tmp;
@@ -416,7 +536,7 @@ public class Backpropagation {
         p[3] = new Patron(grados, salidas);
 
         //Patron[] lPatrones, double alpha, int numNeuCapOculta, double terminoError
-        Backpropagation objB = new Backpropagation(p, 0.1, 2, 0.001);
+        Backpropagation objB = new Backpropagation(p, 0.1, 2, 0.005);
         try {
             objB.iniEntrenamiento();
         } catch (Exception ex) {
