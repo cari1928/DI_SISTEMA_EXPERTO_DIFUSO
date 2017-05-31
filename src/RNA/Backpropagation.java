@@ -342,25 +342,24 @@ public class Backpropagation {
         sizeCapa1 = lPatrones[0].getGrados().size();
         sizeCapa3 = getSizeLayer3(); //leer archivo con -S, de Datos, final
         sizeCapa2 = numNeuCapOculta;
-        //lPesos = fillPesos(sizeCapa1, sizeCapa2, sizeCapa3); //usar esta
+        lPesos = fillPesos(sizeCapa1, sizeCapa2, sizeCapa3); //usar esta
 
         //pruebas
-        lPesos = new ArrayList<>();
-        lPesos.add(new Double[]{1.0, 6.0, 0.388041549});
-        lPesos.add(new Double[]{1.0, 7.0, 0.403900043});
-        lPesos.add(new Double[]{2.0, 6.0, 0.294988421});
-        lPesos.add(new Double[]{2.0, 7.0, 0.421921661});
-        lPesos.add(new Double[]{3.0, 6.0, 0.446224016});
-        lPesos.add(new Double[]{3.0, 7.0, 0.118666065});
-        lPesos.add(new Double[]{4.0, 6.0, 0.086577537});
-        lPesos.add(new Double[]{4.0, 7.0, 0.463159164});
-        lPesos.add(new Double[]{5.0, 6.0, 0.102648999});
-        lPesos.add(new Double[]{5.0, 7.0, 0.355183387});
-        lPesos.add(new Double[]{6.0, 8.0, 0.0822});
-        lPesos.add(new Double[]{6.0, 9.0, 0.4677});
-        lPesos.add(new Double[]{7.0, 8.0, 0.2161});
-        lPesos.add(new Double[]{7.0, 9.0, 0.4412});
-
+//        lPesos = new ArrayList<>();
+//        lPesos.add(new Double[]{1.0, 6.0, 0.388041549});
+//        lPesos.add(new Double[]{1.0, 7.0, 0.403900043});
+//        lPesos.add(new Double[]{2.0, 6.0, 0.294988421});
+//        lPesos.add(new Double[]{2.0, 7.0, 0.421921661});
+//        lPesos.add(new Double[]{3.0, 6.0, 0.446224016});
+//        lPesos.add(new Double[]{3.0, 7.0, 0.118666065});
+//        lPesos.add(new Double[]{4.0, 6.0, 0.086577537});
+//        lPesos.add(new Double[]{4.0, 7.0, 0.463159164});
+//        lPesos.add(new Double[]{5.0, 6.0, 0.102648999});
+//        lPesos.add(new Double[]{5.0, 7.0, 0.355183387});
+//        lPesos.add(new Double[]{6.0, 8.0, 0.0822});
+//        lPesos.add(new Double[]{6.0, 9.0, 0.4677});
+//        lPesos.add(new Double[]{7.0, 8.0, 0.2161});
+//        lPesos.add(new Double[]{7.0, 9.0, 0.4412});
         System.out.println("Pesos");
         mostrar(lPesos);
     }
@@ -402,14 +401,13 @@ public class Backpropagation {
      * valor aleatorio
      */
     private void iniUmbrales() {
-        //lUmbrales = fillUmbrales(sizeCapa2, sizeCapa3);
+        lUmbrales = fillUmbrales(sizeCapa2, sizeCapa3);
 
-        lUmbrales = new ArrayList<>();
-        lUmbrales.add(new Double[]{6.0, 0.441592067});
-        lUmbrales.add(new Double[]{7.0, 0.079930952});
-        lUmbrales.add(new Double[]{8.0, 0.232708258});
-        lUmbrales.add(new Double[]{9.0, 0.341826872});
-
+//        lUmbrales = new ArrayList<>();
+//        lUmbrales.add(new Double[]{6.0, 0.441592067});
+//        lUmbrales.add(new Double[]{7.0, 0.079930952});
+//        lUmbrales.add(new Double[]{8.0, 0.232708258});
+//        lUmbrales.add(new Double[]{9.0, 0.341826872});
         System.out.println("Umbrales");
         mostrar(lUmbrales);
 
