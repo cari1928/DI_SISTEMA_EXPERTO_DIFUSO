@@ -432,9 +432,13 @@ public class Backpropagation {
                 tmp[1] = (double) nNeuronaC2;
                 tmp[2] = (double) getRandom(-0.5, 0.5);
                 list.add(tmp); //se guarda
+
+                mostrar(list);
+
                 ++nNeuronaC2;
-                i += j;
+                i += 1;
             }
+            --i;
             ++nNeuronaC1;
             if (i == lim - 1) {
                 if (flag) {
@@ -451,6 +455,7 @@ public class Backpropagation {
             }
         }
 
+        System.out.println("Pesos");
         mostrar(list);
         return list;
 

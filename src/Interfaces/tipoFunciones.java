@@ -1,11 +1,8 @@
 package Interfaces;
 
-import RNA.Patron;
 import RNA.extras;
-import SED.Etiqueta;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -51,9 +48,8 @@ public class tipoFunciones extends JFrame {
                 extras objE = new extras();
                 objE.inicia();
                 for (int i = 0; i < 4; i++) {
-                    new entradas(i);
+                    new entradas(i, false);
                 }
-
             }
         }
     }
@@ -111,7 +107,7 @@ public class tipoFunciones extends JFrame {
                             extras objE = new extras();
                             objE.inicia();
                             for (int i = 0; i < 4; i++) {
-                                new entradas(i);
+                                new entradas(i, false);
                             }
                         }
                 }

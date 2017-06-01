@@ -1,5 +1,6 @@
 package Interfaces;
 
+import RNA.extras;
 import SED.Combinaciones;
 import SED.Etiqueta;
 import SED.FAM;
@@ -108,6 +109,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu8.add(jMenuItem6);
 
         jMenuItem7.setText("Usar entrenada");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu8.add(jMenuItem7);
 
         jMenuBar1.add(jMenu8);
@@ -187,17 +193,24 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        GestionArchivos objG = new GestionArchivos();
-        List<String> listVars;
-        dato_x guiD;
-        try {
-            listVars = objG.leer("SED/Datos");
-            for (String variable : listVars) {
-                guiD = new dato_x(variable.trim());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+//        GestionArchivos objG = new GestionArchivos();
+//        List<String> listVars;
+//        dato_x guiD;
+//        try {
+//            listVars = objG.leer("SED/Datos");
+//            for (String variable : listVars) {
+//                guiD = new dato_x(variable.trim());
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        extras objE = new extras();
+        objE.inicia();
+        for (int i = 0; i < 4; i++) {
+            new entradas(i, true);
         }
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jmiSalidaDifusaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSalidaDifusaActionPerformed
@@ -300,6 +313,10 @@ public class Principal extends javax.swing.JFrame {
         salida = true;
         discurso objD = new discurso(salida);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments

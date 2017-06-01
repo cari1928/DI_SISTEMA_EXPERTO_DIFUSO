@@ -40,15 +40,21 @@ public class entradas extends JFrame {
     private JPanel pnlSupDer;
     private JPanel pnlSup;
     private JPanel pnlinf;
-    Patron objP;
+    private Patron objP;
+    private boolean fuzzy;
 
-    entradas(int cont) {
+    public entradas(int cont, boolean fuzzy) {
         super("Patrones");
         this.cont = cont;
+        this.fuzzy = fuzzy;
         obtenerEtiquetasE();
         inicializaListas();
         m_panelSupIzq();
-        m_panelSupDer();
+
+        if (!fuzzy) {
+            m_panelSupDer();
+        }
+
         m_panelSup();
         panelInf();
 
@@ -104,20 +110,20 @@ public class entradas extends JFrame {
         }
     }
 
-    void inicializaListas() {
-        labels = new JLabel[variables.size() + 1];
+    public void inicializaListas() {
         int aux = 0;
+        labels = new JLabel[variables.size() + 1];
         txts = new JTextField[variables.size() + 1];
 
         for (int i = 0; i < variables.size(); i++) {
             labels[i] = new JLabel(variables.get(i).trim());
             txts[i] = new JTextField();
-            //txts[i].setText("");
         }
 
         labels[labels.length - 1] = new JLabel(variableSal.trim());
         txts[txts.length - 1] = new JTextField();
         txts[txts.length - 1].setText("");
+
     }
 
     void m_panelSupIzq() {
@@ -143,7 +149,11 @@ public class entradas extends JFrame {
         pnlSup = new JPanel();//Crea el espacio para el panel
         this.setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
         pnlSup.add(pnlSupIzq);
-        pnlSup.add(pnlSupDer);
+
+        if (!fuzzy) {
+            pnlSup.add(pnlSupDer);
+        }
+
     }
 
     void panelInf() {
