@@ -1,15 +1,21 @@
 package Interfaces;
 
+import RNA.Backpropagation;
 import RNA.Patron;
-import RNA.extras;
+import RNA.Extras;
 import SED.GestionArchivos;
 import SED.MotorInferencia;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,7 +31,7 @@ import javax.swing.border.TitledBorder;
  */
 public class entradas extends JFrame {
 
-    extras objE = new extras();
+    Extras objE = new Extras();
     int cont;
     boolean finalizar = false;
     private List<String> variables;
@@ -172,15 +178,17 @@ public class entradas extends JFrame {
                 //while (cont < 4) {
                 try {
                     for (int i = 0; i < variables.size(); i++) {
-
                         objM.fuzzyfication(Double.parseDouble(txts[i].getText()), directoio + "\\" + labels[i].getText().trim()); //Fusifica los falores de entrada
                         for (int j = 0; j < objM.listaMenbrecia.size(); j++) { //obtiene los grados de membresia de cada etiqueta
                             membresiaE.add(Double.parseDouble(objM.listaMenbrecia.get(j)));
                         }
                     }
-                    objM.fuzzyfication(Double.parseDouble(txts[txts.length - 1].getText()), directoio + "\\" + labels[labels.length - 1].getText().trim()); //Fusifica los falores de entrada
-                    for (int j = 0; j < objM.listaMenbrecia.size(); j++) { //obtiene los grados de membresia de cada etiqueta
-                        membresiaY.add(Double.parseDouble(objM.listaMenbrecia.get(j)));
+
+                    if (!fuzzy) {
+                        objM.fuzzyfication(Double.parseDouble(txts[txts.length - 1].getText()), directoio + "\\" + labels[labels.length - 1].getText().trim()); //Fusifica los falores de entrada
+                        for (int j = 0; j < objM.listaMenbrecia.size(); j++) { //obtiene los grados de membresia de cada etiqueta
+                            membresiaY.add(Double.parseDouble(objM.listaMenbrecia.get(j)));
+                        }
                     }
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -193,8 +201,43 @@ public class entradas extends JFrame {
                 if (cont == 0) {
                     //System.out.println("Ya acabe");
                     //Se manda a llamar la siguiente interfacese
-                    datosExtra objDE = new datosExtra();
-                    objDE.setVisible(true);
+                    List<Double[]> lPesos = new ArrayList<>();
+                    List<Double[]> lUmbrales = new ArrayList<>();
+                    if (fuzzy) {
+                        Backpropagation objB;
+                        File f = new File("SED/back_data");
+                        Scanner lector;
+                        try {
+                            lector = new Scanner(f);
+                            String[] parts;
+                            int nCapaOculta = 0;
+                            while (lector.hasNext()) {
+                                parts = lector.nextLine().split(" ");
+                                if (parts[0].equals("P")) {
+                                    lPesos.add(new Double[]{
+                                        Double.parseDouble(parts[1]),
+                                        Double.parseDouble(parts[2]),
+                                        Double.parseDouble(parts[3])});
+                                } else if (parts[0].equals("U")) {
+                                    lUmbrales.add(new Double[]{
+                                        Double.parseDouble(parts[1]),
+                                        Double.parseDouble(parts[2])});
+                                } else {
+                                    nCapaOculta = Integer.parseInt(parts[0]);
+                                }
+                            }
+
+                            objB = new Backpropagation(Extras.arrayP, lPesos, lUmbrales, nCapaOculta);
+                            objB.ejecucion();
+                            objB.saveExits();
+                        } catch (Exception ex) {
+                            Logger.getLogger(entradas.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    } else {
+                        datosExtra objDE = new datosExtra();
+                        objDE.setVisible(true);
+                    }
                 }
             }
         });

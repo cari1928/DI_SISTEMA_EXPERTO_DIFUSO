@@ -51,7 +51,7 @@ public class discurso extends JFrame {
     }
 
     /*public discurso(boolean salida) {
-        super("Discurso");
+        super("discurso");
 
         m_panelSup();
         m_panelInf();

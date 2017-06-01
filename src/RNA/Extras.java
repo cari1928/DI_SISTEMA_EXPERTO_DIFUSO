@@ -4,7 +4,7 @@ package RNA;
  *
  * @author Tenistas
  */
-public class extras {
+public class Extras {
 
     static public Patron arrayP[] = new Patron[4];
 

@@ -1,6 +1,6 @@
 package Interfaces;
 
-import RNA.extras;
+import RNA.Extras;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -45,7 +45,7 @@ public class tipoFunciones extends JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Variable agregada");
             if (nomFile.contains("-S")) {
-                extras objE = new extras();
+                Extras objE = new Extras();
                 objE.inicia();
                 for (int i = 0; i < 4; i++) {
                     new entradas(i, false);
@@ -104,7 +104,7 @@ public class tipoFunciones extends JFrame {
                         JOptionPane.showMessageDialog(null, "Funciones de membresía ingresadas");
 //                        entradas[] ent = new entradas[4];
                         if (nomFile.contains("-S")) {
-                            extras objE = new extras();
+                            Extras objE = new Extras();
                             objE.inicia();
                             for (int i = 0; i < 4; i++) {
                                 new entradas(i, false);

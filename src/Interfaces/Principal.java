@@ -1,6 +1,6 @@
 package Interfaces;
 
-import RNA.extras;
+import RNA.Extras;
 import SED.Combinaciones;
 import SED.Etiqueta;
 import SED.FAM;
@@ -8,10 +8,12 @@ import SED.GestionArchivos;
 import SED.MotorInferencia;
 import SED.Variable;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -205,7 +207,7 @@ public class Principal extends javax.swing.JFrame {
 //            e.printStackTrace();
 //        }
 
-        extras objE = new extras();
+        Extras objE = new Extras();
         objE.inicia();
         for (int i = 0; i < 4; i++) {
             new entradas(i, true);
@@ -214,17 +216,33 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jmiSalidaDifusaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSalidaDifusaActionPerformed
-        String resultado = "";
-        try {
-            for (int i = 0; i < listResultado.size(); i++) {
-                resultado += listResultado.get(i).etiqueta + " : " + listResultado.get(i).membresia + "\n";
-            }
+//        String resultado = "";
+//        try {
+//            for (int i = 0; i < listResultado.size(); i++) {
+//                resultado += listResultado.get(i).etiqueta + " : " + listResultado.get(i).membresia + "\n";
+//            }
+//
+//            JOptionPane.showMessageDialog(this, resultado, "Salidas Difusas", JOptionPane.INFORMATION_MESSAGE);
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            JOptionPane.showMessageDialog(this, "Archivos no disponibles");
+//        }
 
-            JOptionPane.showMessageDialog(this, resultado, "Salidas Difusas", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Archivos no disponibles");
+        File f = new File("SED/back_salidas");
+        Scanner lector;
+        try {
+            lector = new Scanner(f);
+            String[] parts;
+            String res = "";
+            while (lector.hasNext()) {
+                parts = lector.nextLine().split(" ");
+                res += "[" + parts[0] + "] = " + parts[1] + "\n";
+            }
+            JOptionPane.showMessageDialog(this, res);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_jmiSalidaDifusaActionPerformed
 
     private void jmiArchivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiArchivosActionPerformed

@@ -1,10 +1,16 @@
 package RNA;
 
 import SED.GestionArchivos;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,6 +33,13 @@ public class Backpropagation {
     private int numNeuCapOculta, sizeCapa1, sizeCapa2, sizeCapa3, count, epoch;
     private double terminoError;
 
+    public Backpropagation(Patron[] lPatrones, List<Double[]> lPesos, List<Double[]> lUmbrales, int numNeuCapOculta) {
+        this.lPatrones = lPatrones;
+        this.lPesos = lPesos;
+        this.lUmbrales = lUmbrales;
+        this.numNeuCapOculta = numNeuCapOculta;
+    }
+
     public Backpropagation(Patron[] lPatrones, double alpha, int numNeuCapOculta, double terminoError) {
         this.lPatrones = lPatrones;
         this.alpha = alpha;
@@ -44,6 +57,7 @@ public class Backpropagation {
         lEpoch = new ArrayList<>();
         lCuadErrors = new ArrayList<>();
 
+        getLayersSize();
         iniPesos();
         iniUmbrales();
         entrenamiento();
@@ -61,8 +75,12 @@ public class Backpropagation {
         return tmp;
     }
 
-    private void ejecucion() {
-
+    public void ejecucion() throws Exception {
+        iniListas();
+        getLayersSize();
+        calcFunEntActSalida();
+        JOptionPane.showMessageDialog(null, "Ejecusion terminada");
+        //cuando termina se tienen los resultados finales en lFA
     }
 
     /**
@@ -105,14 +123,12 @@ public class Backpropagation {
             }
             //terminia, al llegar a este punto, las listas cuentan con los valores de la última ejecucion
             //listas para la fase de ejecucion
-
-            System.out.println("");
+            //System.out.println("");
         } else {
             ++count;
             entrenamiento();
         }
-
-        System.out.println("");
+        //System.out.println("");
         //termina
     }
 
@@ -335,14 +351,17 @@ public class Backpropagation {
         return yd - yr;
     }
 
+    private void getLayersSize() throws Exception {
+        sizeCapa1 = lPatrones[0].getGrados().size();
+        sizeCapa3 = getSizeLayer3(); //leer archivo con -S, de Datos, final
+        sizeCapa2 = numNeuCapOculta;
+    }
+
     /**
      * Obtiene el número total de pesos que son necesarios y asigna un valor
      * aleatorio a cada uno
      */
     private void iniPesos() throws Exception {
-        sizeCapa1 = lPatrones[0].getGrados().size();
-        sizeCapa3 = getSizeLayer3(); //leer archivo con -S, de Datos, final
-        sizeCapa2 = numNeuCapOculta;
         lPesos = fillPesos(sizeCapa1, sizeCapa2, sizeCapa3); //usar esta
 
         //pruebas
@@ -548,4 +567,50 @@ public class Backpropagation {
         }
     }
 
+    public void saveData() {
+        PrintWriter printWriter = null;
+        try {
+            File file = new File("SED/back_data");
+            printWriter = new PrintWriter(file);
+
+            printWriter.println(numNeuCapOculta + " ");
+
+            //guarda pesos
+            for (int i = 0; i < lPesos.size(); i++) {
+                printWriter.println("P " + lPesos.get(i)[0] + " " + lPesos.get(i)[1] + " " + lPesos.get(i)[2]);
+            }
+            for (int i = 0; i < lUmbrales.size(); i++) {
+                printWriter.println("U " + lUmbrales.get(i)[0] + " " + lUmbrales.get(i)[1]);
+            }
+
+            printWriter.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Backpropagation.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            printWriter.close();
+        }
+    }
+
+    public void saveExits() {
+        PrintWriter printWriter = null;
+        try {
+            File file = new File("SED/back_salidas");
+            printWriter = new PrintWriter(file);
+
+            //guarda salidas
+            int lim = sizeCapa1 + sizeCapa2 + 1;
+            for (int i = 0; i < lFunActSalida.size(); i++) {
+                if (lFunActSalida.get(i)[0] == lim) {
+                    printWriter.println(lFunActSalida.get(i)[0] + " " + lFunActSalida.get(i)[1]);
+                    ++lim;
+                }
+            }
+
+            printWriter.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Backpropagation.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            printWriter.close();
+        }
+    }
 }
