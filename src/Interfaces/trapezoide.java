@@ -27,19 +27,13 @@ public class trapezoide extends JFrame {
     JLabel lblPuntoC1, lblPuntoC2, lblEtiqueta;
     JButton aceptar;
     JPanel pnlsup, pnlinf;
-    private List<Etiqueta> listaEtiquetasSalida = null;
 
-    public void setListaEtiquetasSalida(List<Etiqueta> listaEtiquetasSalida) {
-        this.listaEtiquetasSalida = listaEtiquetasSalida;
-    }
-
-    public trapezoide(int noFuncion, double origen, double fin, String nomFile, List<Etiqueta> listaResuEtiquetas) {
+    public trapezoide(int noFuncion, double origen, double fin, String nomFile) {
         super("Trapezoide");
         this.noFuncion = noFuncion;
         this.origen = origen;
         this.fin = fin;
         this.nomFile = nomFile;
-        this.listaEtiquetasSalida = listaResuEtiquetas;
 
         m_panelSup();
         m_panelInf();
@@ -63,19 +57,19 @@ public class trapezoide extends JFrame {
         txtPuntoC2 = new JTextField();
         txtPuntoC2.setText("");
         lblPuntoC2 = new JLabel("Punto critico 2: ");
-        if (listaEtiquetasSalida == null) {
+        //if (listaEtiquetasSalida == null) {
             txtEtiqueta = new JTextField();
             txtEtiqueta.setText("");
             lblEtiqueta = new JLabel("Etiqueta: ");
-        }
+        //}
         pnlsup.add(lblPuntoC1);
         pnlsup.add(txtPuntoC1);
         pnlsup.add(lblPuntoC2);
         pnlsup.add(txtPuntoC2);
-        if (listaEtiquetasSalida == null) {
+        //if (listaEtiquetasSalida == null) {
             pnlsup.add(lblEtiqueta);
             pnlsup.add(txtEtiqueta);
-        }
+        //}
     }
 
     void m_panelInf() {
@@ -86,7 +80,7 @@ public class trapezoide extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Aqui va lo que tiene que hacer al momento de pulsar aceptar.
-                //System.out.println("Falta programar");
+   
                 if (capturaDatos() == true) {
                     try {
                         GestionArchivos objG = new GestionArchivos();
@@ -94,7 +88,7 @@ public class trapezoide extends JFrame {
                         objG.escribir(nomFile, (noFuncion + 1), Ftrapezoide, "final");
                         ocultarventana();
                         tipoFunciones objFun = new tipoFunciones(noFuncion, calcularTraslape(), fin, nomFile);
-                        objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
+
                     } catch (Exception ex) {
                     }
                 }
@@ -111,15 +105,13 @@ public class trapezoide extends JFrame {
         try {
             puntoC1 = Double.parseDouble(txtPuntoC1.getText().toString());
             puntoC2 = Double.parseDouble(txtPuntoC2.getText().toString());
-            if (listaEtiquetasSalida == null) {
+  //          if (listaEtiquetasSalida == null) {
                 etiqueta = txtEtiqueta.getText().toString();
                 if (etiqueta.equals("")) {
                     JOptionPane.showMessageDialog(this, "Error, llene todos los campos.");
                     return false;
                 }
-            }else{
-                etiqueta = listaEtiquetasSalida.get(noFuncion - 1).etiqueta;
-            }
+   
 
             if (puntoC1 < origen || puntoC1 > fin || puntoC2 < origen || puntoC2 > fin) {
                 JOptionPane.showMessageDialog(this, "Error, los puntos criticos no estan dentro del discurso disponible");
@@ -128,12 +120,9 @@ public class trapezoide extends JFrame {
             if ((fin - origen) < ((puntoC1 - origen) + (puntoC2 - puntoC2) + (fin - puntoC2))) {
                 JOptionPane.showMessageDialog(this, "La funcion abarcara todo el discurso disponible");
                 aux = fin;
-                //return false;
+
             }
-//            if((puntoC1 - origen) < (fin - puntoC2)){
-//                JOptionPane.showMessageDialog(this, "Error, la funcion no se puede colocar dentro del discurso disponible");
-//                return false;
-//            }
+
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al capturar los datos");

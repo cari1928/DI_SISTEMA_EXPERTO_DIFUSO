@@ -18,6 +18,7 @@ public class MotorInferencia {
     public List<semiTrapezoide> listSemiTrapezoide;
     public double punto;
     public String resultado, rutaArchivo;
+    public List<String> listaMenbrecia = new ArrayList<>();
 
     public MotorInferencia() {
         resultado = "";
@@ -31,6 +32,7 @@ public class MotorInferencia {
         this.punto = punto;
         this.rutaArchivo = variable;
         GestionArchivos objG = new GestionArchivos();
+        listaMenbrecia = new ArrayList<>();
         crearModelo(rutaArchivo);
 
         if (listTriangular != null) {
@@ -53,6 +55,7 @@ public class MotorInferencia {
                                 nuevoRegistro += parts[i] + " ";
                             }
                         }
+                        listaMenbrecia.add(objTria.membresiaY+"");
                         objG.actualizar(this.rutaArchivo, objTria.turno, nuevoRegistro);
 
                     } catch (Exception e) {
@@ -80,10 +83,13 @@ public class MotorInferencia {
                                 nuevoRegistro += parts[i] + " ";
                             }
                         }
+                        listaMenbrecia.add(objTrap.membresiaY+"");
                         objG.actualizar(this.rutaArchivo, objTrap.turno, nuevoRegistro);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                }else{
+                    listaMenbrecia.add("0");
                 }
             }
         }
@@ -95,12 +101,12 @@ public class MotorInferencia {
                     if (objSemTria.puntoC[0] > punto && punto > objSemTria.punto2[0]) {
                         objSemTria.membresiaY = calcularY(objSemTria);
                         resultado += objSemTria.etiqueta + " " + objSemTria.membresiaY + "\n";
-                    }
+                    }else objSemTria.membresiaY = 0;
                 } else {
                     if (objSemTria.punto2[0] > punto && punto > objSemTria.puntoC[0]) {
                         objSemTria.membresiaY = calcularY(objSemTria);
                         resultado += objSemTria.etiqueta + " " + objSemTria.membresiaY + "\n";
-                    }
+                    } else objSemTria.membresiaY = 0;
                 }
                 try {
                     String registro = objG.obtenerRegistroByID(this.rutaArchivo, objSemTria.turno), nuevoRegistro = "";
@@ -114,6 +120,7 @@ public class MotorInferencia {
                             nuevoRegistro += parts[i] + " ";
                         }
                     }
+                    listaMenbrecia.add(objSemTria.membresiaY+"");
                     objG.actualizar(this.rutaArchivo, objSemTria.turno, nuevoRegistro);
                 } catch (Exception e) {
                 }
@@ -136,6 +143,7 @@ public class MotorInferencia {
                             nuevoRegistro += parts[j] + " ";
                         }
                     }
+                    listaMenbrecia.add(objSemTrap.membresiaY+"");
                     objG.actualizar(this.rutaArchivo, objSemTrap.turno, nuevoRegistro);
                 } catch (Exception e) {
                 }
@@ -326,10 +334,10 @@ public class MotorInferencia {
         x3 = objTria.puntoDer[0];
         y3 = objTria.puntoDer[1];
 
-        if (x1 < punto && punto < x2) {
+        if (x1 <= punto && punto <= x2) {
             return (((punto - x1) / (x2 - x1)) * (y2 - y1) + y1);
         }
-        if (x2 < punto && punto < x3) {
+        if (x2 <= punto && punto <= x3) {
             return (((punto - x2) / (x3 - x2)) * (y3 - y2) + y2);
         }
         return -1;

@@ -27,19 +27,13 @@ public class ceros extends JFrame {
     JLabel lblInicio, lblFinal;
     JPanel pnlsup, pnlinf;
     JButton aceptar;
-    private List<Etiqueta> listaEtiquetasSalida = null;
 
-    public void setListaEtiquetasSalida(List<Etiqueta> listaEtiquetasSalida) {
-        this.listaEtiquetasSalida = listaEtiquetasSalida;
-    }
-
-    public ceros(int noFuncion, double origen, double finD, String nomFile, List<Etiqueta> listaResuEtiquetas) {
+    public ceros(int noFuncion, double origen, double finD, String nomFile) {
         super("Ceros");
         this.finD = finD;
         this.origen = origen;
         this.noFuncion = noFuncion;
         this.nomFile = nomFile; //ya viene con el nombre de la carpeta
-        this.listaEtiquetasSalida = listaResuEtiquetas;
         
         m_panelSup();
         m_panelInf();

@@ -45,6 +45,26 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu8">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="RNA"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Entrenar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem6ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem7">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Usar entrenada"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
             <Property name="text" type="java.lang.String" value="Motor Inferencia"/>
@@ -58,57 +78,11 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
               </Events>
             </MenuItem>
-            <Menu class="javax.swing.JMenu" name="jMenu4">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Inferencia"/>
-              </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Inferenciar"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem4ActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <Menu class="javax.swing.JMenu" name="jMenu6">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="FAM"/>
-                  </Properties>
-                  <SubComponents>
-                    <MenuItem class="javax.swing.JMenuItem" name="jmiFAMNuevo">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Nuevo"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiFAMNuevoActionPerformed"/>
-                      </Events>
-                    </MenuItem>
-                    <MenuItem class="javax.swing.JMenuItem" name="jmiFAMExistente">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Usar Existente"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiFAMExistenteActionPerformed"/>
-                      </Events>
-                    </MenuItem>
-                  </SubComponents>
-                </Menu>
-              </SubComponents>
-            </Menu>
             <Menu class="javax.swing.JMenu" name="jMenu7">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Defuzzyfication"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Variable Salida"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem5ActionPerformed"/>
-                  </Events>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="jmiCentroGravedad">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Centro de gravedad"/>
@@ -126,14 +100,6 @@
             <Property name="text" type="java.lang.String" value="Mostrar"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jmPesoRegla">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Peso de la Regla"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmPesoReglaActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiSalidaDifusa">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Salida Difusa"/>

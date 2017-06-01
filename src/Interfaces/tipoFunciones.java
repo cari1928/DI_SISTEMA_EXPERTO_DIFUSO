@@ -1,5 +1,7 @@
 package Interfaces;
 
+import RNA.Patron;
+import RNA.extras;
 import SED.Etiqueta;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,11 +24,6 @@ public class tipoFunciones extends JFrame {
     String[] tipoFunciones = {"Ceros", "Triangular", "Trapezoide", "SemiTriangular", "SemiTrapezoide", "Finalizar"};
     JComboBox petList;
     JPanel panel;
-    private List<Etiqueta> listaEtiquetasSalida = null;
-
-    public void setListaEtiquetasSalida(List<Etiqueta> listaEtiquetasSalida) {
-        this.listaEtiquetasSalida = listaEtiquetasSalida;
-    }
 
     public tipoFunciones(int numFuncion, double origen, double fin, String nomFile) {
         super("Funciones de membrecía");
@@ -50,6 +47,14 @@ public class tipoFunciones extends JFrame {
 
         } else {
             JOptionPane.showMessageDialog(null, "Variable agregada");
+            if (nomFile.contains("-S")) {
+                extras objE = new extras();
+                objE.inicia();
+                for (int i = 0; i < 4; i++) {
+                    new entradas(i);
+                }
+
+            }
         }
     }
 
@@ -65,42 +70,50 @@ public class tipoFunciones extends JFrame {
                 ocultarventana();
                 switch (petName) {
                     case "Ceros":
-                        new ceros(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
+                        new ceros(noFuncion, origen, fin, nomFile);
                         break;
                     case "Triangular":
-                        new triangular(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
+                        new triangular(noFuncion, origen, fin, nomFile);
                         break;
                     case "Trapezoide":
-                        new trapezoide(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
+                        new trapezoide(noFuncion, origen, fin, nomFile);
                         break;
                     case "SemiTriangular":
-                        if (listaEtiquetasSalida != null) {
-                            if (noFuncion == 1 || noFuncion == listaEtiquetasSalida.size()) {
-                                new semiTriangular(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
-                            } else {
-                                JOptionPane.showMessageDialog(panel, "No se puede insertar esta función");
-                                tipoFunciones objFun = new tipoFunciones(noFuncion - 1, origen, fin, nomFile);
-                                objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
-                            }
-                        } else {
-                            new semiTriangular(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
-                        }
+                        //if (listaEtiquetasSalida != null) {
+                        //    if (noFuncion == 1 || noFuncion == listaEtiquetasSalida.size()) {
+                        //        new semiTriangular(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
+                        //    } else {
+                        //        JOptionPane.showMessageDialog(panel, "No se puede insertar esta función");
+                        //        tipoFunciones objFun = new tipoFunciones(noFuncion - 1, origen, fin, nomFile);
+                        //        objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
+                        //    }
+                        //} else {
+                        new semiTriangular(noFuncion, origen, fin, nomFile);
+                        //}
                         break;
                     case "SemiTrapezoide":
-                        if (listaEtiquetasSalida != null) {
-                            if (noFuncion == 1 || noFuncion == listaEtiquetasSalida.size()) {
-                                new semiTrapezoide(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
-                            } else {
-                                JOptionPane.showMessageDialog(panel, "No se puede insertar esta función");
-                                tipoFunciones objFun = new tipoFunciones(noFuncion - 1, origen, fin, nomFile);
-                                objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
-                            }
-                        }else{
-                            new semiTrapezoide(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
-                        }
+//                        if (listaEtiquetasSalida != null) {
+//                            if (noFuncion == 1 || noFuncion == listaEtiquetasSalida.size()) {
+//                                new semiTrapezoide(noFuncion, origen, fin, nomFile, listaEtiquetasSalida);
+//                            } else {
+//                                JOptionPane.showMessageDialog(panel, "No se puede insertar esta función");
+//                                tipoFunciones objFun = new tipoFunciones(noFuncion - 1, origen, fin, nomFile);
+//                                objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
+//                            }
+//                        }else{
+                        new semiTrapezoide(noFuncion, origen, fin, nomFile);
+//                        }
                         break;
                     case "Finalizar":
                         JOptionPane.showMessageDialog(null, "Funciones de membresía ingresadas");
+//                        entradas[] ent = new entradas[4];
+                        if (nomFile.contains("-S")) {
+                            extras objE = new extras();
+                            objE.inicia();
+                            for (int i = 0; i < 4; i++) {
+                                new entradas(i);
+                            }
+                        }
                 }
             }
         });

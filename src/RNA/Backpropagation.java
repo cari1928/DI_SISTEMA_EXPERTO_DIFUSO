@@ -43,6 +43,7 @@ public class Backpropagation {
         lTUmbrales = new ArrayList<>();
         lEpoch = new ArrayList<>();
         lCuadErrors = new ArrayList<>();
+
         iniPesos();
         iniUmbrales();
         entrenamiento();
@@ -104,6 +105,7 @@ public class Backpropagation {
             }
             //terminia, al llegar a este punto, las listas cuentan con los valores de la última ejecucion
             //listas para la fase de ejecucion
+
             System.out.println("");
         } else {
             ++count;
@@ -261,12 +263,11 @@ public class Backpropagation {
         for (int i = 0; i < lTPesos.size(); i++) {
             res = lTPesos.get(i)[2];
 
-            System.out.println("V1: " + value1);
-            System.out.println("V1: " + value2);
-
-            System.out.println("lTpesos[0]: " + lTPesos.get(i)[0]);
-            System.out.println("lTpesos[1]: " + lTPesos.get(i)[1]);
-
+//            System.out.println("V1: " + value1);
+//            System.out.println("V1: " + value2);
+//
+//            System.out.println("lTpesos[0]: " + lTPesos.get(i)[0]);
+//            System.out.println("lTpesos[1]: " + lTPesos.get(i)[1]);
             if (lTPesos.get(i)[0] == value1 && lTPesos.get(i)[1] == value2) {
                 tmp.add(res);
                 return tmp;

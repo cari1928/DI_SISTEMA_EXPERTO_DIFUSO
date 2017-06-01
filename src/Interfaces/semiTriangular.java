@@ -32,19 +32,14 @@ public class semiTriangular extends JFrame {
     JButton aceptar;
     JPanel pnlsup, pnlinf;
     String etiqueta;
-    private List<Etiqueta> listaEtiquetasSalida = null;
 
-    public void setListaEtiquetasSalida(List<Etiqueta> listaEtiquetasSalida) {
-        this.listaEtiquetasSalida = listaEtiquetasSalida;
-    }
 
-    public semiTriangular(int noFuncion, double origen, double fin, String nomFile, List<Etiqueta> listaResuEtiquetas) {
+    public semiTriangular(int noFuncion, double origen, double fin, String nomFile) {
         super("Semi Trapesoide");
         this.noFuncion = noFuncion;
         this.origen = origen;
         this.fin = fin;
         this.nomFile = nomFile;
-        this.listaEtiquetasSalida = listaResuEtiquetas;
 
         m_panelSup();
         m_panelInf();
@@ -67,20 +62,20 @@ public class semiTriangular extends JFrame {
         txtLongitud = new JTextField();
         txtLongitud.setText("");
         lblLongitud = new JLabel("Longitud: ");
-        if (listaEtiquetasSalida == null) {
+//        if (listaEtiquetasSalida == null) {
             txtEtiqueta = new JTextField();
             txtEtiqueta.setText("");
             lblEtiqueta = new JLabel("Etiqueta: ");
-        }
+//        }
 
         pnlsup.add(lblOrientacion);
         pnlsup.add(orientacion);
         pnlsup.add(lblLongitud);
         pnlsup.add(txtLongitud);
-        if (listaEtiquetasSalida == null) {
+//        if (listaEtiquetasSalida == null) {
             pnlsup.add(lblEtiqueta);
             pnlsup.add(txtEtiqueta);
-        }
+//        }
     }
 
     void m_panelInf() {
@@ -100,24 +95,24 @@ public class semiTriangular extends JFrame {
                         objG.escribir(nomFile, (noFuncion + 1), Fsemitriangular, "final");
 
                         if (v_orientacion == 'd') {
-                            if (listaEtiquetasSalida != null) {
-                                if (noFuncion != listaEtiquetasSalida.size()) {
-                                    JOptionPane.showMessageDialog(pnlinf, "Error Faltan etiquetas por insertar");
-                                    bandera = false;
-                                } else {
+//                            if (listaEtiquetasSalida != null) {
+//                                if (noFuncion != listaEtiquetasSalida.size()) {
+//                                    JOptionPane.showMessageDialog(pnlinf, "Error Faltan etiquetas por insertar");
+//                                    bandera = false;
+//                                } else {
                                     tipoFunciones objFun = new tipoFunciones(10, fin, fin, nomFile);
-                                    objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
-                                }
-                            } else {
-                                tipoFunciones objFun = new tipoFunciones(10, fin, fin, nomFile);
-                                objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
-                            }
+                                    //objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
+//                                }
+//                            } else {
+//                                tipoFunciones objFun = new tipoFunciones(10, fin, fin, nomFile);
+////                                objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
+//                            }
 
                         } else {
 
                             if (noFuncion == 1) {
                                 tipoFunciones objFun = new tipoFunciones(noFuncion, calculaTraslape(), fin, nomFile);
-                                objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
+//                                objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
                             } else {
                                 JOptionPane.showMessageDialog(pnlinf, "Error, No se puede insertar la etiqueta devido a que no es la primera función");
                                 bandera = false;
@@ -139,15 +134,15 @@ public class semiTriangular extends JFrame {
         try {
             v_orientacion = orientacion.getSelectedItem().toString().toLowerCase().charAt(0);
             longitud = Double.parseDouble(txtLongitud.getText());
-            if (listaEtiquetasSalida == null) {
+//            if (listaEtiquetasSalida == null) {
                 etiqueta = txtEtiqueta.getText();
                 if (etiqueta.equals("")) {
                     JOptionPane.showMessageDialog(this, "Error llene todos los campos");
                     return false;
                 }
-            } else {
-                etiqueta = listaEtiquetasSalida.get(noFuncion - 1).etiqueta;
-            }
+//            } else {
+//                etiqueta = listaEtiquetasSalida.get(noFuncion - 1).etiqueta;
+//            }
 
             if (orientacion.getSelectedItem().toString().equalsIgnoreCase("Derecha")) {
                 puntoC = fin;

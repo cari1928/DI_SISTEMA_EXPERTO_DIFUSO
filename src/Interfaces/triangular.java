@@ -27,19 +27,13 @@ public class triangular extends JFrame {
     JTextField txtPuntoC, txtEtiqueta;
     JPanel pnlinf, pnlsup;
     JButton aceptar;
-    private List<Etiqueta> listaEtiquetasSalida = null;
 
-    public void setListaEtiquetasSalida(List<Etiqueta> listaEtiquetasSalida) {
-        this.listaEtiquetasSalida = listaEtiquetasSalida;
-    }
-
-    triangular(int noFuncion, double origen, double fin, String nomFile, List<Etiqueta> listaResuEtiquetas) {
+    triangular(int noFuncion, double origen, double fin, String nomFile) {
         super("Triangular");
         this.noFuncion = noFuncion;
         this.origen = origen;
         this.fin = fin;
         this.nomFile = nomFile;
-        this.listaEtiquetasSalida = listaResuEtiquetas;
 
         m_panelSup();
         m_panelInf();
@@ -60,17 +54,13 @@ public class triangular extends JFrame {
         txtPuntoC = new JTextField();
         txtPuntoC.setText("");
         lblPuntoC = new JLabel("Punto Critico: ");
-        if (listaEtiquetasSalida == null) {
-            txtEtiqueta = new JTextField();
-            txtEtiqueta.setText("");
-            lblEtiqueta = new JLabel("Etiqueta: ");
-        }
+        txtEtiqueta = new JTextField();
+        txtEtiqueta.setText("");
+        lblEtiqueta = new JLabel("Etiqueta: ");
         pnlsup.add(lblPuntoC);
         pnlsup.add(txtPuntoC);
-        if(listaEtiquetasSalida == null){
-            pnlsup.add(lblEtiqueta);
-            pnlsup.add(txtEtiqueta);
-        }
+        pnlsup.add(lblEtiqueta);
+        pnlsup.add(txtEtiqueta);
         
     }
 
@@ -90,7 +80,6 @@ public class triangular extends JFrame {
                         objG.escribir(nomFile, (noFuncion + 1), Ftriangular, "final");
                         ocultarventana();
                         tipoFunciones objFun = new tipoFunciones(noFuncion, calculaTraslape(), fin, nomFile);
-                        objFun.setListaEtiquetasSalida(listaEtiquetasSalida);
                     } catch (Exception ex) {
                     }
                 }
@@ -106,15 +95,15 @@ public class triangular extends JFrame {
     boolean capturaDatos() {
         try {
             puntoC = Double.parseDouble(txtPuntoC.getText().toString());
-            if (listaEtiquetasSalida == null) {
+//            if (listaEtiquetasSalida == null) {
                 etiqueta = txtEtiqueta.getText().toString();
                 if (etiqueta.equals("")) {
                     JOptionPane.showMessageDialog(this, "Error llene todos los campos");
                     return false;
                 }
-            }else{
-                etiqueta = listaEtiquetasSalida.get(noFuncion - 1).etiqueta;
-            }
+//            }else{
+//                etiqueta = listaEtiquetasSalida.get(noFuncion - 1).etiqueta;
+//            }
 
             if (puntoC <= origen || puntoC >= fin) {
                 JOptionPane.showMessageDialog(this, "El punto critico esta fuera del discurso disponible");

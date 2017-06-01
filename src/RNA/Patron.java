@@ -34,5 +34,4 @@ public class Patron {
     public void setSalidas(List<Double> salidas) {
         this.salidas = salidas;
     }
-
 }
